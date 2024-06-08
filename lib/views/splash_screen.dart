@@ -1,26 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nuraga_app/blocs/splash_bloc.dart';
+import 'package:nuraga_app/constant.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  late SplashBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = SplashBloc();
+    _bloc.initDelay(
+        context); // Memanggil metode initDelay untuk menunda navigasi
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SplashBloc()..add(AppStarted()),
-      child: Scaffold(
-        body: BlocListener<SplashBloc, SplashState>(
-          listener: (context, state) {
-            if (state is SplashLoaded) {
-              Navigator.of(context).pushReplacementNamed('/home');
-            }
-          },
-          child: BlocBuilder<SplashBloc, SplashState>(
-            builder: (context, state) {
-              if (state is SplashLoading) {
-                return Center(child: CircularProgressIndicator());
-              }
-              return Center(child: Text('Welcome to My App'));
-            },
+    return Scaffold(
+      body: Container(
+        color: Color(0xFF1F319D),
+        child: Center(
+          child: Text(
+            'NURAGA',
+            style: TextStyle(
+              color: kPrimaryYellow,
+              fontSize: 50.0,
+              fontFamily: 'poppins',
+              fontWeight: FontWeight.w800,
+            ),
           ),
         ),
       ),
