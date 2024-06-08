@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nuraga_app/blocs/authentication_bloc.dart';
 import 'package:nuraga_app/constant.dart';
+import 'package:nuraga_app/views/sign_in.dart';
+import 'package:nuraga_app/views/sign_up.dart';
 import 'package:nuraga_app/utils/half_circle_clipper.dart';
 
 class MenuSelectScreen extends StatefulWidget {
@@ -76,7 +79,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.5,
-              padding: EdgeInsets.only(right: 30, left: 30),
+              padding: EdgeInsets.only(right: 40, left: 40, top: 180),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -85,7 +88,11 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                     height: MediaQuery.of(context).size.height * 0.063,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Aksi yang diambil ketika tombol ditekan
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignUpScreen()),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: kPrimaryYellow,
@@ -103,13 +110,38 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 6,
+                  ),
                   Container(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Already have an account?'),
-                        Text(' Sign In'),
+                        Text(
+                          'Sudah punya akun?',
+                          style: TextStyle(
+                              fontFamily: 'poppins',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignInScreen()),
+                            );
+                          },
+                          child: Text(
+                            ' Sign In',
+                            style: TextStyle(
+                                fontFamily: 'poppins',
+                                fontSize: 12,
+                                color: kPrimaryYellow,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
                       ],
                     ),
                   )
