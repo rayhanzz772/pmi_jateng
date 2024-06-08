@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Splash Screen with BLoC',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'Poppins',
       ),
       initialRoute: '/',
       routes: {

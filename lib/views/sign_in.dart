@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nuraga_app/blocs/authentication_bloc.dart';
+import 'package:nuraga_app/constant.dart';
 
 class SignInScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -21,28 +22,14 @@ class SignInScreen extends StatelessWidget {
               return Container(
                 padding: EdgeInsets.all(16.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextField(
-                      controller: emailController,
-                      decoration: InputDecoration(labelText: 'Email'),
-                    ),
-                    SizedBox(height: 16.0),
-                    TextField(
-                      controller: passwordController,
-                      decoration: InputDecoration(labelText: 'Password'),
-                      obscureText: true,
-                    ),
-                    SizedBox(height: 32.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        String email = emailController.text;
-                        String password = passwordController.text;
-                        BlocProvider.of<AuthenticationBloc>(context)
-                            .add(SignInEvent(email: email, password: password));
-                      },
-                      child: Text('Sign In'),
-                    ),
+                    Text("Daftar,",
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.bold,
+                            color: kPrimaryColor)),
+                    Text("Mohon masukan data anda terlebih dahulu")
                   ],
                 ),
               );
