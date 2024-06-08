@@ -77,77 +77,101 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                 ),
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.5,
-              padding: EdgeInsets.only(right: 40, left: 40, top: 180),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.063,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignUpScreen()),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: kPrimaryYellow,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(
-                            fontFamily: 'poppins',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: kPrimarywhite),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  Container(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Sudah punya akun?',
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        GestureDetector(
-                          onTap: () {
+            Stack(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.38,
+                  padding: EdgeInsets.only(right: 40, left: 40, top: 180),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.063,
+                        child: ElevatedButton(
+                          onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignInScreen()),
+                                  builder: (context) => SignUpScreen()),
                             );
                           },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: kPrimaryYellow,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
                           child: Text(
-                            ' Sign In',
+                            'Sign Up',
                             style: TextStyle(
                                 fontFamily: 'poppins',
-                                fontSize: 12,
-                                color: kPrimaryYellow,
-                                fontWeight: FontWeight.w700),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: kPrimarywhite),
                           ),
                         ),
-                      ],
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Sudah punya akun?',
+                              style: TextStyle(
+                                  fontFamily: 'poppins',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignInScreen()),
+                                );
+                              },
+                              child: Text(
+                                ' Sign In',
+                                style: TextStyle(
+                                    fontFamily: 'poppins',
+                                    fontSize: 12,
+                                    color: kPrimaryYellow,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.12,
+              width: MediaQuery.of(context).size.width,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: -60, // Menggeser ke kiri sejauh 50
+                    top: MediaQuery.of(context).size.height * 0.06 - 40,
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: kPrimarygrey,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
