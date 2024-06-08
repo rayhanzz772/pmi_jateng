@@ -33,7 +33,20 @@ class SignInScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              height: 100,
+                              height: 10,
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: Colors.white, // Ubah warna menjadi putih
+                                size: 24, // Ubah ukuran menjadi 32
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            SizedBox(
+                              height: 60,
                             ),
                             Text(
                               "Selamat datang,",

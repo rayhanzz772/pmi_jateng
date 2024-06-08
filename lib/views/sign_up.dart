@@ -33,7 +33,20 @@ class SignUpScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              height: 50,
+                              height: 10,
+                            ),
+                            Container(
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color:
+                                      Colors.white, // Ubah warna menjadi putih
+                                  size: 24, // Ubah ukuran menjadi 32
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
                             ),
                             Text(
                               "Daftar",
