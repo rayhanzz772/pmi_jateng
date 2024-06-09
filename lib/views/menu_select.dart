@@ -14,7 +14,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimarywhite,
+      backgroundColor: kPrimaryWhite,
       body: Container(
         child: Column(
           children: [
@@ -53,7 +53,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                                 fontFamily: 'poppins',
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,
-                                color: kPrimarywhite,
+                                color: kPrimaryWhite,
                               ),
                             ),
                           ),
@@ -67,7 +67,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                                   fontFamily: 'poppins',
                                   fontSize: 13,
                                   fontWeight: FontWeight.w400,
-                                  color: kPrimarywhite),
+                                  color: kPrimaryWhite),
                             ),
                           ),
                         ],
@@ -108,7 +108,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                                 fontFamily: 'poppins',
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
-                                color: kPrimarywhite),
+                                color: kPrimaryWhite),
                           ),
                         ),
                       ),
@@ -165,7 +165,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                       height: 150,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: kPrimarygrey,
+                        color: kPrimaryGrey,
                       ),
                     ),
                   ),
