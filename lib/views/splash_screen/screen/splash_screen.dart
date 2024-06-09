@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nuraga_app/blocs/splash_bloc.dart';
+import 'package:nuraga_app/blocs/splash_screen/splash_bloc.dart';
 import 'package:nuraga_app/utils/color/constant.dart';
 
 class SplashScreen extends StatefulWidget {

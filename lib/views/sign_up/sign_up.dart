@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nuraga_app/blocs/authentication_bloc.dart';
+import 'package:nuraga_app/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:nuraga_app/utils/color/constant.dart';
 import 'package:nuraga_app/views/sign_in/sign_in.dart';
 
@@ -147,11 +147,11 @@ class SignUpScreen extends StatelessWidget {
                                               confirmpasswordController.text;
                                           String password =
                                               passwordController.text;
-                                          BlocProvider.of<AuthenticationBloc>(
-                                            context,
-                                          ).add(SignInEvent(
-                                              email: email,
-                                              password: password));
+                                          // BlocProvider.of<AuthenticationBloc>(
+                                          //   context,
+                                          // ).add(SigninEvent(
+                                          //     email: email,
+                                          //     password: password));
                                         },
                                         style: ElevatedButton.styleFrom(
                                           shape: RoundedRectangleBorder(

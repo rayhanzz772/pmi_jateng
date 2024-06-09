@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nuraga_app/blocs/authentication_bloc.dart';
+import 'package:nuraga_app/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:nuraga_app/utils/color/constant.dart';
 import 'package:nuraga_app/views/sign_up/sign_up.dart';
 
@@ -11,52 +11,66 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthenticationBloc(),
-      child: Scaffold(
-        backgroundColor: kPrimaryColor,
-        body: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          builder: (context, state) {
-            if (state is LoadingState) {
-              return Center(child: CircularProgressIndicator());
-            } else if (state is ErrorState) {
-              return Center(child: Text(state.message));
-            } else {
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 30),
-                    IconButton(
-                      padding: EdgeInsets.only(left: 20),
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                        size: 24,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+        create: (context) => AuthenticationBloc(),
+        child: Scaffold(
+          backgroundColor: kPrimaryColor,
+          body: BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              if (state is SignedInState) {
+                Navigator.pushReplacementNamed(context, '/home');
+              } else if (state is ErrorState) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+                Navigator.pushReplacementNamed(context, '/sign_in');
+              }
+            },
+            child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+              builder: (context, state) {
+                if (state is LoadingState) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is ErrorState) {
+                  return Center(child: Text(state.message));
+                } else {
+                  return SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 30),
+                        IconButton(
+                          padding: EdgeInsets.only(left: 20),
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        Container(
+                          color: kPrimaryColor,
+                          padding: EdgeInsets.all(24.0),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 35),
+                              TopText(), // Gunakan widget TopText disini
+                              SizedBox(height: 60),
+                              BoxForm(),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      color: kPrimaryColor,
-                      padding: EdgeInsets.all(24.0),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 35),
-                          TopText(), // Gunakan widget TopText disini
-                          SizedBox(height: 60),
-                          BoxForm(),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-          },
-        ),
-      ),
-    );
+                  );
+                }
+              },
+            ),
+          ),
+        ));
   }
 }
 
@@ -150,9 +164,10 @@ class BoxForm extends StatelessWidget {
                     String email = emailController.text;
                     String password = passwordController.text;
                     BlocProvider.of<AuthenticationBloc>(context).add(
-                      SignInEvent(
+                      SigninEvent(
                         email: email,
                         password: password,
+                        context: context,
                       ),
                     );
                   },
