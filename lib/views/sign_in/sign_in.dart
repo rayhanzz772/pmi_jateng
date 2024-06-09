@@ -45,198 +45,7 @@ class SignInScreen extends StatelessWidget {
                           SizedBox(height: 35),
                           TopText(), // Gunakan widget TopText disini
                           SizedBox(height: 60),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            child: Column(
-                              children: [
-                                SizedBox(height: 22),
-                                Text(
-                                  "SIGN IN",
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontFamily: "Poppins",
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                Container(
-                                  padding: EdgeInsets.only(left: 30, right: 30),
-                                  child: Column(
-                                    children: [
-                                      TextField(
-                                        controller: emailController,
-                                        decoration: InputDecoration(
-                                          labelText: 'Username',
-                                          labelStyle: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 16.0),
-                                      TextField(
-                                        controller: passwordController,
-                                        decoration: InputDecoration(
-                                          labelText: 'Password',
-                                          labelStyle: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 16.0),
-                                      Text(
-                                        "Forgot Password?",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      SizedBox(height: 16.0),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          String email = emailController.text;
-                                          String password =
-                                              passwordController.text;
-                                          BlocProvider.of<AuthenticationBloc>(
-                                                  context)
-                                              .add(
-                                            SignInEvent(
-                                              email: email,
-                                              password: password,
-                                            ),
-                                          );
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          minimumSize:
-                                              Size(double.infinity, 48),
-                                          backgroundColor: kPrimaryYellow,
-                                        ),
-                                        child: Text(
-                                          'Sign In',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 16.0),
-                                      Text("or sign in with"),
-                                      SizedBox(height: 16.0),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                // Your onPressed logic here
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                fixedSize: Size.fromHeight(45),
-                                                alignment: Alignment.centerLeft,
-                                                backgroundColor: Colors.white,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                side: BorderSide(
-                                                  color: Color.fromARGB(
-                                                      255, 152, 152, 152),
-                                                  width: 0.5,
-                                                ),
-                                              ),
-                                              child: Row(
-                                                children: [
-                                                  Image.asset(
-                                                    'assets/images/google.png',
-                                                    width: 35,
-                                                    height: 35,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                // Your onPressed logic here
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                fixedSize: Size.fromHeight(45),
-                                                alignment: Alignment.centerLeft,
-                                                backgroundColor: Colors.white,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                side: BorderSide(
-                                                  color: Color.fromARGB(
-                                                      255, 152, 152, 152),
-                                                  width: 0.5,
-                                                ),
-                                              ),
-                                              child: Row(
-                                                children: [
-                                                  Image.asset(
-                                                    'assets/images/x.png',
-                                                    width: 27,
-                                                    height: 27,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        SignUpScreen(),
-                                                  ),
-                                                );
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                fixedSize: Size.fromHeight(45),
-                                                alignment: Alignment.centerLeft,
-                                                backgroundColor: Colors.white,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                side: BorderSide(
-                                                  color: Color.fromARGB(
-                                                      255, 152, 152, 152),
-                                                  width: 0.5,
-                                                ),
-                                              ),
-                                              child: Row(
-                                                children: [
-                                                  Image.asset(
-                                                    'assets/images/facebook.png',
-                                                    width: 30,
-                                                    height: 30,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: 34),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          BoxForm(),
                         ],
                       ),
                     ),
@@ -276,6 +85,192 @@ class TopText extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class BoxForm extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: Column(
+        children: [
+          SizedBox(height: 22),
+          Text(
+            "SIGN IN",
+            style: TextStyle(
+              fontSize: 22,
+              fontFamily: "Poppins",
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(height: 10),
+          Container(
+            padding: EdgeInsets.only(left: 30, right: 30),
+            child: Column(
+              children: [
+                TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                    labelStyle: TextStyle(
+                      fontSize: 13,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                TextField(
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: TextStyle(
+                      fontSize: 13,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  "Forgot Password?",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    String email = emailController.text;
+                    String password = passwordController.text;
+                    BlocProvider.of<AuthenticationBloc>(context).add(
+                      SignInEvent(
+                        email: email,
+                        password: password,
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    minimumSize: Size(double.infinity, 48),
+                    backgroundColor: kPrimaryYellow,
+                  ),
+                  child: Text(
+                    'Sign In',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Text("or sign in with"),
+                SizedBox(height: 16.0),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          // Your onPressed logic here
+                        },
+                        style: ElevatedButton.styleFrom(
+                          fixedSize: Size.fromHeight(45),
+                          alignment: Alignment.centerLeft,
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          side: BorderSide(
+                            color: Color.fromARGB(255, 152, 152, 152),
+                            width: 0.5,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              'assets/images/google.png',
+                              width: 35,
+                              height: 35,
+                            ),
+                          ],
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Your onPressed logic here
+                        },
+                        style: ElevatedButton.styleFrom(
+                          fixedSize: Size.fromHeight(45),
+                          alignment: Alignment.centerLeft,
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          side: BorderSide(
+                            color: Color.fromARGB(255, 152, 152, 152),
+                            width: 0.5,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              'assets/images/x.png',
+                              width: 27,
+                              height: 27,
+                            ),
+                          ],
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignUpScreen(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          fixedSize: Size.fromHeight(45),
+                          alignment: Alignment.centerLeft,
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          side: BorderSide(
+                            color: Color.fromARGB(255, 152, 152, 152),
+                            width: 0.5,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              'assets/images/facebook.png',
+                              width: 30,
+                              height: 30,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 34),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
