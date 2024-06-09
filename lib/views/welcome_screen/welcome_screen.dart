@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nuraga_app/blocs/authentication_bloc.dart';
-import 'package:nuraga_app/constant.dart';
-import 'package:nuraga_app/views/sign_in.dart';
-import 'package:nuraga_app/views/sign_up.dart';
-import 'package:nuraga_app/utils/half_circle_clipper.dart';
+import 'package:nuraga_app/utils/color/constant.dart';
+import 'package:nuraga_app/views/sign_in/sign_in.dart';
+import 'package:nuraga_app/views/sign_up/sign_up.dart';
+import 'package:nuraga_app/utils/design/half_circle_clipper.dart';
 
 class MenuSelectScreen extends StatefulWidget {
   @override

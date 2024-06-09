@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nuraga_app/blocs/authentication_bloc.dart';
-import 'package:nuraga_app/constant.dart';
-import 'package:nuraga_app/views/sign_in.dart';
+import 'package:nuraga_app/utils/color/constant.dart';
+import 'package:nuraga_app/views/sign_up/sign_up.dart';
 
-class SignUpScreen extends StatelessWidget {
-  final TextEditingController usernameController = TextEditingController();
+class SignInScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmpasswordController =
-      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +25,7 @@ class SignUpScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 30,
-                    ),
+                    SizedBox(height: 30),
                     IconButton(
                       padding: EdgeInsets.only(left: 20),
                       icon: Icon(
@@ -46,25 +41,9 @@ class SignUpScreen extends StatelessWidget {
                       color: kPrimaryColor,
                       padding: EdgeInsets.all(24.0),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Daftar",
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontFamily: "Poppins",
-                              fontWeight: FontWeight.bold,
-                              color: kPrimaryYellow,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Container(
-                            padding: EdgeInsets.only(right: 100),
-                            child: Text(
-                              "Mohon masukkan data anda terlebih dahulu.",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
+                          SizedBox(height: 35),
+                          TopText(), // Gunakan widget TopText disini
                           SizedBox(height: 60),
                           Container(
                             decoration: BoxDecoration(
@@ -75,7 +54,7 @@ class SignUpScreen extends StatelessWidget {
                               children: [
                                 SizedBox(height: 22),
                                 Text(
-                                  "SIGN UP",
+                                  "SIGN IN",
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontFamily: "Poppins",
@@ -85,24 +64,13 @@ class SignUpScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10),
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 30),
+                                  padding: EdgeInsets.only(left: 30, right: 30),
                                   child: Column(
                                     children: [
                                       TextField(
-                                        controller: usernameController,
-                                        decoration: InputDecoration(
-                                          labelText: 'Username',
-                                          labelStyle: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 16.0),
-                                      TextField(
                                         controller: emailController,
                                         decoration: InputDecoration(
-                                          labelText: 'Email',
+                                          labelText: 'Username',
                                           labelStyle: TextStyle(
                                             fontSize: 13,
                                             color: Colors.black,
@@ -121,37 +89,26 @@ class SignUpScreen extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(height: 16.0),
-                                      TextField(
-                                        controller: confirmpasswordController,
-                                        decoration: InputDecoration(
-                                          labelText: 'Confirm Password',
-                                          labelStyle: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 16.0),
                                       Text(
                                         "Forgot Password?",
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w600),
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
                                       SizedBox(height: 16.0),
                                       ElevatedButton(
                                         onPressed: () {
                                           String email = emailController.text;
-                                          String username =
-                                              usernameController.text;
-                                          String confirmpassword =
-                                              confirmpasswordController.text;
                                           String password =
                                               passwordController.text;
                                           BlocProvider.of<AuthenticationBloc>(
-                                            context,
-                                          ).add(SignInEvent(
+                                                  context)
+                                              .add(
+                                            SignInEvent(
                                               email: email,
-                                              password: password));
+                                              password: password,
+                                            ),
+                                          );
                                         },
                                         style: ElevatedButton.styleFrom(
                                           shape: RoundedRectangleBorder(
@@ -163,7 +120,7 @@ class SignUpScreen extends StatelessWidget {
                                           backgroundColor: kPrimaryYellow,
                                         ),
                                         child: Text(
-                                          'Sign up',
+                                          'Sign In',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             color: Colors.white,
@@ -171,7 +128,7 @@ class SignUpScreen extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(height: 16.0),
-                                      Text("or sign up with"),
+                                      Text("or sign in with"),
                                       SizedBox(height: 16.0),
                                       Container(
                                         width:
@@ -182,11 +139,67 @@ class SignUpScreen extends StatelessWidget {
                                           children: [
                                             ElevatedButton(
                                               onPressed: () {
+                                                // Your onPressed logic here
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                fixedSize: Size.fromHeight(45),
+                                                alignment: Alignment.centerLeft,
+                                                backgroundColor: Colors.white,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                side: BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255, 152, 152, 152),
+                                                  width: 0.5,
+                                                ),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Image.asset(
+                                                    'assets/images/google.png',
+                                                    width: 35,
+                                                    height: 35,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                // Your onPressed logic here
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                fixedSize: Size.fromHeight(45),
+                                                alignment: Alignment.centerLeft,
+                                                backgroundColor: Colors.white,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                side: BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255, 152, 152, 152),
+                                                  width: 0.5,
+                                                ),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Image.asset(
+                                                    'assets/images/x.png',
+                                                    width: 27,
+                                                    height: 27,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        SignInScreen(),
+                                                        SignUpScreen(),
                                                   ),
                                                 );
                                               },
@@ -204,64 +217,14 @@ class SignUpScreen extends StatelessWidget {
                                                   width: 0.5,
                                                 ),
                                               ),
-                                              child: Container(
-                                                child: Image.asset(
-                                                  'assets/images/google.png',
-                                                  width: 35,
-                                                  height: 35,
-                                                ),
-                                              ),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                // Your onPressed logic here
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                fixedSize: Size.fromHeight(45),
-                                                alignment: Alignment.centerLeft,
-                                                backgroundColor: Colors.white,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                side: BorderSide(
-                                                  color: Color.fromARGB(
-                                                      255, 152, 152, 152),
-                                                  width: 0.5,
-                                                ),
-                                              ),
-                                              child: Container(
-                                                child: Image.asset(
-                                                  'assets/images/x.png',
-                                                  width: 27,
-                                                  height: 27,
-                                                ),
-                                              ),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                // Your onPressed logic here
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                fixedSize: Size.fromHeight(45),
-                                                alignment: Alignment.centerLeft,
-                                                backgroundColor: Colors.white,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                side: BorderSide(
-                                                  color: Color.fromARGB(
-                                                      255, 152, 152, 152),
-                                                  width: 0.5,
-                                                ),
-                                              ),
-                                              child: Container(
-                                                child: Image.asset(
-                                                  'assets/images/facebook.png',
-                                                  width: 30,
-                                                  height: 30,
-                                                ),
+                                              child: Row(
+                                                children: [
+                                                  Image.asset(
+                                                    'assets/images/facebook.png',
+                                                    width: 30,
+                                                    height: 30,
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ],
@@ -284,6 +247,35 @@ class SignUpScreen extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+}
+
+// Definisikan widget TopText dalam file yang sama
+class TopText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Selamat datang,",
+          style: TextStyle(
+            fontSize: 30,
+            fontFamily: "Poppins",
+            fontWeight: FontWeight.bold,
+            color: kPrimaryYellow,
+          ),
+        ),
+        SizedBox(height: 10),
+        Container(
+          padding: EdgeInsets.only(right: 100),
+          child: Text(
+            "Mohon masukan akun anda terlebih dahulu.",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ],
     );
   }
 }
