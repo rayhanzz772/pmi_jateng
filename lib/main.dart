@@ -5,6 +5,7 @@ import 'package:nuraga_app/views/splash_screen/screen/splash_screen.dart';
 import 'package:nuraga_app/views/sign_up/sign_up.dart';
 import 'package:nuraga_app/views/sign_in/sign_in.dart';
 import 'package:nuraga_app/views/home_screen/home_screen.dart';
+import 'package:nuraga_app/views/bottom_bar/bottom_bar.dart';
 import 'package:nuraga_app/views/welcome_screen/welcome_screen.dart';
 
 void main() async {
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         '/sign_up': (context) => SignUpScreen(),
         '/menu_select': (context) => MenuSelectScreen(),
         '/home': (context) => HomeScreen(),
+        '/bottom_bar': (context) => BottomBar(),
       },
     );
   }
