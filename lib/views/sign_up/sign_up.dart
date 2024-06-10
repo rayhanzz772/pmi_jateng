@@ -112,6 +112,7 @@ class SignUpScreen extends StatelessWidget {
                                       SizedBox(height: 16.0),
                                       TextField(
                                         controller: passwordController,
+                                        obscureText: true,
                                         decoration: InputDecoration(
                                           labelText: 'Password',
                                           labelStyle: TextStyle(
@@ -123,6 +124,7 @@ class SignUpScreen extends StatelessWidget {
                                       SizedBox(height: 16.0),
                                       TextField(
                                         controller: confirmpasswordController,
+                                        obscureText: true,
                                         decoration: InputDecoration(
                                           labelText: 'Confirm Password',
                                           labelStyle: TextStyle(

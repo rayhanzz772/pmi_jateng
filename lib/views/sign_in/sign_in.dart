@@ -143,6 +143,7 @@ class BoxForm extends StatelessWidget {
                 SizedBox(height: 16.0),
                 TextField(
                   controller: passwordController,
+                  obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     labelStyle: TextStyle(
