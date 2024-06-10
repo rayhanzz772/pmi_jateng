@@ -133,7 +133,7 @@ class BoxForm extends StatelessWidget {
                 TextField(
                   controller: emailController,
                   decoration: InputDecoration(
-                    labelText: 'Username',
+                    labelText: 'Email',
                     labelStyle: TextStyle(
                       fontSize: 13,
                       color: Colors.black,

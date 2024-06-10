@@ -67,8 +67,6 @@ class AuthenticationBloc
         password: event.password,
       );
       emit(SignedInState());
-      Navigator.pushReplacementNamed(
-          event.context, '/home'); // Navigate to HomeScreen
     } catch (e) {
       emit(ErrorState(message: 'Akun tidak ditemukan'));
     }
