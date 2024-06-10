@@ -7,6 +7,9 @@ import 'package:nuraga_app/views/notification_screen/notification_screen.dart';
 import 'package:nuraga_app/views/profile_screen/profile_screen.dart';
 import 'package:nuraga_app/views/search_screen/search_screen.dart';
 
+import 'package:flutter/material.dart';
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+
 class BottomBar extends StatefulWidget {
   @override
   _BottomBarState createState() => _BottomBarState();
@@ -32,7 +35,7 @@ class _BottomBarState extends State<BottomBar> {
     pages = [
       HomeScreen(),
       SearchScreen(),
-      LaporScreen(),
+      Container(), // Placeholder for "Lapor" screen
       NotificationScreen(),
       ProfileScreen()
     ];
@@ -46,42 +49,50 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (_bottomNavIndex != 0) {
-          _pageController.jumpToPage(0);
+    return Scaffold(
+      body: PageView(
+        controller: _pageController,
+        children: pages,
+        onPageChanged: (index) {
           setState(() {
-            _bottomNavIndex = 0;
+            _bottomNavIndex = index;
           });
-          return false;
-        }
-        return true;
-      },
-      child: Scaffold(
-        body: PageView(
-          controller: _pageController,
-          children: pages,
-          onPageChanged: (index) {
-            setState(() {
-              _bottomNavIndex = index;
-            });
-          },
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _pageController.jumpToPage(2); // Jump to the "Lapor" screen
+          setState(() {
+            _bottomNavIndex = 2; // Update the bottom nav index
+          });
+        },
+        backgroundColor: kPrimaryColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(80.0),
         ),
-        bottomNavigationBar: AnimatedBottomNavigationBar(
-          activeColor: kPrimaryYellow,
-          splashColor: kPrimaryGrey,
-          inactiveColor: kPrimaryWhite,
-          backgroundColor: kPrimaryColor,
-          leftCornerRadius: 0,
-          rightCornerRadius: 0,
-          gapLocation: GapLocation.none,
-          notchSmoothness: NotchSmoothness.defaultEdge,
-          icons: iconList,
-          activeIndex: _bottomNavIndex,
-          onTap: (index) {
+        child: Icon(
+          Icons.add,
+          color: kPrimaryWhite,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: AnimatedBottomNavigationBar(
+        icons: iconList,
+        activeColor: kPrimaryYellow,
+        splashColor: kPrimaryGrey,
+        inactiveColor: kPrimaryWhite,
+        backgroundColor: kPrimaryColor,
+        leftCornerRadius: 18,
+        rightCornerRadius: 18,
+        activeIndex: _bottomNavIndex,
+        gapLocation: GapLocation.none,
+        notchSmoothness: NotchSmoothness.softEdge,
+        onTap: (index) {
+          setState(() {
             _pageController.jumpToPage(index);
-          },
-        ),
+            _bottomNavIndex = index;
+          });
+        },
       ),
     );
   }
