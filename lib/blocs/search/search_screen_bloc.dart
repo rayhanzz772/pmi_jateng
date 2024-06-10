@@ -75,7 +75,7 @@ class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
     List<String> items = [
       "RSJ Diponegoro:Jawa Tengah:Semarang:assets/images/rs_diponegoro.png:Jl. Sriwijaya No.1, Pedurungan Kidul, Pedurungan, Kota Semarang, Jawa Tengah 50193:4.5:Telepon (024) 6713473",
       "RSJ Padjajaran:Jawa Tengah:Magelang:assets/images/rs_banyumanik.png:Jl. Tidar No.121, Rejomulyo, Magelang Tengah, Kota Magelang, Jawa Tengah 56116:4.0:Telepon (021) 3489134",
-      "RSJ Banyumanik:Jawa Tengah:Semarang:assets/images/rs_magelang.png:Jl. Puri Anjasmoro Blok B No. 10, Kalitirto, Kabupaten Klaten, Jawa Tengah 57463:4.2:Telepon (024) 4354313",
+      "RSJ Banyumanik:Jawa Tengah:Semarang:assets/images/rs_magelang.png:Jl. Puri Anjasmoro Blok B No. 10, Kalitirto, Kabupaten Semarang, Jawa Tengah 57463:4.2:Telepon (024) 4354313",
     ];
 
     List<String> filteredItems = [];

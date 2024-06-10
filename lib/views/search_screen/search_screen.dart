@@ -146,8 +146,8 @@ class _SearchPageState extends State<SearchPage> {
                         itemBuilder: (context, index) {
                           var item = state.items[index].split(':');
                           String hospitalName = item[0];
-                          String province = item[1];
-                          String city = item[2];
+                          // String province = item[1];
+                          // String city = item[2];
                           String imagePath = item[3];
                           String address = item[4];
                           String rating = item[5];
@@ -169,6 +169,7 @@ class _SearchPageState extends State<SearchPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          SizedBox(height: 5),
                                           Row(
                                             children: [
                                               Icon(Icons.star,
@@ -178,6 +179,7 @@ class _SearchPageState extends State<SearchPage> {
                                               Text(rating),
                                             ],
                                           ),
+                                          SizedBox(height: 5),
                                           Text(
                                             address,
                                             style: TextStyle(fontSize: 12),
