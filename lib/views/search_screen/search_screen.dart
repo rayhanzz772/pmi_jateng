@@ -149,12 +149,60 @@ class _SearchPageState extends State<SearchPage> {
                           String province = item[1];
                           String city = item[2];
                           String imagePath = item[3];
+                          String address = item[4];
+                          String rating = item[5];
+                          String no = item[6];
 
-                          return ListTile(
-                            title: Text(hospitalName),
-                            subtitle: Text('$province, $city'),
-                            leading: CircleAvatar(
-                              backgroundImage: AssetImage(imagePath),
+                          return Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: kPrimaryGrey,
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: ListTile(
+                                      contentPadding: EdgeInsets.all(8.0),
+                                      title: Text(hospitalName,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Icon(Icons.star,
+                                                  color: Colors.amber,
+                                                  size: 16.0),
+                                              SizedBox(width: 4.0),
+                                              Text(rating),
+                                            ],
+                                          ),
+                                          Text(
+                                            address,
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          Text(
+                                            no,
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                        ],
+                                      ),
+                                      leading: Container(
+                                          width: 60.0,
+                                          height: 60.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.rectangle,
+                                            borderRadius: BorderRadius.circular(
+                                                8.0), // Optional: Add rounded corners
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: AssetImage(imagePath),
+                                            ),
+                                          ))),
+                                ),
+                                Divider()
+                              ],
                             ),
                           );
                         },

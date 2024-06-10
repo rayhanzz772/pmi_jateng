@@ -72,26 +72,19 @@ class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
   }
 
   List<String> _fetchItemsByProvinceAndCity(String province, String city) {
-    // Example logic to filter items based on province and city
-    // Replace this with your actual data fetching logic
     List<String> items = [
-      "Rumah Sakit Diponegoro:Jawa Tengah:Semarang:assets/images/rs_diponegoro.png",
-      "Rumah Sakit Magelang:Jawa Tengah:Magelang:assets/images/rs_magelang.png",
-      "Rumah Sakit Banyumanik:Jawa Tengah:Semarang:assets/images/rs_banyumanik.png",
+      "RSJ Diponegoro:Jawa Tengah:Semarang:assets/images/rs_diponegoro.png:Jl. Sriwijaya No.1, Pedurungan Kidul, Pedurungan, Kota Semarang, Jawa Tengah 50193:4.5:Telepon (024) 6713473",
+      "RSJ Padjajaran:Jawa Tengah:Magelang:assets/images/rs_banyumanik.png:Jl. Tidar No.121, Rejomulyo, Magelang Tengah, Kota Magelang, Jawa Tengah 56116:4.0:Telepon (021) 3489134",
+      "RSJ Banyumanik:Jawa Tengah:Semarang:assets/images/rs_magelang.png:Jl. Puri Anjasmoro Blok B No. 10, Kalitirto, Kabupaten Klaten, Jawa Tengah 57463:4.2:Telepon (024) 4354313",
     ];
+
     List<String> filteredItems = [];
 
     for (String item in items) {
       List<String> parts = item.split(':');
-      if (parts.length == 4 && parts[1] == province && parts[2] == city) {
-        // Create an object to represent each item
-        String hospitalName = parts[0];
-        String province = parts[1];
-        String city = parts[2];
-        String imagePath = parts[3];
-
-        // Add item information to the list
-        String formattedItem = '$hospitalName:$province:$city:$imagePath';
+      if (parts.length == 7 && parts[1] == province && parts[2] == city) {
+        String formattedItem =
+            '${parts[0]}:${parts[1]}:${parts[2]}:${parts[3]}:${parts[4]}:${parts[5]}:${parts[6]}';
         filteredItems.add(formattedItem);
       }
     }

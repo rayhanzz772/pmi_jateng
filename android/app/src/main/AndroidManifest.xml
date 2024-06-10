@@ -2,7 +2,7 @@
     <application
         android:label="NURAGA"
         android:name="${applicationName}"
-        android:icon="@mipmap/nuraga_icon"
+        android:icon="@mipmap/ic_launcher"
         android:background="#1F319D">
         <activity
             android:name=".MainActivity"

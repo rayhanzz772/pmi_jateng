@@ -1,5 +1,5 @@
 name: nuraga_app
-description: "A new Flutter project."
+description: "NURAGA"
 publish_to: "none"
 version: 0.1.0
 
@@ -22,6 +22,13 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  iamge_path: "assets/images/uraga.png"
+  adaptive_icon_foreground: "assets/images/logo_nuraga.png"
+  adaptive_icon_background: "#1F319D"
 
 flutter:
   uses-material-design: true

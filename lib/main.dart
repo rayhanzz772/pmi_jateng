@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Splash Screen with BLoC',
+      title: 'NURAGA',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: 'Poppins',
