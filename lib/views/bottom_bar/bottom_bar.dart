@@ -7,9 +7,6 @@ import 'package:nuraga_app/views/notification_screen/notification_screen.dart';
 import 'package:nuraga_app/views/profile_screen/profile_screen.dart';
 import 'package:nuraga_app/views/search_screen/search_screen.dart';
 
-import 'package:flutter/material.dart';
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-
 class BottomBar extends StatefulWidget {
   @override
   _BottomBarState createState() => _BottomBarState();
@@ -23,7 +20,6 @@ class _BottomBarState extends State<BottomBar> {
   final List<IconData> iconList = [
     Icons.home_filled,
     Icons.search,
-    Icons.add,
     Icons.notifications,
     Icons.person,
   ];
@@ -35,9 +31,8 @@ class _BottomBarState extends State<BottomBar> {
     pages = [
       HomeScreen(),
       SearchScreen(),
-      Container(), // Placeholder for "Lapor" screen
       NotificationScreen(),
-      ProfileScreen()
+      ProfileScreen(),
     ];
   }
 
@@ -50,6 +45,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: PageView(
         controller: _pageController,
         children: pages,
@@ -61,10 +57,10 @@ class _BottomBarState extends State<BottomBar> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _pageController.jumpToPage(2); // Jump to the "Lapor" screen
-          setState(() {
-            _bottomNavIndex = 2; // Update the bottom nav index
-          });
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LaporScreen()),
+          );
         },
         backgroundColor: kPrimaryColor,
         shape: RoundedRectangleBorder(
@@ -85,7 +81,7 @@ class _BottomBarState extends State<BottomBar> {
         leftCornerRadius: 18,
         rightCornerRadius: 18,
         activeIndex: _bottomNavIndex,
-        gapLocation: GapLocation.none,
+        gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.softEdge,
         onTap: (index) {
           setState(() {
