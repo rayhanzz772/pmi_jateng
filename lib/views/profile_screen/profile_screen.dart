@@ -1,13 +1,34 @@
 // Profile_screen.dart
 import 'package:flutter/material.dart';
+import 'package:nuraga_app/utils/color/constant.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile Screen'),
-      ),
+          backgroundColor: kPrimaryColor,
+          automaticallyImplyLeading: false,
+          title: Row(
+            children: [
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.person,
+                    color: kPrimaryWhite,
+                  )),
+              SizedBox(
+                width: 8,
+              ),
+              Text(
+                'Profile',
+                style: TextStyle(
+                    fontFamily: 'poppins',
+                    fontWeight: FontWeight.bold,
+                    color: kPrimaryWhite),
+              )
+            ],
+          )),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,

@@ -36,13 +36,13 @@ class TopContainer extends StatelessWidget {
         children: [
           Container(
             height: MediaQuery.of(context).size.height * 0.23,
-            padding: EdgeInsets.only(top: 45, left: 10, right: 10),
+            padding: EdgeInsets.only(top: 45, left: 20, right: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.75,
+                  width: MediaQuery.of(context).size.width * 0.65,
                   padding: EdgeInsets.only(top: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,7 +208,7 @@ class BottomContainer extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 12, left: 14, bottom: 12),
+                    padding: EdgeInsets.only(top: 12, left: 12, bottom: 12),
                     decoration: BoxDecoration(
                         color: kPrimaryWhite,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
