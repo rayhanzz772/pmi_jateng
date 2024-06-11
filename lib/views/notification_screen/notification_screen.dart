@@ -7,6 +7,7 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kPrimaryWhite,
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         automaticallyImplyLeading: false, // This removes the default back arrow

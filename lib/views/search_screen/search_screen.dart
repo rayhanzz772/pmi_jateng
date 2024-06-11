@@ -77,6 +77,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kPrimaryWhite,
       body: Padding(
         padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
         child: Form(

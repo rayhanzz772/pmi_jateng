@@ -1,10 +1,12 @@
 // Lapor_screen.dart
 import 'package:flutter/material.dart';
+import 'package:nuraga_app/utils/color/constant.dart';
 
 class LaporScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kPrimaryWhite,
       appBar: AppBar(
         title: Text('Lapor Screen'),
       ),
