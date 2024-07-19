@@ -9,13 +9,22 @@
         "client_info": {
             "mobilesdk_app_id": "1:445860739698:android:d2a245064e83ad790020eb",
             "android_client_info": {
-                "package_name": "com.example.nuraga_app"
+                "package_name": "com.nuraga.com"
             }
         },
         "oauth_client": [{
-            "client_id": "445860739698-2dge68r9b639k3dcsb33ofo94cgkq73s.apps.googleusercontent.com",
-            "client_type": 3
-        }],
+                "client_id": "445860739698-jmaebc8gh20r3e4hrfh0v3rq4er54c6b.apps.googleusercontent.com",
+                "client_type": 1,
+                "android_info": {
+                    "package_name": "com.nuraga.com",
+                    "certificate_hash": "57e6f37f73285a7be054d45036d28115461769d5"
+                }
+            },
+            {
+                "client_id": "445860739698-2dge68r9b639k3dcsb33ofo94cgkq73s.apps.googleusercontent.com",
+                "client_type": 3
+            }
+        ],
         "api_key": [{
             "current_key": "AIzaSyBGUWDcFy-GaFmlUuA3zH4pJByDxGpkghw"
         }],

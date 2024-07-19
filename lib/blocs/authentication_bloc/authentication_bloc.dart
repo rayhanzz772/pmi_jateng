@@ -103,7 +103,7 @@ class AuthenticationBloc
       await _firebaseAuth.signInWithCredential(credential);
       emit(SignedInState());
     } catch (e) {
-      emit(ErrorState(message: 'Sign in with Google failed'));
+      emit(ErrorState(message: e.toString()));
     }
   }
 }
