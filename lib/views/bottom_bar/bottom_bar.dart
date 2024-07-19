@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:nuraga_app/utils/color/constant.dart';
-import 'package:nuraga_app/views/lapor_screen/lapor_screen.dart';
-import 'package:nuraga_app/blocs/bottom_bar/bottom_bar_bloc.dart';
+import 'package:pmi_jateng/utils/color/constant.dart';
+import 'package:pmi_jateng/views/lapor_screen/lapor_screen.dart';
+import 'package:pmi_jateng/blocs/bottom_bar/bottom_bar_bloc.dart';
 
 class BottomBar extends StatefulWidget {
   @override

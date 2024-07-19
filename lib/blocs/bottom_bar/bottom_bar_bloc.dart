@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nuraga_app/utils/color/constant.dart';
-import 'package:nuraga_app/views/home_screen/home_screen.dart';
-import 'package:nuraga_app/views/search_screen/search_screen.dart';
-import 'package:nuraga_app/views/notification_screen/notification_screen.dart';
-import 'package:nuraga_app/views/profile_screen/profile_screen.dart';
+import 'package:pmi_jateng/utils/color/constant.dart';
+import 'package:pmi_jateng/views/home_screen/home_screen.dart';
+import 'package:pmi_jateng/views/search_screen/search_screen.dart';
+import 'package:pmi_jateng/views/notification_screen/notification_screen.dart';
+import 'package:pmi_jateng/views/profile_screen/profile_screen.dart';
 
 List<Widget> initializePages() {
   return [

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nuraga_app/blocs/search/search_screen_bloc.dart';
-import 'package:nuraga_app/utils/color/constant.dart';
+import 'package:pmi_jateng/blocs/search/search_screen_bloc.dart';
+import 'package:pmi_jateng/utils/color/constant.dart';
 
 class SearchScreen extends StatelessWidget {
   @override

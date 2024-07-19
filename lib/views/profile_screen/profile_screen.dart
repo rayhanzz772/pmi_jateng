@@ -1,6 +1,6 @@
 // Profile_screen.dart
 import 'package:flutter/material.dart';
-import 'package:nuraga_app/utils/color/constant.dart';
+import 'package:pmi_jateng/utils/color/constant.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override

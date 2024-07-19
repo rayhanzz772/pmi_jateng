@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nuraga_app/blocs/notification/notification_bloc.dart';
-import 'package:nuraga_app/utils/color/constant.dart';
+import 'package:pmi_jateng/blocs/notification/notification_bloc.dart';
+import 'package:pmi_jateng/utils/color/constant.dart';
 
 class NotificationScreen extends StatelessWidget {
   @override
