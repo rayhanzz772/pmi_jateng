@@ -16,7 +16,7 @@ class SignUpScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => AuthenticationBloc(),
       child: Scaffold(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: kPrimaryWhite,
         body: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
             if (state is LoadingState) {
@@ -28,44 +28,36 @@ class SignUpScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 30,
-                    ),
-                    IconButton(
-                      padding: EdgeInsets.only(left: 20),
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                        size: 24,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+                    SizedBox(height: 30),
+                    Row(
+                      children: [
+                        IconButton(
+                          padding: EdgeInsets.only(left: 20),
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: kPrimaryColor,
+                            size: 24,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        SizedBox(
+                            width:
+                                10), // Add some spacing between the icon and the image
+                        Image.asset(
+                          'assets/images/logo_PMI.png',
+                          height: 40, // Specify the height of the image
+                        ),
+                      ],
                     ),
                     Container(
-                      color: kPrimaryColor,
+                      color: kPrimaryWhite,
                       padding: EdgeInsets.all(24.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Daftar",
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontFamily: "Poppins",
-                              fontWeight: FontWeight.bold,
-                              color: kPrimaryYellow,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Container(
-                            padding: EdgeInsets.only(right: 100),
-                            child: Text(
-                              "Mohon masukkan data anda terlebih dahulu.",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          SizedBox(height: 60),
+                          SizedBox(height: 30),
                           Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -162,7 +154,7 @@ class SignUpScreen extends StatelessWidget {
                                           ),
                                           minimumSize:
                                               Size(double.infinity, 48),
-                                          backgroundColor: kPrimaryYellow,
+                                          backgroundColor: kPrimaryColor,
                                         ),
                                         child: Text(
                                           'Sign up',

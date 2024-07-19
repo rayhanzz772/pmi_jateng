@@ -13,7 +13,7 @@ class SignInScreen extends StatelessWidget {
     return BlocProvider(
         create: (context) => AuthenticationBloc(),
         child: Scaffold(
-          backgroundColor: kPrimaryColor,
+          backgroundColor: kPrimaryWhite,
           body: BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
               if (state is SignedInState) {
@@ -40,19 +40,30 @@ class SignInScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 30),
-                        IconButton(
-                          padding: EdgeInsets.only(left: 20),
-                          icon: Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
+                        Row(
+                          children: [
+                            IconButton(
+                              padding: EdgeInsets.only(left: 20),
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: kPrimaryColor,
+                                size: 24,
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            SizedBox(
+                                width:
+                                    10), // Add some spacing between the icon and the image
+                            Image.asset(
+                              'assets/images/logo_PMI.png',
+                              height: 40, // Specify the height of the image
+                            ),
+                          ],
                         ),
                         Container(
-                          color: kPrimaryColor,
+                          color: kPrimaryWhite,
                           padding: EdgeInsets.all(24.0),
                           child: Column(
                             children: [
@@ -81,22 +92,9 @@ class TopText extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Selamat datang,",
-          style: TextStyle(
-            fontSize: 30,
-            fontFamily: "Poppins",
-            fontWeight: FontWeight.bold,
-            color: kPrimaryYellow,
-          ),
-        ),
         SizedBox(height: 10),
         Container(
           padding: EdgeInsets.only(right: 100),
-          child: Text(
-            "Mohon masukan akun anda terlebih dahulu.",
-            style: TextStyle(color: Colors.white),
-          ),
         ),
       ],
     );
@@ -177,7 +175,7 @@ class BoxForm extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     minimumSize: Size(double.infinity, 48),
-                    backgroundColor: kPrimaryYellow,
+                    backgroundColor: kPrimaryColor,
                   ),
                   child: Text(
                     'Sign In',
