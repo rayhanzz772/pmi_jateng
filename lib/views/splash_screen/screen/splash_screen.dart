@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         fit: BoxFit.cover),
                   )),
               SizedBox(
-                width: 10,
+                width: 20,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,27 +48,27 @@ class _SplashScreenState extends State<SplashScreen> {
                     'Palang',
                     style: TextStyle(
                       color: kPrimaryBlack,
-                      fontSize: 20.0,
+                      fontSize: wp * 0.06,
                       fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   Text(
                     'Merah',
                     style: TextStyle(
                       color: kPrimaryBlack,
-                      fontSize: 20.0,
+                      fontSize: wp * 0.06,
                       fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   Text(
                     'Indonesia',
                     style: TextStyle(
                       color: kPrimaryBlack,
-                      fontSize: 20.0,
+                      fontSize: wp * 0.06,
                       fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ],

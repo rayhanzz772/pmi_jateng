@@ -23,7 +23,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
               ClipPath(
                 clipper: WaveClipper(offset: 0),
                 child: Container(
-                  height: hp * 0.4,
+                  height: hp * 0.39,
                   decoration: BoxDecoration(
                     color: kPrimaryColor,
                   ),
@@ -41,7 +41,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
               ClipPath(
                 clipper: WaveClipperReversedFromRight(offset: 0.57),
                 child: Container(
-                  height: hp * 0.48,
+                  height: hp * 0.479,
                   decoration: BoxDecoration(
                     color: kPrimaryColor.withOpacity(0.2),
                   ),
@@ -59,7 +59,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                         'PUSDIKLAT',
                         style: TextStyle(
                             fontFamily: 'poppins',
-                            fontSize: 30,
+                            fontSize: wp * 0.1,
                             fontWeight: FontWeight.w600,
                             color: kPrimaryWhite),
                       ),
@@ -67,7 +67,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                         'Provinsi Jawa Tengah',
                         style: TextStyle(
                             fontFamily: 'poppins',
-                            fontSize: 16,
+                            fontSize: wp * 0.05,
                             fontWeight: FontWeight.w100,
                             color: kPrimaryWhite),
                       ),
@@ -96,7 +96,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                                 'Palang',
                                 style: TextStyle(
                                   color: kPrimaryWhite,
-                                  fontSize: 18.0,
+                                  fontSize: wp * 0.045,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w800,
                                 ),
@@ -105,7 +105,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                                 'Merah',
                                 style: TextStyle(
                                   color: kPrimaryWhite,
-                                  fontSize: 18.0,
+                                  fontSize: wp * 0.045,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w800,
                                 ),
@@ -114,7 +114,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                                 'Indonesia',
                                 style: TextStyle(
                                   color: kPrimaryWhite,
-                                  fontSize: 18.0,
+                                  fontSize: wp * 0.045,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w800,
                                 ),
@@ -131,8 +131,8 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
           ),
           Expanded(
             child: Container(
-              padding:
-                  EdgeInsets.only(right: 40, left: 40, top: 10, bottom: 70),
+              padding: EdgeInsets.only(
+                  right: 40, left: 40, top: 10, bottom: hp * 0.1),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -170,14 +170,14 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                             'Sign Up',
                             style: TextStyle(
                                 fontFamily: 'poppins',
-                                fontSize: 14,
+                                fontSize: wp * 0.04,
                                 fontWeight: FontWeight.w700,
                                 color: kPrimaryWhite),
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: 6,
+                        height: 9,
                       ),
                       Container(
                         child: Row(
@@ -188,7 +188,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                               'Sudah punya akun?',
                               style: TextStyle(
                                   fontFamily: 'poppins',
-                                  fontSize: 12,
+                                  fontSize: wp * 0.035,
                                   fontWeight: FontWeight.w400),
                             ),
                             GestureDetector(
@@ -203,7 +203,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                                 ' Sign In',
                                 style: TextStyle(
                                     fontFamily: 'poppins',
-                                    fontSize: 12,
+                                    fontSize: wp * 0.035,
                                     color: kPrimaryColor,
                                     fontWeight: FontWeight.w700),
                               ),
