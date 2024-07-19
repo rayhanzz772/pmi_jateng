@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Text(
                     'Palang',
                     style: TextStyle(
-                      color: kPrimaryBlack,
+                      color: kPrimaryColor,
                       fontSize: 20.0,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w800,
@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Text(
                     'Merah',
                     style: TextStyle(
-                      color: kPrimaryBlack,
+                      color: kPrimaryColor,
                       fontSize: 20.0,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w800,
@@ -65,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Text(
                     'Indonesia',
                     style: TextStyle(
-                      color: kPrimaryBlack,
+                      color: kPrimaryColor,
                       fontSize: 20.0,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w800,
