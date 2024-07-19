@@ -195,7 +195,9 @@ class BoxForm extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          // Your onPressed logic here
+                          context
+                              .read<AuthenticationBloc>()
+                              .add(GoogleSignInEvent());
                         },
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size.fromHeight(45),
