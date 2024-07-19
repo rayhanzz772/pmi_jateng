@@ -3,7 +3,6 @@ import 'package:pmi_jateng/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/views/sign_in/sign_in.dart';
 import 'package:pmi_jateng/views/sign_up/sign_up.dart';
-import 'package:pmi_jateng/utils/design/half_circle_clipper.dart';
 
 class MenuSelectScreen extends StatefulWidget {
   @override
@@ -13,62 +12,114 @@ class MenuSelectScreen extends StatefulWidget {
 class _MenuSelectScreenState extends State<MenuSelectScreen> {
   @override
   Widget build(BuildContext context) {
+    final hp = MediaQuery.of(context).size.height;
+    final wp = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: kPrimaryWhite,
-      body: Container(
-        child: Column(
-          children: [
-            Container(
-              child: ClipPath(
-                clipper: HalfCircleClipper(),
+      body: Column(
+        children: [
+          Stack(
+            children: [
+              ClipPath(
+                clipper: WaveClipper(offset: 0),
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  padding: EdgeInsets.only(right: 20, left: 20),
+                  height: hp * 0.4,
                   decoration: BoxDecoration(
                     color: kPrimaryColor,
                   ),
+                ),
+              ),
+              ClipPath(
+                clipper: WaveClipper(offset: 0.5),
+                child: Container(
+                  height: hp * 0.45,
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor.withOpacity(0.6),
+                  ),
+                ),
+              ),
+              ClipPath(
+                clipper: WaveClipperReversedFromRight(offset: 0.57),
+                child: Container(
+                  height: hp * 0.48,
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor.withOpacity(0.2),
+                  ),
+                ),
+              ),
+              Container(
+                height: hp * 0.42,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        height: 100,
-                      ),
                       Text(
-                        'NURAGA',
+                        'PUSDIKLAT',
                         style: TextStyle(
                             fontFamily: 'poppins',
-                            fontSize: 62,
-                            fontWeight: FontWeight.w800,
-                            color: kPrimaryYellow),
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600,
+                            color: kPrimaryWhite),
                       ),
-                      Column(
+                      Text(
+                        'Provinsi Jawa Tengah',
+                        style: TextStyle(
+                            fontFamily: 'poppins',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w100,
+                            color: kPrimaryWhite),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(top: 6),
-                            width: MediaQuery.of(context).size.width,
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              'Layanan Pengaduan Online Rakyat',
-                              style: TextStyle(
-                                fontFamily: 'poppins',
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                                color: kPrimaryWhite,
-                              ),
-                            ),
+                              height: hp * 0.10,
+                              width: wp * 0.27,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage('assets/images/logo.png'),
+                                    fit: BoxFit.cover),
+                              )),
+                          SizedBox(
+                            width: 5,
                           ),
-                          Container(
-                            margin: EdgeInsets.only(top: 6),
-                            width: MediaQuery.of(context).size.width,
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              'Sampaikan laporan Anda bila terjadi sesuatu yang meresahkan.',
-                              style: TextStyle(
-                                  fontFamily: 'poppins',
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w400,
-                                  color: kPrimaryWhite),
-                            ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Palang',
+                                style: TextStyle(
+                                  color: kPrimaryWhite,
+                                  fontSize: 18.0,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              Text(
+                                'Merah',
+                                style: TextStyle(
+                                  color: kPrimaryWhite,
+                                  fontSize: 18.0,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              Text(
+                                'Indonesia',
+                                style: TextStyle(
+                                  color: kPrimaryWhite,
+                                  fontSize: 18.0,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -76,18 +127,31 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                   ),
                 ),
               ),
-            ),
-            Stack(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.38,
-                  padding: EdgeInsets.only(right: 40, left: 40, top: 180),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+            ],
+          ),
+          Expanded(
+            child: Container(
+              padding:
+                  EdgeInsets.only(right: 40, left: 40, top: 10, bottom: 70),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 9),
+                    // child: Text(
+                    //   'Selamat Datang,',
+                    //   style: TextStyle(
+                    //       fontFamily: 'Poppins',
+                    //       fontWeight: FontWeight.bold,
+                    //       fontSize: 18),
+                    // ),
+                  ),
+                  Column(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.063,
+                        width: wp,
+                        height: hp * 0.063,
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
@@ -97,7 +161,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: kPrimaryYellow,
+                            backgroundColor: kPrimaryColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -140,7 +204,7 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                                 style: TextStyle(
                                     fontFamily: 'poppins',
                                     fontSize: 12,
-                                    color: kPrimaryYellow,
+                                    color: kPrimaryColor,
                                     fontWeight: FontWeight.w700),
                               ),
                             ),
@@ -149,32 +213,80 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                       )
                     ],
                   ),
-                ),
-              ],
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.12,
-              width: MediaQuery.of(context).size.width,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: -60, // Menggeser ke kiri sejauh 50
-                    top: MediaQuery.of(context).size.height * 0.06 - 40,
-                    child: Container(
-                      width: 150,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: kPrimaryGrey,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
+  }
+}
+
+class WaveClipper extends CustomClipper<Path> {
+  final double offset;
+
+  WaveClipper({this.offset = 0});
+
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0, size.height);
+
+    final firstControlPoint = Offset(size.width / 4, size.height - 30 - offset);
+    final firstEndPoint = Offset(size.width / 2, size.height - 20 + offset);
+    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
+        firstEndPoint.dx, firstEndPoint.dy);
+
+    final secondControlPoint =
+        Offset(size.width * 3 / 4, size.height - 10 - offset);
+    final secondEndPoint = Offset(size.width, size.height - 50 + offset);
+    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
+        secondEndPoint.dx, secondEndPoint.dy);
+
+    path.lineTo(size.width, 0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
+  }
+}
+
+class WaveClipperReversedFromRight extends CustomClipper<Path> {
+  final double offset;
+
+  WaveClipperReversedFromRight({this.offset = 0});
+
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.moveTo(size.width, 0);
+    path.lineTo(size.width, size.height);
+
+    final firstControlPoint =
+        Offset(size.width * 3 / 4, size.height - 30 - offset);
+    final firstEndPoint = Offset(size.width / 2, size.height - 20 + offset);
+    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
+        firstEndPoint.dx, firstEndPoint.dy);
+
+    final secondControlPoint =
+        Offset(size.width / 4, size.height - 10 - offset);
+    final secondEndPoint = Offset(0, size.height - 50 + offset);
+    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
+        secondEndPoint.dx, secondEndPoint.dy);
+
+    path.lineTo(0, 0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
   }
 }
