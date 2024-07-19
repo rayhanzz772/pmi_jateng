@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pmi_jateng/blocs/splash_screen/splash_bloc.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -14,24 +15,65 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _bloc = SplashBloc();
-    _bloc.initDelay(
-        context); // Memanggil metode initDelay untuk menunda navigasi
+    _bloc.initDelay(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    final hp = MediaQuery.of(context).size.height;
+    final wp = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
-        color: Color(0xFF1F319D),
+        color: kPrimaryWhite,
         child: Center(
-          child: Text(
-            'NURAGA',
-            style: TextStyle(
-              color: kPrimaryYellow,
-              fontSize: 50.0,
-              fontFamily: 'poppins',
-              fontWeight: FontWeight.w800,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  height: hp * 0.15,
+                  width: wp * 0.27,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/logo.png'),
+                        fit: BoxFit.cover),
+                  )),
+              SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Palang',
+                    style: TextStyle(
+                      color: kPrimaryBlack,
+                      fontSize: 20.0,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Text(
+                    'Merah',
+                    style: TextStyle(
+                      color: kPrimaryBlack,
+                      fontSize: 20.0,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Text(
+                    'Indonesia',
+                    style: TextStyle(
+                      color: kPrimaryBlack,
+                      fontSize: 20.0,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
