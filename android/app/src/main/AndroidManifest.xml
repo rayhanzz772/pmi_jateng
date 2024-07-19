@@ -1,6 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.nuraga.com">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.pmi.com">
     <application
-        android:label="NURAGA"
+        android:label="PMI"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:background="#1F319D">

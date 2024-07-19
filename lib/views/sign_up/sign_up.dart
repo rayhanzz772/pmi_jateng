@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nuraga_app/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:nuraga_app/utils/color/constant.dart';
-import 'package:nuraga_app/views/sign_in/sign_in.dart';
+import 'package:pmi_jateng/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:pmi_jateng/utils/color/constant.dart';
+import 'package:pmi_jateng/views/sign_in/sign_in.dart';
 
 class SignUpScreen extends StatelessWidget {
   final TextEditingController usernameController = TextEditingController();
