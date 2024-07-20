@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pmi_jateng/firebase_options.dart';
+import 'package:pmi_jateng/views/lapor_screen/lapor_screen.dart';
+import 'package:pmi_jateng/views/notification_screen/notification_screen.dart';
 import 'package:pmi_jateng/views/splash_screen/screen/splash_screen.dart';
 import 'package:pmi_jateng/views/sign_up/sign_up.dart';
 import 'package:pmi_jateng/views/sign_in/sign_in.dart';
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
+        '/': (context) => LaporScreen(),
         '/sign_in': (context) => SignInScreen(),
         '/sign_up': (context) => SignUpScreen(),
         '/menu_select': (context) => MenuSelectScreen(),
