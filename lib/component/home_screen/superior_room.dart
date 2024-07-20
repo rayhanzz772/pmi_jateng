@@ -228,29 +228,6 @@ class _SuperiorRoomState extends State<SuperiorRoom> {
                       ),
                     ),
                     SizedBox(height: 15),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailPage(
-                              image: imgList[_current],
-                              text: textList[_current],
-                            ),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        iconColor: kPrimaryMaroon,
-                      ),
-                      child: Text(
-                        'View More',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: wp * 0.03,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
