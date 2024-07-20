@@ -1,332 +1,542 @@
-// home_screen.dart
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kPrimaryWhite,
-      body: Container(
-        child: Column(
+    final hp = MediaQuery.of(context).size.height;
+    final wp = MediaQuery.of(context).size.width;
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: kPrimaryWhite,
+        body: Stack(
           children: [
-            TopContainer(),
-            BottomContainer(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// ini untuk bagian atas pada homescreen
-class TopContainer extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.35,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/background_home.png'),
-              fit: BoxFit.cover),
-          borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(35),
-              bottomLeft: Radius.circular(35))),
-      child: Column(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.23,
-            padding: EdgeInsets.only(top: 45, left: 20, right: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.65,
-                  padding: EdgeInsets.only(top: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Hallo, Rayhan',
-                        style: TextStyle(
-                            fontFamily: 'poppins',
-                            fontSize: 17,
-                            fontWeight: FontWeight.w700,
-                            color: kPrimaryWhite),
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Text(
-                        'Apakah anda ingin melaporkan sesuatu hari ini',
-                        style: TextStyle(
-                            fontFamily: 'poppins',
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                            color: kPrimaryWhite),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.14,
-                  height: MediaQuery.of(context).size.height * 0.23,
-                  child: Align(
-                    alignment: Alignment.topLeft, // Align image to top start
-                    child: Container(
-                      width: 46, // Custom width for the circle
-                      height: 46,
-                      // Ensure it's a square for a perfect circle
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: kPrimaryWhite, width: 3),
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/image_profile.png'),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.12,
-            padding: EdgeInsets.only(right: 50, left: 50),
-            child: Container(
+            // Konten di bawah top bar
+            SingleChildScrollView(
               child: Column(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.02,
-                    margin: EdgeInsets.only(left: 15, right: 15),
+                    height: hp * 0.75,
+                    width: wp,
                     decoration: BoxDecoration(
-                        color: Color(0xFFC7C7C7),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30))),
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/landing_page.png'),
+                            fit: BoxFit.cover)),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: wp * 0.05, top: hp * 0.09),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Find your ',
+                                  style: TextStyle(
+                                      fontFamily: 'JosefinSans',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: wp * 0.12,
+                                      color: kPrimaryWhite),
+                                ),
+                                Text('ideal room',
+                                    style: TextStyle(
+                                        fontFamily: 'josefinsans',
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: wp * 0.12,
+                                        color: kPrimaryWhite)),
+                                Container(
+                                  height: hp * 0.03,
+                                  width: wp * 0.25,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/Vector.png'),
+                                          fit: BoxFit.contain)),
+                                )
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: hp * 0.15,
+                                width: wp * 0.35,
+                                padding: EdgeInsets.all(3),
+                                margin: EdgeInsets.only(
+                                    right: wp * 0.05,
+                                    top: hp * 0.09,
+                                    left: wp * 0.05),
+                                decoration: BoxDecoration(
+                                    color: kPrimaryMaroon,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20))),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: wp,
+                                      height: hp * 0.09,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(17)),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/images/our_room.jpg'),
+                                              fit: BoxFit.cover)),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(hp * 0.01),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Our rooms',
+                                            style: TextStyle(
+                                                fontFamily: 'poppins',
+                                                fontSize: wp * 0.037,
+                                                fontWeight: FontWeight.w600,
+                                                color: kPrimaryWhite),
+                                          ),
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                          Container(
+                                            width: wp * 0.07,
+                                            height: hp * 0.03,
+                                            decoration: BoxDecoration(
+                                              color: kPrimaryWhite,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(6)),
+                                              shape: BoxShape.rectangle,
+                                            ),
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.arrow_forward,
+                                                color: kPrimaryMaroon,
+                                                size: wp * 0.05,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: hp * 0.15,
+                                width: wp * 0.35,
+                                padding: EdgeInsets.all(3),
+                                margin: EdgeInsets.only(
+                                    right: wp * 0.05, top: hp * 0.09),
+                                decoration: BoxDecoration(
+                                    color: kPrimaryMaroon,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20))),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: wp,
+                                      height: hp * 0.09,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(17)),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/images/our_room.jpg'),
+                                              fit: BoxFit.cover)),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(hp * 0.01),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Our rooms',
+                                            style: TextStyle(
+                                                fontFamily: 'poppins',
+                                                fontSize: wp * 0.037,
+                                                fontWeight: FontWeight.w600,
+                                                color: kPrimaryWhite),
+                                          ),
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                          Container(
+                                            width: wp * 0.07,
+                                            height: hp * 0.03,
+                                            decoration: BoxDecoration(
+                                              color: kPrimaryWhite,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(6)),
+                                              shape: BoxShape.rectangle,
+                                            ),
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.arrow_forward,
+                                                color: kPrimaryMaroon,
+                                                size: wp * 0.05,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.1,
+                    margin: EdgeInsets.all(7),
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    height: hp * 0.2,
                     decoration: BoxDecoration(
-                        color: kPrimaryYellow,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15))),
+                      color: kPrimaryMaroon,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(5),
+                      width: wp,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Book now your ideal room',
+                            style: TextStyle(
+                                fontFamily: 'poppins',
+                                fontSize: wp * 0.04,
+                                fontWeight: FontWeight.w600,
+                                color: kPrimaryWhite),
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                Container(
+                                  color: kPrimaryMaroon,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Arrival date',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: wp * 0.03,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: 'poppins'),
+                                          ),
+                                          SizedBox(height: 4),
+                                          Text(
+                                            '18/07/2024',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          SizedBox(height: 4),
+                                          Container(
+                                            width:
+                                                100, // Width of the underline
+                                            height:
+                                                1, // Height of the underline
+                                            color: Colors
+                                                .white, // Color of the underline
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: kPrimaryMaroon,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Icon(
+                                          Icons.calendar_today,
+                                          color: Colors.white,
+                                          size: 24,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: hp * 0.4,
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Container(
-                          padding: EdgeInsets.only(left: 10, top: 10),
-                          width: MediaQuery.of(context).size.width * 0.5,
+                          width: wp * 0.4,
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              border: Border(
+                            top: BorderSide(color: kPrimaryMaroon, width: 2),
+                            bottom: BorderSide(color: kPrimaryMaroon, width: 2),
+                          )),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Jumlah Laporan :',
-                                style: TextStyle(
-                                    fontFamily: 'poppins',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xFF000000)),
+                              Container(
+                                height: hp * 0.13,
                               ),
-                              Text(
-                                '5',
-                                style: TextStyle(
-                                    fontFamily: 'poppins',
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xFF000000)),
+                              Container(
+                                height: hp * 0.13,
+                              ),
+                              Container(
+                                height: hp * 0.12,
                               ),
                             ],
                           ),
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.2,
-                          height: MediaQuery.of(context).size.height * 0.07,
+                          width: wp * 0.06,
                           decoration: BoxDecoration(
-                              image: DecorationImage(
-                            image: AssetImage(
-                              'assets/images/statistic.png',
-                            ),
-                            fit: BoxFit.cover,
-                          )),
+                              border: Border(
+                                  top: BorderSide(
+                                      color: kPrimaryMaroon, width: 2),
+                                  bottom: BorderSide(
+                                      color: kPrimaryMaroon, width: 2))),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      margin:
+                                          EdgeInsets.only(bottom: hp * 0.01),
+                                      width: 2,
+                                      height: hp * 0.09,
+                                      color:
+                                          kPrimaryMaroon, // Color of the top line
+                                    ),
+                                    RotatedBox(
+                                      quarterTurns: 5,
+                                      child: Text(
+                                        'ROOMS',
+                                        style: TextStyle(
+                                          color: kPrimaryMaroon,
+                                          fontSize: wp * 0.03,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: hp * 0.01),
+                                      width: 2,
+                                      height: hp * 0.236,
+                                      color:
+                                          kPrimaryMaroon, // Color of the bottom line
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+                        Container(
+                          width: wp * 0.54,
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  top: BorderSide(
+                                      color: kPrimaryMaroon, width: 2),
+                                  bottom: BorderSide(
+                                      color: kPrimaryMaroon, width: 2))),
+                        )
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ini untuk bagian bawah homescreen
-class BottomContainer extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 20, right: 20, top: 15),
-      height: MediaQuery.of(context).size.height * 0.57,
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Apa yang sedang terjadi ?',
-            style: TextStyle(
-                fontFamily: 'poppins',
-                fontWeight: FontWeight.w700,
-                fontSize: 14),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              padding: EdgeInsets.all(12),
-              height: MediaQuery.of(context).size.height * 0.17,
-              decoration: BoxDecoration(
-                color: kPrimaryYellow,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black
-                        .withOpacity(0.2), // Shadow color with opacity
-                    spreadRadius: 2, // Spread radius
-                    blurRadius: 4, // Blur radius
-                    offset: Offset(0, 3), // Shadow position
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(top: 12, left: 12, bottom: 12),
+            // Top bar yang tetap di atas
+            Positioned(
+              top: 40,
+              left: 0,
+              right: 0,
+              child: Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                    margin: EdgeInsets.only(
+                        right: 16,
+                        left: 16,
+                        top: hp * 0.01), // Margin di setiap sudut
+                    padding: EdgeInsets.symmetric(horizontal: 3.0),
                     decoration: BoxDecoration(
-                        color: kPrimaryWhite,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    height: MediaQuery.of(context).size.height,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage('assets/images/buat_laporan.png'),
-                        fit: BoxFit.contain,
-                      )),
+                      color:
+                          kPrimaryWhite, // Mengganti warna top bar menjadi putih
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3), // Perubahan posisi bayangan
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.48,
-                    margin: EdgeInsets.only(left: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Buat Laporan',
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: black),
+                        IconButton(
+                          icon: Icon(Icons.menu, color: kPrimaryColor),
+                          onPressed: () {
+                            Scaffold.of(context).openDrawer();
+                          },
                         ),
-                        SizedBox(
-                          height: 7,
+                        Container(
+                          child: Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'PUSDIKLAT',
+                                    style: TextStyle(
+                                        fontFamily: 'poppins',
+                                        color: kPrimaryColor,
+                                        fontSize: wp * 0.03,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  Text(
+                                    'Jawa Tengah',
+                                    style: TextStyle(
+                                        fontFamily: 'poppins',
+                                        color: kPrimaryBlack,
+                                        fontSize: wp * 0.022,
+                                        fontWeight: FontWeight.w300),
+                                  )
+                                ],
+                              ),
+                              SizedBox(width: 4),
+                              Container(
+                                height: hp * 0.03,
+                                width: wp * 0.005,
+                                decoration: BoxDecoration(color: kPrimaryBlack),
+                              ),
+                              SizedBox(width: 4),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                      height: hp * 0.04,
+                                      width: wp * 0.07,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/images/logo.png'),
+                                            fit: BoxFit.cover),
+                                      )),
+                                  SizedBox(width: 7),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Palang',
+                                        style: TextStyle(
+                                          color: kPrimaryBlack,
+                                          fontSize: wp * 0.018,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Merah',
+                                        style: TextStyle(
+                                          color: kPrimaryBlack,
+                                          fontSize: wp * 0.018,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Indonesia',
+                                        style: TextStyle(
+                                          color: kPrimaryBlack,
+                                          fontSize: wp * 0.018,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                        Text(
-                          'Laporkan kepada kami apabila anda menemukan ODGJ',
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: black),
+                        IconButton(
+                          icon: Icon(Icons.account_circle),
+                          iconSize: hp * 0.05,
+                          onPressed: () {},
                         ),
                       ],
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
-          ),
-          SizedBox(
-            height: 19,
-          ),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              padding: EdgeInsets.all(12),
-              height: MediaQuery.of(context).size.height * 0.17,
-              decoration: BoxDecoration(
-                color: kPrimaryYellow,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black
-                        .withOpacity(0.2), // Shadow color with opacity
-                    spreadRadius: 2, // Spread radius
-                    blurRadius: 4, // Blur radius
-                    offset: Offset(0, 3), // Shadow position
+          ],
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text(
+                  'Menu',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
                   ),
-                ],
+                ),
               ),
-              child: Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: kPrimaryWhite,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    height: MediaQuery.of(context).size.height,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage('assets/images/riwayat.png'),
-                        fit: BoxFit.contain,
-                      )),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.48,
-                    margin: EdgeInsets.only(left: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Riwayat',
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: black),
-                        ),
-                        SizedBox(
-                          height: 7,
-                        ),
-                        Text(
-                          'Kumpulan laporan yang pernah anda ajukan',
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: black),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text('Home'),
+                onTap: () {
+                  Navigator.pop(context); // Menutup drawer
+                },
               ),
-            ),
-          )
-        ],
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+                onTap: () {
+                  Navigator.pop(context); // Menutup drawer
+                },
+              ),
+              // Tambahkan item menu lain sesuai kebutuhan
+            ],
+          ),
+        ),
       ),
     );
   }

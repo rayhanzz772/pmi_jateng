@@ -17,7 +17,7 @@ class SignInScreen extends StatelessWidget {
           body: BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
               if (state is SignedInState) {
-                Navigator.pushReplacementNamed(context, '/bottom_bar');
+                Navigator.pushReplacementNamed(context, '/home');
               } else if (state is ErrorState) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

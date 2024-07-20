@@ -43,6 +43,8 @@ flutter:
       fonts:
         - asset: assets/font/Poppins-ExtraBold.ttf # Sesuaikan dengan nama file sebenarnya
           weight: 800
+        - asset: assets/font/Poppins-ExtraBold.ttf # Sesuaikan dengan nama file sebenarnya
+          weight: 800
         - asset: assets/font/Poppins-Bold.ttf # Sesuaikan dengan nama file sebenarnya
           weight: 700
         - asset: assets/font/Poppins-SemiBold.ttf # Sesuaikan dengan nama file sebenarnya
@@ -52,4 +54,17 @@ flutter:
         - asset: assets/font/Poppins-Regular.ttf # Sesuaikan dengan nama file sebenarnya
           weight: 400
         - asset: assets/font/Poppins-Light.ttf
+          weight: 300
+
+    - family: JosefinSans
+      fonts:
+        - asset: assets/font/JosefinSans-Bold.ttf
+          weight: 700
+        - asset: assets/font/JosefinSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/font/JosefinSans-Medium.ttf
+          weight: 500
+        - asset: assets/font/JosefinSans-Regular.ttf
+          weight: 400
+        - asset: assets/font/JosefinSans-Light.ttf
           weight: 300

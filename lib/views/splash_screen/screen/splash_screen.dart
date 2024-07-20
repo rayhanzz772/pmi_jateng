@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         fit: BoxFit.cover),
                   )),
               SizedBox(
-                width: 20,
+                width: 15,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
