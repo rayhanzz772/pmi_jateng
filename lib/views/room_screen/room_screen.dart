@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 
-class LaporScreen extends StatelessWidget {
+class RoomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
