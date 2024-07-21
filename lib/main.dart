@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pmi_jateng/firebase_options.dart';
 import 'package:pmi_jateng/views/room_screen/room_screen.dart';
 import 'package:pmi_jateng/views/notification_screen/notification_screen.dart';
+import 'package:pmi_jateng/views/booking/booking.dart';
 import 'package:pmi_jateng/views/splash_screen/screen/splash_screen.dart';
 import 'package:pmi_jateng/views/sign_up/sign_up.dart';
 import 'package:pmi_jateng/views/sign_in/sign_in.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => RoomScreen(),
+        '/': (context) => BookingForm(),
         '/sign_in': (context) => SignInScreen(),
         '/sign_up': (context) => SignUpScreen(),
         '/menu_select': (context) => MenuSelectScreen(),
