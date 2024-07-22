@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
-import 'package:pmi_jateng/views/lapor_screen/lapor_screen.dart';
+import 'package:pmi_jateng/views/room_screen/room_screen.dart';
 import 'package:pmi_jateng/blocs/bottom_bar/bottom_bar_bloc.dart';
 
 class BottomBar extends StatefulWidget {
@@ -53,7 +53,7 @@ class _BottomBarState extends State<BottomBar> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => LaporScreen()),
+              MaterialPageRoute(builder: (context) => RoomScreen()),
             );
           },
           backgroundColor: kPrimaryColor,
