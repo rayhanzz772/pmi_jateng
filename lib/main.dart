@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pmi_jateng/firebase_options.dart';
 
 import 'package:pmi_jateng/views/notification_screen/notification_screen.dart';
@@ -18,10 +19,18 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MyApp());
+  // Periksa status login
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
+  final bool isLoggedIn;
+
+  MyApp({required this.isLoggedIn});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,7 +40,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Poppins',
       ),
-      initialRoute: '/',
+      initialRoute: isLoggedIn ? '/home' : '/',
       routes: {
         '/': (context) => SplashScreen(),
         '/sign_in': (context) => SignInScreen(),
