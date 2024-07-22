@@ -238,7 +238,7 @@ class LaporScreen extends StatelessWidget {
                                                   size: 18,
                                                   color: kPrimaryFontColor),
                                               SizedBox(width: 8),
-                                              Text("2 Single Bed",
+                                              Text("2 bed",
                                                   style: TextStyle(
                                                       color:
                                                           kPrimaryFontColor)),

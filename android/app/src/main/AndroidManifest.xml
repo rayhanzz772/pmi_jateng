@@ -2,8 +2,7 @@
     <application
         android:label="PMI"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
-        android:background="#1F319D">
+        android:icon="@mipmap/ic_launcher_monochrome">
         <activity
             android:name=".MainActivity"
             android:exported="true"

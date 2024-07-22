@@ -10,9 +10,9 @@ class SuperiorRoom extends StatefulWidget {
 class _SuperiorRoomState extends State<SuperiorRoom> {
   int _current = 0;
   final List<String> imgList = [
-    'assets/images/room_1.jpg',
-    'assets/images/room_2.jpg',
-    'assets/images/room_3.jpeg',
+    'assets/images/kamar_2.png',
+    'assets/images/kamar.jpeg',
+    'assets/images/our_room.jpg',
   ];
   final List<String> textList = [
     '1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
@@ -108,7 +108,7 @@ class _SuperiorRoomState extends State<SuperiorRoom> {
                       width: wp,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('assets/images/room_3.jpeg'),
+                          image: AssetImage('assets/images/kamar.jpeg'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -150,7 +150,7 @@ class _SuperiorRoomState extends State<SuperiorRoom> {
                           Container(
                             margin: EdgeInsets.only(top: hp * 0.01),
                             width: 2,
-                            height: hp * 0.284,
+                            height: hp * 0.283,
                             color: kPrimaryMaroon,
                           ),
                         ],
@@ -172,7 +172,7 @@ class _SuperiorRoomState extends State<SuperiorRoom> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'SUPERIOR',
+                      'OUR',
                       style: TextStyle(
                         fontFamily: 'Judson',
                         fontSize: wp * 0.06,

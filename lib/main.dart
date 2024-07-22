@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'NURAGA',
+      title: 'PMI',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: 'Poppins',

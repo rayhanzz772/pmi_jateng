@@ -7,7 +7,7 @@ class TopBar extends StatelessWidget {
     final hp = MediaQuery.of(context).size.height;
     final wp = MediaQuery.of(context).size.width;
     return Positioned(
-      top: 40,
+      top: 50,
       left: 0,
       right: 0,
       child: Builder(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pmi_jateng/component/home_screen/about_us.dart';
+import 'package:pmi_jateng/component/home_screen/our_gallery.dart';
 import 'package:pmi_jateng/component/home_screen/our_services.dart';
 import 'package:pmi_jateng/component/home_screen/superior_room.dart';
 import 'package:pmi_jateng/component/home_screen/top_bar.dart';
@@ -30,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: hp * 0.75,
                   width: wp,
                   decoration: BoxDecoration(
+                      color: kPrimaryBlack,
                       image: DecorationImage(
                           image: AssetImage('assets/images/landing_page.png'),
                           fit: BoxFit.cover)),
@@ -210,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 BookNow(),
                 SuperiorRoom(),
                 Container(
-                  height: hp * 0.6,
+                  height: hp * 0.62,
                   width: wp,
                   padding: EdgeInsets.only(top: hp * 0.02, right: 7, left: 7),
                   decoration: BoxDecoration(color: kPrimaryWhite),
@@ -247,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemCount: rooms.length,
                           itemBuilder: (context, index) {
                             return Container(
-                              width: 300, // Set a fixed width for each item
+                              width: wp * 0.8,
                               child: MeetingRoomCard(
                                 title: rooms[index]['title']!,
                                 description: rooms[index]['description']!,
@@ -260,7 +263,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                OurServices()
+                OurServices(),
+                OurGallery(),
+                AboutUs()
               ],
             ),
           ),

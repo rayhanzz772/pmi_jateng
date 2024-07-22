@@ -50,6 +50,7 @@ class MeetingRoomCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
+                  style: TextStyle(fontFamily: 'poppins', fontSize: wp * 0.035),
                   description,
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
@@ -68,7 +69,7 @@ class MeetingRoomCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(top: 2.0, left: 8.0),
                 child: GestureDetector(
                   onTap: () {
                     // Add navigation or any other functionality here
@@ -76,9 +77,10 @@ class MeetingRoomCard extends StatelessWidget {
                   child: Text(
                     'View More',
                     style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'poppins',
+                        fontSize: wp * 0.035),
                   ),
                 ),
               ),
@@ -101,7 +103,7 @@ final List<Map<String, String>> rooms = [
     'title': 'Small meeting room',
     'description':
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    'image': 'assets/images/kamar.jpeg',
+    'image': 'assets/images/room_2.jpg',
   },
   {
     'title': 'Big meeting room',
