@@ -14,8 +14,7 @@ class _AboutUsState extends State<AboutUs> {
     final wp = MediaQuery.of(context).size.width;
 
     return Container(
-      height: hp * 0.3,
-      padding: EdgeInsets.all(10),
+      height: hp * 0.35,
       child: Row(
         children: [
           Container(
@@ -24,50 +23,67 @@ class _AboutUsState extends State<AboutUs> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(width: 2, color: Colors.red),
-                    ),
-                  ),
+                  padding: EdgeInsets.only(bottom: 5, left: 5),
+                  decoration: BoxDecoration(),
                   child: Text(
                     'About Us',
                     style: TextStyle(
                       fontFamily: 'Judson',
                       fontSize: wp * 0.06,
-                      color: Colors.red,
+                      color: kPrimaryMaroon,
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
                 Container(
-                  height: hp * 0.2,
-                  width: wp * 0.8,
-                  child: Expanded(
-                    child: SvgPicture.asset(
-                      'assets/images/about_us.svg',
-                      fit: BoxFit.contain,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(width: 2, color: kPrimaryMaroon),
+                      bottom: BorderSide(width: 2, color: kPrimaryMaroon),
                     ),
+                  ),
+                  child: Container(
+                    height: hp * 0.13,
+                    width: wp * 0.8,
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/about_us.png'),
+                            fit: BoxFit.contain)),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(width: 10),
-          Expanded(
+          Container(
+            width: wp * 0.6,
+            decoration: BoxDecoration(
+                border: Border(
+                    top: BorderSide(
+                      color: kPrimaryMaroon,
+                      width: 2,
+                    ),
+                    left: BorderSide(
+                      color: kPrimaryMaroon,
+                      width: 2,
+                    ),
+                    bottom: BorderSide(
+                      color: kPrimaryMaroon,
+                      width: 2,
+                    ))),
             child: Container(
-              color: kPrimaryColor,
               padding: EdgeInsets.all(10),
               child: Text(
-                'GEDUNG DIKLAT PMI PROVINSI JAWA TENGAH Terletak di kawasan perbukitan di Kota Semarang yang memiliki suasana nyaman dan jauh dari kebisingan kota, sehingga cocok digunakan untuk tempat rapat, pendidikan, pelatihan, seminar, dan lainnya. Lingkungan Gedung Diklat yang Hijau dan rumah belajar memiliki beragam fasilitas yang tersedia serta pilihan menu hidangan yang ditawarkan berinovasi sehat dan lezat.',
                 style: TextStyle(
-                  fontFamily: 'Judson',
-                  fontSize: wp * 0.04,
-                  color: Colors.white,
-                ),
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.normal,
+                    fontSize: 10),
+                'GEDUNG DIKLAT PMI PROVINSI JAWA TENGAH Terletak di kawasan perbukitan di Kota Semarang yang memiliki suasana nyaman dan jauh dari kebisingan kota, sehingga cocok digunakan untuk tempat rapat, pendidikan, pelatihan, seminar, dan lainnya. lingkungan Gedung Diklat yang Hijau dan rumah belajar memiliki beragam fasilitas yang tersedia serta pilihan menu hidangan yang ditawarkan berinovasi sehat dan lezat',
+                softWrap: true,
+                textAlign: TextAlign.justify,
               ),
             ),
-          ),
+          )
         ],
       ),
     );
