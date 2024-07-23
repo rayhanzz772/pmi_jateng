@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Events
 abstract class AuthenticationEvent extends Equatable {
@@ -76,6 +77,11 @@ class AuthenticationBloc
         email: event.email,
         password: event.password,
       );
+
+      // Simpan status login ke SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+
       emit(SignedInState());
     } catch (e) {
       emit(ErrorState(message: 'Akun tidak ditemukan'));
@@ -99,6 +105,9 @@ class AuthenticationBloc
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
 
       await _firebaseAuth.signInWithCredential(credential);
       emit(SignedInState());
