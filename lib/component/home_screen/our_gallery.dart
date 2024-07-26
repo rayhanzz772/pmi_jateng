@@ -51,8 +51,10 @@ class _OurGalleryState extends State<OurGallery> {
           SizedBox(height: hp * 0.01),
           Container(
             height: hp * 0.35,
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(5),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: wp * 0.336,

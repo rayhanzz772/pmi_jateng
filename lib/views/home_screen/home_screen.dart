@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pmi_jateng/component/home_screen/about_us.dart';
+import 'package:pmi_jateng/component/home_screen/contact_us.dart';
+import 'package:pmi_jateng/component/home_screen/footer.dart';
+import 'package:pmi_jateng/component/home_screen/mitra.dart';
 import 'package:pmi_jateng/component/home_screen/our_gallery.dart';
 import 'package:pmi_jateng/component/home_screen/our_services.dart';
 import 'package:pmi_jateng/component/home_screen/superior_room.dart';
@@ -265,7 +268,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 OurServices(),
                 OurGallery(),
-                AboutUs()
+                AboutUs(),
+                ContactUs(),
+                Footer()
               ],
             ),
           ),
