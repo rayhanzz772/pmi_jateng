@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pmi_jateng/blocs/booking/booking_event.dart';
+import 'package:pmi_jateng/service/api_service.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 
 class BookingForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => BookingBloc(),
+      create: (_) => BookingBloc(apiService: ApiService()),
       child: Scaffold(
         backgroundColor: kPrimaryWhite,
         appBar: AppBar(
@@ -27,6 +28,8 @@ class BookingForm extends StatelessWidget {
 }
 
 class BookingFormFields extends StatelessWidget {
+  final ApiService apiService = ApiService();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -479,20 +482,69 @@ class BookingFormFields extends StatelessWidget {
                   height: 50,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Handle submission logic here
+                    BlocBuilder<BookingBloc, BookingState>(
+                      builder: (context, state) {
+                        return ElevatedButton(
+                          onPressed: state.status == BookingStatus.submitting
+                              ? null
+                              : () async {
+                                  try {
+                                    await apiService.insertData(
+                                      name: state.name,
+                                      phone: state.phone,
+                                      guests: state.guests,
+                                      email: "rayhanzz772@gmail.com",
+                                      harga: state.guests * 200000,
+                                      checkinTime: state
+                                          .checkInDate, // Pastikan ini adalah DateTime
+                                      checkoutTime: state
+                                          .checkOutDate, // Pastikan ini adalah DateTime
+                                    );
+                                    // Handle successful submission
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              'Data submitted successfully state')),
+                                    );
+                                  } catch (e) {
+                                    // Handle errors
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text('Failed to submit data')),
+                                    );
+                                  }
+                                },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: kPrimaryFontColor, // Text color
+                          ),
+                          child: state.status == BookingStatus.submitting
+                              ? CircularProgressIndicator()
+                              : Text('Submit'),
+                        );
                       },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: kPrimaryFontColor, // Text color
-                      ),
-                      child: Text('Verifikasi'),
                     ),
                   ],
                 ),
+                BlocBuilder<BookingBloc, BookingState>(
+                  builder: (context, state) {
+                    if (state.status == BookingStatus.failure) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          'Error: ${state.errorMessage}',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      );
+                    }
+                    return Container();
+                  },
+                ),
+                //
+                //
+                //
               ],
             ),
           ),
