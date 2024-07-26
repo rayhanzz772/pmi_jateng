@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pmi_jateng/blocs/booking/booking_event.dart';
 import 'package:pmi_jateng/service/api_service.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
+import 'package:pmi_jateng/views/booking/paymentScreen.dart';
 
 class BookingForm extends StatelessWidget {
   @override
@@ -482,47 +483,23 @@ class BookingFormFields extends StatelessWidget {
                   height: 50,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     BlocBuilder<BookingBloc, BookingState>(
                       builder: (context, state) {
+                        if (state.status == BookingStatus.submitting) {
+                          return CircularProgressIndicator();
+                        }
                         return ElevatedButton(
-                          onPressed: state.status == BookingStatus.submitting
-                              ? null
-                              : () async {
-                                  try {
-                                    await apiService.insertData(
-                                      name: state.name,
-                                      phone: state.phone,
-                                      guests: state.guests,
-                                      email: "rayhanzz772@gmail.com",
-                                      harga: state.guests * 200000,
-                                      checkinTime: state
-                                          .checkInDate, // Pastikan ini adalah DateTime
-                                      checkoutTime: state
-                                          .checkOutDate, // Pastikan ini adalah DateTime
-                                    );
-                                    // Handle successful submission
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              'Data submitted successfully state')),
-                                    );
-                                  } catch (e) {
-                                    // Handle errors
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content:
-                                              Text('Failed to submit data')),
-                                    );
-                                  }
-                                },
+                          onPressed: () async {
+                            await handleBooking(context);
+                          },
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: kPrimaryFontColor, // Text color
+                              backgroundColor: kPrimaryFontColor),
+                          child: Text(
+                            'Submit',
+                            style: TextStyle(color: kPrimaryWhite),
                           ),
-                          child: state.status == BookingStatus.submitting
-                              ? CircularProgressIndicator()
-                              : Text('Submit'),
                         );
                       },
                     ),
@@ -551,5 +528,36 @@ class BookingFormFields extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> handleBooking(BuildContext context) async {
+    final bookingBloc = context.read<BookingBloc>();
+    final state = bookingBloc.state;
+
+    try {
+      final snapToken = await bookingBloc.apiService.insertData(
+        name: state.name,
+        phone: state.phone,
+        guests: state.guests,
+        email: "rayhanzz772@gmail.com",
+        harga: state.guests * 200000,
+        checkinTime: state.checkInDate,
+        checkoutTime: state.checkOutDate,
+      );
+
+      if (snapToken != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PaymentScreen(snapToken: snapToken),
+          ),
+        );
+      } else {
+        print('Failed to get snap token');
+      }
+    } catch (e) {
+      // Tangani kesalahan jika diperlukan
+      print('Error: $e');
+    }
   }
 }

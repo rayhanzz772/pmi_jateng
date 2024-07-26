@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class PaymentScreen extends StatefulWidget {
+  final String snapToken;
+
+  PaymentScreen({required this.snapToken});
+
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  String? snapToken;
   late WebViewController _controller;
 
   @override
@@ -20,9 +21,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
+          onProgress: (int progress) {},
           onPageStarted: (String url) {},
           onPageFinished: (String url) {},
           onHttpError: (HttpResponseError error) {},
@@ -36,8 +35,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
           },
         ),
       )
-      ..loadRequest(Uri.parse(
-          'https://app.sandbox.midtrans.com/snap/v4/redirection/477fe861-68b3-4776-968e-0a570592af1a'));
+      ..loadRequest(
+        Uri.parse(
+            'https://app.sandbox.midtrans.com/snap/v2/vtweb/${widget.snapToken}'),
+      );
   }
 
   @override
@@ -46,9 +47,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       appBar: AppBar(
         title: Text('Payment'),
       ),
-      body: snapToken == null
-          ? WebViewWidget(controller: _controller)
-          : WebViewWidget(controller: _controller),
+      body: WebViewWidget(controller: _controller),
     );
   }
 }
