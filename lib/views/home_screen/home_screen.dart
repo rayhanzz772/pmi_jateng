@@ -8,7 +8,7 @@ import 'package:pmi_jateng/component/home_screen/our_services.dart';
 import 'package:pmi_jateng/component/home_screen/superior_room.dart';
 import 'package:pmi_jateng/component/home_screen/top_bar.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
-import 'package:pmi_jateng/component/home_screen/meeting_room.dart';
+import 'package:pmi_jateng/component/home_screen/meeting_room/meeting_room.dart';
 import 'package:pmi_jateng/component/home_screen/sidebar.dart';
 import 'package:pmi_jateng/component/home_screen/book_now.dart';
 
@@ -215,57 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 BookNow(),
                 SuperiorRoom(),
-                Container(
-                  height: hp * 0.62,
-                  width: wp,
-                  padding: EdgeInsets.only(top: hp * 0.02, right: 7, left: 7),
-                  decoration: BoxDecoration(color: kPrimaryWhite),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(left: 10),
-                        child: Row(
-                          children: [
-                            Text(
-                              'Meeting',
-                              style: TextStyle(
-                                  fontFamily: 'Freehand',
-                                  fontSize: wp * 0.08,
-                                  color: kPrimaryMaroon),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              'Room',
-                              style: TextStyle(
-                                  fontFamily: 'Judson',
-                                  fontSize: wp * 0.08,
-                                  color: kPrimaryBlack),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          physics: BouncingScrollPhysics(),
-                          itemCount: rooms.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              width: wp * 0.8,
-                              child: MeetingRoomCard(
-                                title: rooms[index]['title']!,
-                                description: rooms[index]['description']!,
-                                image: rooms[index]['image']!,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                MeetingRoomCard(),
                 OurServices(),
                 OurGallery(),
                 AboutUs(),

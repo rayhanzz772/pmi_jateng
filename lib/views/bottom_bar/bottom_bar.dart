@@ -51,10 +51,10 @@ class _BottomBarState extends State<BottomBar> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => RoomScreen()),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => RoomScreen()),
+            // );
           },
           backgroundColor: kPrimaryColor,
           shape: RoundedRectangleBorder(

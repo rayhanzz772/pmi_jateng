@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:pmi_jateng/service/api_service.dart';
 
 // Events
 abstract class BookingEvent extends Equatable {
-  const BookingEvent();
-
   @override
   List<Object> get props => [];
 }
@@ -73,8 +72,7 @@ class UpdateCheckOutTime extends BookingEvent {
   List<Object> get props => [checkOutTime];
 }
 
-// States
-class BookingState extends Equatable {
+class SubmitBooking extends BookingEvent {
   final String name;
   final String phone;
   final int guests;
@@ -83,38 +81,15 @@ class BookingState extends Equatable {
   final DateTime checkOutDate;
   final TimeOfDay checkOutTime;
 
-  BookingState({
-    this.name = '',
-    this.phone = '',
-    this.guests = 1,
-    DateTime? checkInDate,
-    TimeOfDay? checkInTime,
-    DateTime? checkOutDate,
-    TimeOfDay? checkOutTime,
-  })  : this.checkInDate = checkInDate ?? DateTime.now(),
-        this.checkInTime = checkInTime ?? TimeOfDay.now(),
-        this.checkOutDate = checkOutDate ?? DateTime.now(),
-        this.checkOutTime = checkOutTime ?? TimeOfDay.now();
-
-  BookingState copyWith({
-    String? name,
-    String? phone,
-    int? guests,
-    DateTime? checkInDate,
-    TimeOfDay? checkInTime,
-    DateTime? checkOutDate,
-    TimeOfDay? checkOutTime,
-  }) {
-    return BookingState(
-      name: name ?? this.name,
-      phone: phone ?? this.phone,
-      guests: guests ?? this.guests,
-      checkInDate: checkInDate ?? this.checkInDate,
-      checkInTime: checkInTime ?? this.checkInTime,
-      checkOutDate: checkOutDate ?? this.checkOutDate,
-      checkOutTime: checkOutTime ?? this.checkOutTime,
-    );
-  }
+  SubmitBooking({
+    required this.name,
+    required this.phone,
+    required this.guests,
+    required this.checkInDate,
+    required this.checkInTime,
+    required this.checkOutDate,
+    required this.checkOutTime,
+  });
 
   @override
   List<Object> get props => [
@@ -128,26 +103,121 @@ class BookingState extends Equatable {
       ];
 }
 
-// Bloc
-class BookingBloc extends Bloc<BookingEvent, BookingState> {
-  BookingBloc() : super(BookingState());
+// States
+enum BookingStatus { initial, submitting, success, failure }
+
+class BookingState extends Equatable {
+  final String name;
+  final String phone;
+  final int guests;
+  final DateTime checkInDate;
+  final TimeOfDay checkInTime;
+  final DateTime checkOutDate;
+  final TimeOfDay checkOutTime;
+  final BookingStatus status;
+  final String errorMessage;
+
+  BookingState({
+    this.name = '',
+    this.phone = '',
+    this.guests = 1,
+    DateTime? checkInDate,
+    TimeOfDay? checkInTime,
+    DateTime? checkOutDate,
+    TimeOfDay? checkOutTime,
+    this.status = BookingStatus.initial,
+    this.errorMessage = '',
+  })  : checkInDate = checkInDate ?? DateTime.now(),
+        checkInTime = checkInTime ?? TimeOfDay.now(),
+        checkOutDate = checkOutDate ?? DateTime.now(),
+        checkOutTime = checkOutTime ?? TimeOfDay.now();
+
+  BookingState copyWith({
+    String? name,
+    String? phone,
+    int? guests,
+    DateTime? checkInDate,
+    TimeOfDay? checkInTime,
+    DateTime? checkOutDate,
+    TimeOfDay? checkOutTime,
+    BookingStatus? status,
+    String? errorMessage,
+  }) {
+    return BookingState(
+      name: name ?? this.name,
+      phone: phone ?? this.phone,
+      guests: guests ?? this.guests,
+      checkInDate: checkInDate ?? this.checkInDate,
+      checkInTime: checkInTime ?? this.checkInTime,
+      checkOutDate: checkOutDate ?? this.checkOutDate,
+      checkOutTime: checkOutTime ?? this.checkOutTime,
+      status: status ?? this.status,
+      errorMessage: errorMessage ?? this.errorMessage,
+    );
+  }
 
   @override
-  Stream<BookingState> mapEventToState(BookingEvent event) async* {
-    if (event is UpdateName) {
-      yield state.copyWith(name: event.name);
-    } else if (event is UpdatePhone) {
-      yield state.copyWith(phone: event.phone);
-    } else if (event is UpdateGuests) {
-      yield state.copyWith(guests: event.guests);
-    } else if (event is UpdateCheckInDate) {
-      yield state.copyWith(checkInDate: event.checkInDate);
-    } else if (event is UpdateCheckInTime) {
-      yield state.copyWith(checkInTime: event.checkInTime);
-    } else if (event is UpdateCheckOutDate) {
-      yield state.copyWith(checkOutDate: event.checkOutDate);
-    } else if (event is UpdateCheckOutTime) {
-      yield state.copyWith(checkOutTime: event.checkOutTime);
-    }
+  List<Object?> get props => [
+        name,
+        phone,
+        guests,
+        checkInDate,
+        checkInTime,
+        checkOutDate,
+        checkOutTime,
+        status,
+        errorMessage
+      ];
+}
+
+// Bloc
+class BookingBloc extends Bloc<BookingEvent, BookingState> {
+  final ApiService apiService;
+
+  BookingBloc({required this.apiService}) : super(BookingState()) {
+    on<UpdateName>((event, emit) {
+      emit(state.copyWith(name: event.name));
+    });
+    on<UpdatePhone>((event, emit) {
+      emit(state.copyWith(phone: event.phone));
+    });
+    on<UpdateGuests>((event, emit) {
+      emit(state.copyWith(guests: event.guests));
+    });
+    on<UpdateCheckInDate>((event, emit) {
+      emit(state.copyWith(checkInDate: event.checkInDate));
+    });
+    on<UpdateCheckInTime>((event, emit) {
+      emit(state.copyWith(checkInTime: event.checkInTime));
+    });
+    on<UpdateCheckOutDate>((event, emit) {
+      emit(state.copyWith(checkOutDate: event.checkOutDate));
+    });
+    on<UpdateCheckOutTime>((event, emit) {
+      emit(state.copyWith(checkOutTime: event.checkOutTime));
+    });
+    on<SubmitBooking>((event, emit) async {
+      emit(state.copyWith(status: BookingStatus.submitting));
+
+      try {
+        await apiService.submitBooking(
+          name: event.name,
+          phone: event.phone,
+          guests: event.guests,
+          checkInDate: event.checkInDate,
+          checkInTime: event.checkInTime,
+          checkOutDate: event.checkOutDate,
+          checkOutTime: event.checkOutTime,
+        );
+
+        emit(state.copyWith(status: BookingStatus.success));
+      } catch (error) {
+        emit(state.copyWith(
+          status: BookingStatus.failure,
+          errorMessage: error.toString(),
+        ));
+        print('Error: $error');
+      }
+    });
   }
 }
