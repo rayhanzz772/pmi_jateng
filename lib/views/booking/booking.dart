@@ -6,6 +6,10 @@ import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/views/booking/paymentScreen.dart';
 
 class BookingForm extends StatelessWidget {
+  final String roomType;
+  final String price;
+
+  BookingForm({required this.roomType, required this.price});
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -21,7 +25,10 @@ class BookingForm extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: BookingFormFields(),
+          child: BookingFormFields(
+            roomType: roomType,
+            price: price,
+          ),
         ),
       ),
     );
@@ -30,6 +37,10 @@ class BookingForm extends StatelessWidget {
 
 class BookingFormFields extends StatelessWidget {
   final ApiService apiService = ApiService();
+  final String roomType;
+  final String price;
+
+  BookingFormFields({required this.roomType, required this.price});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +58,7 @@ class BookingFormFields extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "Tipe Kamar : Deluxe",
+                      "Tipe Kamar : $roomType",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -445,7 +456,7 @@ class BookingFormFields extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Harga Kamar"),
-                        Text("Rp. 200.000"),
+                        Text("Rp. $price"),
                       ],
                     ),
                     SizedBox(
@@ -455,7 +466,7 @@ class BookingFormFields extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Pajak dan biaya lainnya"),
-                        Text("Rp. 2000"),
+                        Text("Rp. -"),
                       ],
                     ),
                     Divider(
@@ -470,7 +481,7 @@ class BookingFormFields extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "Rp. 220000",
+                          "$price",
                           style: TextStyle(
                               color: kPrimaryFontColor,
                               fontWeight: FontWeight.bold),
@@ -534,6 +545,27 @@ class BookingFormFields extends StatelessWidget {
     final bookingBloc = context.read<BookingBloc>();
     final state = bookingBloc.state;
 
+    // Show loading dialog
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 16),
+                Text("Processing booking..."),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
     try {
       final snapToken = await bookingBloc.apiService.insertData(
         name: state.name,
@@ -544,6 +576,9 @@ class BookingFormFields extends StatelessWidget {
         checkinTime: state.checkInDate,
         checkoutTime: state.checkOutDate,
       );
+
+      // Dismiss the loading dialog
+      Navigator.of(context).pop();
 
       if (snapToken != null) {
         Navigator.push(
@@ -556,7 +591,10 @@ class BookingFormFields extends StatelessWidget {
         print('Failed to get snap token');
       }
     } catch (e) {
-      // Tangani kesalahan jika diperlukan
+      // Dismiss the loading dialog
+      Navigator.of(context).pop();
+
+      // Handle the error if necessary
       print('Error: $e');
     }
   }

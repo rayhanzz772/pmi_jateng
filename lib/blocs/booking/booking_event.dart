@@ -198,26 +198,6 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     });
     on<SubmitBooking>((event, emit) async {
       emit(state.copyWith(status: BookingStatus.submitting));
-
-      try {
-        await apiService.submitBooking(
-          name: event.name,
-          phone: event.phone,
-          guests: event.guests,
-          checkInDate: event.checkInDate,
-          checkInTime: event.checkInTime,
-          checkOutDate: event.checkOutDate,
-          checkOutTime: event.checkOutTime,
-        );
-
-        emit(state.copyWith(status: BookingStatus.success));
-      } catch (error) {
-        emit(state.copyWith(
-          status: BookingStatus.failure,
-          errorMessage: error.toString(),
-        ));
-        print('Error: $error');
-      }
     });
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pmi_jateng/views/booking/booking.dart';
 import 'package:pmi_jateng/views/booking/paymentScreen.dart';
 import 'package:pmi_jateng/views/room_screen/room_screen.dart';
+import 'package:pmi_jateng/views/test_untuk_fetch/test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pmi_jateng/firebase_options.dart';
 import 'package:pmi_jateng/views/notification_screen/notification_screen.dart';
@@ -43,15 +44,15 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Poppins',
       ),
-      initialRoute: isLoggedIn ? '/home' : '/booking',
+      initialRoute: isLoggedIn ? '/home' : '/home',
       routes: {
         '/': (context) => HomeScreen(),
-        '/booking': (context) => BookingForm(),
         '/sign_in': (context) => SignInScreen(),
         '/sign_up': (context) => SignUpScreen(),
         '/menu_select': (context) => MenuSelectScreen(),
         '/home': (context) => HomeScreen(),
         '/bottom_bar': (context) => BottomBar(),
+        '/test_api': (context) => TestApiScreen(),
         '/room_screen': (context) =>
             RoomScreen(id: ModalRoute.of(context)!.settings.arguments as int),
       },

@@ -4,36 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String baseUrl = 'http://10.0.2.2:8000/api/insert';
-
-  Future<void> submitBooking({
-    required String name,
-    required String phone,
-    required int guests,
-    required DateTime checkInDate,
-    required TimeOfDay checkInTime,
-    required DateTime checkOutDate,
-    required TimeOfDay checkOutTime,
-  }) async {
-    final request = http.MultipartRequest('POST', Uri.parse('$baseUrl/order'));
-    request.fields['name'] = name;
-    request.fields['phone'] = phone;
-    final response = await request.send();
-    if (response.statusCode != 200) {
-      throw Exception('Failed to submit booking bro');
-    }
-  }
-
-  // Future<void> submitBooking2({
-  //   required String name,
-  // }) async {
-  //   final request = http.MultipartRequest('POST', Uri.parse('$baseUrl/order'));
-  //   request.fields['name'] = name;
-  //   final response = await request.send();
-  //   if (response.statusCode != 200) {
-  //     throw Exception('Failed to submit booking bro');
-  //   }
-  // }
+  static const String baseUrl = 'http://10.0.2.2:8001/api/insert';
+  static const String apiUrl = 'http://10.0.2.2:8000/api/room_type/getAll';
 
   Future<String?> insertData({
     required String name,
@@ -79,6 +51,18 @@ class ApiService {
     } catch (e) {
       print('Error: $e');
       return null;
+    }
+  }
+
+  // Fetch API Test
+  Future<Map<String, dynamic>> fetchData() async {
+    final response = await http.get(Uri.parse(apiUrl));
+
+    if (response.statusCode == 200) {
+      // Parse the JSON response
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load data');
     }
   }
 }

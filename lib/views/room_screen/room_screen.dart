@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:pmi_jateng/component/home_screen/top_bar.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/component/home_screen/meeting_room/models/api_services.dart';
 import 'package:pmi_jateng/component/home_screen/meeting_room/models/room_type.dart';
+import 'package:pmi_jateng/views/booking/booking.dart';
+import 'package:pmi_jateng/views/room_screen/bottombar.dart';
 
 class RoomScreen extends StatelessWidget {
   final int id;
 
   const RoomScreen({Key? key, required this.id}) : super(key: key);
+
+  void _handleCheckout(BuildContext context, String roomType, String price) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BookingForm(roomType: roomType, price: price),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +31,10 @@ class RoomScreen extends StatelessWidget {
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: kPrimaryFontColor,
               ),
               child: Text(
-                'Drawer Header',
+                'PMI',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -30,9 +42,9 @@ class RoomScreen extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text('Lapor'),
+              title: Text('Home'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, '/home');
               },
             ),
             ListTile(
@@ -72,7 +84,8 @@ class RoomScreen extends StatelessWidget {
                       indicatorColor: kPrimaryWhite,
                       indicatorBackgroundColor: Colors.grey,
                       children: [
-                        Image.network(roomType.image,
+                        Image.network(
+                            "http://127.0.0.1:8000/storage/default_image.jpg",
                             fit: BoxFit.cover), // Display the room image
                         // You can add more images if available in your data
                       ],
@@ -279,7 +292,12 @@ class RoomScreen extends StatelessWidget {
                                   )
                                 ],
                               ),
-                            )
+                            ),
+                            Container(
+                              child: Row(
+                                children: [Text("TEST")],
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -291,90 +309,18 @@ class RoomScreen extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16),
-                    padding: EdgeInsets.symmetric(horizontal: 3.0),
-                    decoration: BoxDecoration(
-                      color: kPrimaryWhite,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.menu, color: kPrimaryColor),
-                          onPressed: () {
-                            Scaffold.of(context).openDrawer();
-                          },
-                        ),
-                        Container(
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'PUSDIKLAT',
-                                    style: TextStyle(
-                                        fontFamily: 'poppins',
-                                        color: kPrimaryColor,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  Text(
-                                    'Jawa Tengah',
-                                    style: TextStyle(
-                                        fontFamily: 'poppins',
-                                        color: kPrimaryBlack,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w300),
-                                  )
-                                ],
-                              ),
-                              SizedBox(width: 4),
-                              Container(
-                                height: 20,
-                                width: 5,
-                                decoration: BoxDecoration(color: kPrimaryBlack),
-                              ),
-                              SizedBox(width: 4),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 20,
-                                    width: 20,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/logo.png'),
-                                          fit: BoxFit.cover),
-                                    ),
-                                  ),
-                                  SizedBox(width: 8),
-                                  Text(
-                                    'Bersih',
-                                    style: TextStyle(
-                                        fontFamily: 'poppins',
-                                        color: kPrimaryBlack,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w300),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 16),
-                      ],
+                    child: TopBar(),
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: BottomBar(
+                    onCheckout: () => _handleCheckout(
+                      context,
+                      roomType.roomType,
+                      roomType.price,
                     ),
                   ),
                 ),
