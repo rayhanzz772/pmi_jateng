@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 
 class Sidebar extends StatelessWidget {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GetStorage _box = GetStorage();
 
   Future<void> _signOut(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    await _googleSignIn.signOut();
+    await _box.remove('auth_token'); // Remove auth token from storage
+    await _box.write('isLoggedIn', false); // Update login status
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isLoggedIn', false);
-
-    // Navigasi ke halaman login
+    // Navigate to sign-in page
     Navigator.of(context)
         .pushNamedAndRemoveUntil('/sign_in', (Route<dynamic> route) => false);
   }

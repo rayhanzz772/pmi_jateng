@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:pmi_jateng/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/views/sign_up/sign_up.dart';
@@ -10,78 +10,73 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => AuthenticationBloc(),
-        child: Scaffold(
-          backgroundColor: kPrimaryWhite,
-          body: BlocListener<AuthenticationBloc, AuthenticationState>(
-            listener: (context, state) {
-              if (state is SignedInState) {
-                Navigator.pushReplacementNamed(context, '/home');
-              } else if (state is ErrorState) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.message),
-                    backgroundColor: Colors.red,
-                  ),
-                );
-                Navigator.pushReplacementNamed(context, '/sign_in');
-              }
-            },
-            child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-              builder: (context, state) {
-                if (state is LoadingState) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (state is ErrorState) {
-                  return Center(child: Text(state.message));
-                } else {
-                  return SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 30),
-                        Row(
-                          children: [
-                            IconButton(
-                              padding: EdgeInsets.only(left: 20),
-                              icon: Icon(
-                                Icons.arrow_back,
-                                color: kPrimaryColor,
-                                size: 24,
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                            SizedBox(
-                                width:
-                                    10), // Add some spacing between the icon and the image
-                            Image.asset(
-                              'assets/images/logo_PMI.png',
-                              height: 40, // Specify the height of the image
-                            ),
-                          ],
-                        ),
-                        Container(
-                          color: kPrimaryWhite,
-                          padding: EdgeInsets.all(24.0),
-                          child: Column(
-                            children: [
-                              SizedBox(height: 35),
-                              TopText(), // Gunakan widget TopText disini
-                              SizedBox(height: 60),
-                              BoxForm(),
-                            ],
-                          ),
-                        ),
-                      ],
+    final AuthController authController = Get.put(AuthController());
+
+    return Scaffold(
+      backgroundColor: kPrimaryWhite,
+      body: Obx(() {
+        if (authController.isLoading) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (authController.errorMessage.isNotEmpty) {
+          WidgetsBinding.instance?.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(authController.errorMessage),
+                backgroundColor: Colors.red,
+              ),
+            );
+          });
+        }
+
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 30),
+              Row(
+                children: [
+                  IconButton(
+                    padding: EdgeInsets.only(left: 20),
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: kPrimaryColor,
+                      size: 24,
                     ),
-                  );
-                }
-              },
-            ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/welcome_screen");
+                    },
+                  ),
+                  SizedBox(
+                      width:
+                          10), // Add some spacing between the icon and the image
+                  Image.asset(
+                    'assets/images/logo_PMI.png',
+                    height: 40, // Specify the height of the image
+                  ),
+                ],
+              ),
+              Container(
+                color: kPrimaryWhite,
+                padding: EdgeInsets.all(24.0),
+                child: Column(
+                  children: [
+                    SizedBox(height: 35),
+                    TopText(), // Gunakan widget TopText disini
+                    SizedBox(height: 60),
+                    BoxForm(
+                      emailController: emailController,
+                      passwordController: passwordController,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ));
+        );
+      }),
+    );
   }
 }
 
@@ -102,10 +97,18 @@ class TopText extends StatelessWidget {
 }
 
 class BoxForm extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+
+  BoxForm({
+    required this.emailController,
+    required this.passwordController,
+  });
+
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.find<AuthController>();
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -162,13 +165,7 @@ class BoxForm extends StatelessWidget {
                   onPressed: () {
                     String email = emailController.text;
                     String password = passwordController.text;
-                    BlocProvider.of<AuthenticationBloc>(context).add(
-                      SigninEvent(
-                        email: email,
-                        password: password,
-                        context: context,
-                      ),
-                    );
+                    authController.signInWithEmail(email, password);
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -195,9 +192,7 @@ class BoxForm extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          context
-                              .read<AuthenticationBloc>()
-                              .add(GoogleSignInEvent());
+                          // Handle Google Sign In
                         },
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size.fromHeight(45),
@@ -223,7 +218,7 @@ class BoxForm extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Your onPressed logic here
+                          // Handle X Sign In
                         },
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size.fromHeight(45),
