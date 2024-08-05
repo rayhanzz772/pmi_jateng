@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/views/room_screen/room_screen.dart';
 import './models/api_services.dart'; // Pastikan path ini benar
 import './models/room_type.dart';
@@ -80,7 +81,7 @@ class MeetingRoomCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  height: wp * 0.5,
+                                  height: hp * 0.26,
                                   width: wp * 0.8,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -96,6 +97,7 @@ class MeetingRoomCard extends StatelessWidget {
                                     room.roomType,
                                     style: TextStyle(
                                       fontSize: wp * 0.05,
+                                      color: kPrimaryBlack,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

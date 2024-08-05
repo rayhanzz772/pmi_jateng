@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'room_type.dart';
 
 class ApiService {
-  static const String baseUrl = "http://10.0.2.2:8000/api/room_type";
+  static const String baseUrl = "http://192.168.1.5:8000/api/room_type";
 
   static Future<List<RoomType>> fetchRoomTypes() async {
     final response = await http.get(Uri.parse("$baseUrl/getAll"));

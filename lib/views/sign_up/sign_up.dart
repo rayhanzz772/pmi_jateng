@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pmi_jateng/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:pmi_jateng/auth/AuthControl.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/views/sign_in/sign_in.dart';
 
@@ -13,14 +13,15 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthController authController = Get.put(AuthController());
+    final AuthControl authController = Get.put(AuthControl());
 
     return Scaffold(
       backgroundColor: kPrimaryWhite,
       body: Obx(() {
         if (authController.isLoading2.value) {
           return Center(child: CircularProgressIndicator());
-        } else if (authController.errorMessage.isNotEmpty) {
+        } else if (authController.errorMessage2.value.isNotEmpty) {
+          print('Error: ${authController.errorMessage2.value}');
           return Center(child: Text(authController.errorMessage2.value));
         } else {
           return SingleChildScrollView(
@@ -139,8 +140,16 @@ class SignUpScreen extends StatelessWidget {
                                         );
                                         return;
                                       }
-                                      authController.register(username, email,
-                                          password, confirmPassword);
+                                      authController
+                                          .register(username, email, password,
+                                              confirmPassword)
+                                          .then((success) {
+                                        if (success) {
+                                          Get.offNamed('/sign_in');
+                                        } else {
+                                          print('Registration failed');
+                                        }
+                                      });
                                     },
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(

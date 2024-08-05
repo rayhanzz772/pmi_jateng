@@ -63,32 +63,32 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> register(String name, String email, String password,
-      String confirmPassword) async {
-    isLoading2.value = true;
-    try {
-      final response = await _dio.post(
-        'http://localhost:8000/api/register',
-        data: {
-          'name': name,
-          'email': email,
-          'password': password,
-          'c_password': confirmPassword,
-        },
-      );
+  // Future<void> register(String name, String email, String password,
+  //     String confirmPassword) async {
+  //   isLoading2.value = true;
+  //   try {
+  //     final response = await _dio.post(
+  //       'http://localhost:8000/api/register',
+  //       data: {
+  //         'name': name,
+  //         'email': email,
+  //         'password': password,
+  //         'c_password': confirmPassword,
+  //       },
+  //     );
 
-      final data = response.data;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
-      await prefs.setString('token', data['data']['token']);
+  //     final data = response.data;
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     await prefs.setBool('isLoggedIn', true);
+  //     await prefs.setString('token', data['data']['token']);
 
-      Get.offNamed('/home'); // Navigate to home screen
-    } catch (e) {
-      errorMessage2.value = 'Registration failed: ${e.toString()}';
-    } finally {
-      isLoading2.value = false;
-    }
-  }
+  //     Get.offNamed('/home'); // Navigate to home screen
+  //   } catch (e) {
+  //     errorMessage2.value = 'Registration failed: ${e.toString()}';
+  //   } finally {
+  //     isLoading2.value = false;
+  //   }
+  // }
 
   void signOut() async {
     await GetStorage().remove('auth_token');

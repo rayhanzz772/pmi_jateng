@@ -11,6 +11,8 @@ import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/component/home_screen/meeting_room/meeting_room.dart';
 import 'package:pmi_jateng/component/home_screen/sidebar.dart';
 import 'package:pmi_jateng/component/home_screen/book_now.dart';
+import 'package:pmi_jateng/auth/AuthControl.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -20,9 +22,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final AuthControl authControl = Get.find<AuthControl>();
     final hp = MediaQuery.of(context).size.height;
     final wp = MediaQuery.of(context).size.width;
 
+    if (authControl.token.value.isEmpty) {
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Get.offNamed('/sign_in');
+      });
+    }
     return Scaffold(
       backgroundColor: kPrimaryWhite,
       body: Stack(

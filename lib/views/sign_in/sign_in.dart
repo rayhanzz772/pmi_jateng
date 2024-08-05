@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pmi_jateng/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:pmi_jateng/utils/color/constant.dart';
+import 'package:pmi_jateng/auth/AuthControl.dart'; // Pastikan import ini sesuai dengan lokasi file Anda
 import 'package:pmi_jateng/views/sign_up/sign_up.dart';
+import 'package:pmi_jateng/utils/color/constant.dart';
 
 class SignInScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -10,12 +10,12 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthController authController = Get.put(AuthController());
+    final AuthControl authController = Get.put(AuthControl());
 
     return Scaffold(
       backgroundColor: kPrimaryWhite,
       body: Obx(() {
-        if (authController.isLoading) {
+        if (authController.isLoading.value) {
           return Center(child: CircularProgressIndicator());
         }
 
@@ -23,7 +23,7 @@ class SignInScreen extends StatelessWidget {
           WidgetsBinding.instance?.addPostFrameCallback((_) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(authController.errorMessage),
+                content: Text(authController.errorMessage.value),
                 backgroundColor: Colors.red,
               ),
             );
@@ -107,7 +107,7 @@ class BoxForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthController authController = Get.find<AuthController>();
+    final AuthControl authController = Get.find<AuthControl>();
 
     return Container(
       decoration: BoxDecoration(
@@ -162,10 +162,17 @@ class BoxForm extends StatelessWidget {
                 ),
                 SizedBox(height: 16.0),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     String email = emailController.text;
                     String password = passwordController.text;
-                    authController.signInWithEmail(email, password);
+                    try {
+                      await authController.signInWithEmail(email, password);
+                      // Redirect to home after successful login
+                      Get.offAllNamed(
+                          '/home'); // Ganti '/home' dengan route halaman utama Anda
+                    } catch (e) {
+                      print('Error during sign-in: $e'); // Log error to console
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Poppins',
       ),
-      initialRoute: isLoggedIn ? '/home' : '/',
+      initialRoute: isLoggedIn ? '/home' : '/sign_in',
       getPages: [
         GetPage(name: '/', page: () => SplashScreen()),
         GetPage(name: '/welcome_screen', page: () => MenuSelectScreen()),
