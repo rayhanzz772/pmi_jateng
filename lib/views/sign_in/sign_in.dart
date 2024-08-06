@@ -167,7 +167,6 @@ class BoxForm extends StatelessWidget {
                     String password = passwordController.text;
                     try {
                       await authController.signInWithEmail(email, password);
-                      Get.offAllNamed('/home');
                     } catch (e) {
                       print('Error during sign-in: $e');
                     }

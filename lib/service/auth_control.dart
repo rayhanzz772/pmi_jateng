@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -43,13 +44,24 @@ class AuthControl extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        Get.snackbar('Success', 'Registration successful',
+            snackPosition: SnackPosition.BOTTOM);
+        Get.offAllNamed('/home');
         return true;
       } else {
-        errorMessage2.value = 'Failed to register: ${response.body}';
+        Get.snackbar(
+          'Error',
+          'Registration failed',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+        );
         return false;
       }
     } catch (e) {
       errorMessage2.value = 'An error occurred: $e';
+      Get.snackbar('Error', 'An error occurred: $e',
+          snackPosition: SnackPosition.BOTTOM);
       return false;
     } finally {
       isLoading2.value = false;
