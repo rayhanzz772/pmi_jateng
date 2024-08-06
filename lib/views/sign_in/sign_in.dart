@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pmi_jateng/auth/AuthControl.dart'; // Pastikan import ini sesuai dengan lokasi file Anda
+import 'package:pmi_jateng/service/auth_control.dart'; // Pastikan import ini sesuai dengan lokasi file Anda
 import 'package:pmi_jateng/views/sign_up/sign_up.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 
@@ -167,11 +167,9 @@ class BoxForm extends StatelessWidget {
                     String password = passwordController.text;
                     try {
                       await authController.signInWithEmail(email, password);
-                      // Redirect to home after successful login
-                      Get.offAllNamed(
-                          '/home'); // Ganti '/home' dengan route halaman utama Anda
+                      Get.offAllNamed('/home');
                     } catch (e) {
-                      print('Error during sign-in: $e'); // Log error to console
+                      print('Error during sign-in: $e');
                     }
                   },
                   style: ElevatedButton.styleFrom(

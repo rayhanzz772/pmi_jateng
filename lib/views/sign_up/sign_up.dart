@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pmi_jateng/auth/AuthControl.dart';
+import 'package:pmi_jateng/service/auth_control.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/views/sign_in/sign_in.dart';
 

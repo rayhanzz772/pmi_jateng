@@ -1,21 +1,21 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashBloc {
   Future<void> initDelay(BuildContext context) async {
-    // Delay for splash screen effect
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 2));
+    _checkToken();
+  }
 
-    // Periksa status login
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  Future<void> _checkToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('auth_token');
 
-    // Navigasi berdasarkan status login
-    if (isLoggedIn) {
-      Navigator.of(context).pushReplacementNamed('/home');
+    if (token != null && token.isNotEmpty) {
+      Get.offAllNamed('/home');
     } else {
-      Navigator.of(context).pushReplacementNamed('/menu_select');
+      Get.offAllNamed('/sign_in');
     }
   }
 }

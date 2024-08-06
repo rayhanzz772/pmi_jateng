@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:pmi_jateng/component/home_screen/top_bar.dart';
+import 'package:pmi_jateng/service/config.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
-import 'package:pmi_jateng/component/home_screen/meeting_room/models/api_services.dart';
-import 'package:pmi_jateng/component/home_screen/meeting_room/models/room_type.dart';
+import 'package:pmi_jateng/service/api_service.dart';
+import 'package:pmi_jateng/service/model/room_type.dart';
 import 'package:pmi_jateng/views/booking/booking.dart';
 import 'package:pmi_jateng/views/room_screen/bottombar.dart';
+import 'package:get/get.dart';
 
 class RoomScreen extends StatelessWidget {
   final int id;
@@ -23,6 +25,8 @@ class RoomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hp = MediaQuery.of(context).size.height;
+    final wp = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: kPrimaryWhite,
       drawer: Drawer(
@@ -73,21 +77,23 @@ class RoomScreen extends StatelessWidget {
                 Column(
                   children: [
                     Container(
-                      color:
-                          kPrimaryFontColor, // Background color for space above the ImageSlideshow
-                      height: 50, // Adjust height as needed
+                      height: hp * 0.12,
+                      width: wp,
+                      decoration: BoxDecoration(color: kPrimaryMaroon),
                     ),
                     ImageSlideshow(
                       width: double.infinity,
-                      height: 230,
+                      height: 250,
                       initialPage: 0,
                       indicatorColor: kPrimaryWhite,
                       indicatorBackgroundColor: Colors.grey,
                       children: [
-                        Image.network(
-                            "http://127.0.0.1:8000/storage/default_image.jpg",
-                            fit: BoxFit.cover), // Display the room image
-                        // You can add more images if available in your data
+                        // Image.network("$baseUrl/storage/default_image.jpg",
+                        //     fit: BoxFit.cover),
+                        Image.asset(
+                          'assets/images/kamar.jpeg',
+                          fit: BoxFit.cover,
+                        )
                       ],
                       onPageChanged: (value) {
                         print('Page changed: $value');
@@ -303,14 +309,6 @@ class RoomScreen extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
-                Positioned(
-                  top: 35, // Padding from top
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    child: TopBar(),
-                  ),
                 ),
                 Positioned(
                   bottom: 0,

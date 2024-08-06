@@ -22,8 +22,7 @@ class RoomType {
       capacity: json['capacity'],
       price: json['price'],
       description: json['description'],
-      image: json['image'] ??
-          '', // Provide a default empty string if image is null
+      image: json['image'] ?? '',
     );
   }
 }

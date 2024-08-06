@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
+import 'package:pmi_jateng/service/auth_control.dart';
 
 class Sidebar extends StatelessWidget {
-  final GetStorage _box = GetStorage();
-
   Future<void> _signOut(BuildContext context) async {
-    await _box.remove('auth_token'); // Remove auth token from storage
-    await _box.write('isLoggedIn', false); // Update login status
+    final authControl = Get.find<AuthControl>();
 
-    // Navigate to sign-in page
+    // Call the clearToken method
+    authControl.clearToken();
     Navigator.of(context)
         .pushNamedAndRemoveUntil('/sign_in', (Route<dynamic> route) => false);
   }
@@ -37,6 +38,7 @@ class Sidebar extends StatelessWidget {
             title: Text('Home'),
             onTap: () {
               Navigator.pop(context); // Close the drawer
+              Navigator.pushNamed(context, '/home'); // Navigate to home
             },
           ),
           ListTile(
@@ -44,6 +46,7 @@ class Sidebar extends StatelessWidget {
             title: Text('Settings'),
             onTap: () {
               Navigator.pop(context); // Close the drawer
+              Navigator.pushNamed(context, '/settings'); // Navigate to settings
             },
           ),
           ListTile(

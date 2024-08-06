@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/views/room_screen/room_screen.dart';
-import './models/api_services.dart'; // Pastikan path ini benar
-import './models/room_type.dart';
+import 'package:pmi_jateng/service/api_service.dart'; // Pastikan path ini benar
+import 'package:pmi_jateng/service/model/room_type.dart';
 
 class MeetingRoomCard extends StatelessWidget {
   const MeetingRoomCard({Key? key}) : super(key: key);
@@ -86,7 +86,8 @@ class MeetingRoomCard extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                      image: NetworkImage(room.image),
+                                      image: AssetImage(
+                                          'assets/images/kamar.jpeg'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),

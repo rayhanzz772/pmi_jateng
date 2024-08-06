@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'auth_control.dart';
+import 'config.dart';
 
 class AuthControl extends GetxController {
   // Reactive variables
@@ -16,7 +18,7 @@ class AuthControl extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _loadToken(); // Load token on initialization
+    _loadToken();
   }
 
   // Method to register
@@ -25,7 +27,7 @@ class AuthControl extends GetxController {
     isLoading2.value = true;
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.5:8000/api/register'),
+        Uri.parse('$baseUrl/api/register'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -56,7 +58,7 @@ class AuthControl extends GetxController {
     isLoading.value = true;
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.5:8000/api/login'),
+        Uri.parse('$baseUrl/api/login'),
         headers: {
           'Content-Type': 'application/json',
         },

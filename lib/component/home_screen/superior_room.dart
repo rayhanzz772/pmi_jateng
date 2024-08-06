@@ -28,7 +28,7 @@ class _SuperiorRoomState extends State<SuperiorRoom> {
     return Column(
       children: [
         Container(
-          height: hp * 0.45,
+          height: hp * 0.455,
           child: Row(
             children: [
               Container(

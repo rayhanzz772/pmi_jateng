@@ -77,7 +77,8 @@ class TopBar extends StatelessWidget {
                               width: wp * 0.07,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('assets/images/logo.png'),
+                                    image:
+                                        AssetImage('assets/images/620x480.png'),
                                     fit: BoxFit.cover),
                               )),
                           SizedBox(width: 7),

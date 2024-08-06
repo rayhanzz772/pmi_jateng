@@ -8,10 +8,10 @@ import 'package:pmi_jateng/component/home_screen/our_services.dart';
 import 'package:pmi_jateng/component/home_screen/superior_room.dart';
 import 'package:pmi_jateng/component/home_screen/top_bar.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
-import 'package:pmi_jateng/component/home_screen/meeting_room/meeting_room.dart';
+import 'package:pmi_jateng/component/home_screen/meeting_room.dart';
 import 'package:pmi_jateng/component/home_screen/sidebar.dart';
 import 'package:pmi_jateng/component/home_screen/book_now.dart';
-import 'package:pmi_jateng/auth/AuthControl.dart';
+import 'package:pmi_jateng/service/auth_control.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
