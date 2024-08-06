@@ -84,13 +84,13 @@ class RoomScreen extends StatelessWidget {
                     Expanded(
                       child: SingleChildScrollView(
                         padding: EdgeInsets.only(
+                          top: 10,
                           right: 10,
                           left: 10,
                         ),
                         child: Column(
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
@@ -99,7 +99,12 @@ class RoomScreen extends StatelessWidget {
                                       fontWeight: FontWeight.w700,
                                       fontSize: 20),
                                 ),
-                                Text("Per Malam mulai dari")
+                                Text(
+                                  "Per Malam mulai dari",
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: wp * 0.03),
+                                )
                               ],
                             ),
                             Row(
