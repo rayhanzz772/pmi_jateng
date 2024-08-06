@@ -8,6 +8,7 @@ import 'package:pmi_jateng/views/sign_in/sign_in.dart';
 import 'package:pmi_jateng/views/home_screen/home_screen.dart';
 import 'package:pmi_jateng/views/bottom_bar/bottom_bar.dart';
 import 'package:pmi_jateng/service/auth_control.dart';
+import 'package:pmi_jateng/views/profile_screen/profile_screen.dart';
 import 'package:pmi_jateng/views/welcome_screen/welcome_screen.dart';
 
 void main() async {
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/', page: () => SplashScreen()),
         GetPage(name: '/welcome_screen', page: () => MenuSelectScreen()),
+        GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(name: '/sign_in', page: () => SignInScreen()),
         GetPage(name: '/sign_up', page: () => SignUpScreen()),
         GetPage(name: '/menu_select', page: () => MenuSelectScreen()),

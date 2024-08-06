@@ -15,7 +15,7 @@ class SplashBloc {
     if (token != null && token.isNotEmpty) {
       Get.offAllNamed('/home');
     } else {
-      Get.offAllNamed('/sign_in');
+      Get.offAllNamed('/home');
     }
   }
 }

@@ -86,8 +86,8 @@ class MeetingRoomCard extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/kamar.jpeg'),
+                                      image: NetworkImage(room
+                                          .image), // Use NetworkImage instead of Image.network
                                       fit: BoxFit.cover,
                                     ),
                                   ),

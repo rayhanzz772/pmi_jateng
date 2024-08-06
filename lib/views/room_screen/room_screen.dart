@@ -25,6 +25,7 @@ class RoomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int displayPrice;
     final hp = MediaQuery.of(context).size.height;
     final wp = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -68,12 +69,11 @@ class RoomScreen extends StatelessWidget {
                       indicatorColor: kPrimaryWhite,
                       indicatorBackgroundColor: Colors.grey,
                       children: [
-                        // Image.network("$baseUrl/storage/default_image.jpg",
-                        //     fit: BoxFit.cover),
-                        Image.asset(
-                          'assets/images/kamar.jpeg',
-                          fit: BoxFit.cover,
-                        )
+                        Image.network(roomType.image, fit: BoxFit.cover),
+                        // Image.asset(
+                        //   'assets/images/kamar.jpeg',
+                        //   fit: BoxFit.cover,
+                        // )
                       ],
                       onPageChanged: (value) {
                         print('Page changed: $value');
@@ -94,10 +94,15 @@ class RoomScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  roomType.roomType, // Display room type
+                                  roomType.roomType.length > 12
+                                      ? roomType.roomType.substring(0, 12) +
+                                          '...'
+                                      : roomType
+                                          .roomType, // Display room type with truncation
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20),
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 20,
+                                  ),
                                 ),
                                 Text(
                                   "Per Malam mulai dari",
@@ -127,12 +132,12 @@ class RoomScreen extends StatelessWidget {
                                       size: 24.0,
                                     ),
                                     Text(
-                                      roomType.price, // Display room price
+                                      roomType.price, // Convert int to String
                                       style: TextStyle(
                                         color: kPrimaryFontColor,
                                         fontSize: 16.0,
                                       ),
-                                    ),
+                                    )
                                   ],
                                 ),
                               ],
@@ -307,7 +312,7 @@ class RoomScreen extends StatelessWidget {
                     onCheckout: () => _handleCheckout(
                       context,
                       roomType.roomType,
-                      roomType.price,
+                      roomType.price.toString(),
                     ),
                   ),
                 ),

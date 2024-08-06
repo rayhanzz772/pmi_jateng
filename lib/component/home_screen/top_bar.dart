@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 
 class TopBar extends StatelessWidget {
@@ -123,7 +124,9 @@ class TopBar extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.account_circle),
                   iconSize: hp * 0.05,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.offNamed('/profile');
+                  },
                 ),
               ],
             ),
