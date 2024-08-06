@@ -57,23 +57,30 @@ class ApiService {
     }
   }
 
-// Untuk menambahkan data pada bookin{g
+// Untuk menambahkan data pada booking
   Future<String?> insertData(
-      // {required String user_email,
-      // required int room_type_id,
-      // required String start_date,
-      // required String end_date,
-      // required int amount,
-      // required String side}
-      ) async {
+      {required String email,
+      required String id,
+      required String start_dt,
+      required String end_dt,
+      required String amo,
+      required String sd}) async {
     final Map<String, dynamic> data = {
-      "user_email": "admin@admin.com",
-      "room_type_id": "2",
+      "user_email": email,
+      "room_type_id": id,
       "start_date": "2024-08-06",
       "end_date": "2024-08-06",
-      "amount": "2",
+      "amount": amo,
       "side": "client"
     };
+
+    print('Sending request with parameters:');
+    // print('user_email: $user_email (type: ${user_email.runtimeType})');
+    // print('room_type_id: $id (type: ${id.runtimeType})');
+    // print('start_date: $start_date (type: ${start_date.runtimeType})');
+    // print('end_date: $end_date (type: ${end_date.runtimeType})');
+    // print('amount: $amount (type: ${amount.runtimeType})');
+    // print('side: $side (type: ${side.runtimeType})');
 
     try {
       Dio dio = Dio();
