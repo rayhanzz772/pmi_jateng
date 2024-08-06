@@ -7,6 +7,7 @@ import 'package:pmi_jateng/views/sign_in/sign_in.dart';
 class SignUpScreen extends StatelessWidget {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmpasswordController =
       TextEditingController();
@@ -101,6 +102,18 @@ class SignUpScreen extends StatelessWidget {
                                   ),
                                   SizedBox(height: 16.0),
                                   TextField(
+                                    keyboardType: TextInputType.number,
+                                    controller: phoneController,
+                                    decoration: InputDecoration(
+                                      labelText: 'phone',
+                                      labelStyle: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 16.0),
+                                  TextField(
                                     controller: passwordController,
                                     obscureText: true,
                                     decoration: InputDecoration(
@@ -128,6 +141,7 @@ class SignUpScreen extends StatelessWidget {
                                     onPressed: () {
                                       String username = usernameController.text;
                                       String email = emailController.text;
+                                      String phone = phoneController.text;
                                       String password = passwordController.text;
                                       String confirmPassword =
                                           confirmpasswordController.text;
@@ -141,8 +155,8 @@ class SignUpScreen extends StatelessWidget {
                                         return;
                                       }
                                       authController
-                                          .register(username, email, password,
-                                              confirmPassword)
+                                          .register(username, email, phone,
+                                              password, confirmPassword)
                                           .then((success) {
                                         if (success) {
                                           Get.offNamed('/sign_in');

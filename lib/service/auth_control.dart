@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -22,18 +24,19 @@ class AuthControl extends GetxController {
   }
 
   // Method to register
-  Future<bool> register(String name, String email, String password,
-      String password_confirmation) async {
+  Future<bool> register(String name, String email, String phone,
+      String password, String password_confirmation) async {
     isLoading2.value = true;
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/api/register'),
+        Uri.parse("$baseUrl/api/register"),
         headers: {
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
           'name': name,
           'email': email,
+          'phone': phone,
           'password': password,
           'password_confirmation': password_confirmation,
         }),

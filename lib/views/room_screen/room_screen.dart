@@ -28,39 +28,24 @@ class RoomScreen extends StatelessWidget {
     final hp = MediaQuery.of(context).size.height;
     final wp = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: kPrimaryWhite,
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: kPrimaryFontColor,
-              ),
-              child: Text(
-                'PMI',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              title: Text('Home'),
-              onTap: () {
-                Navigator.pushNamed(context, '/home');
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
+      appBar: AppBar(
+        backgroundColor: kPrimaryMaroon,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: kPrimaryWhite),
+          onPressed: () {
+            Get.toNamed('/home');
+          },
+        ),
+        title: Text(
+          'Home',
+          style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+              color: kPrimaryWhite),
         ),
       ),
+      backgroundColor: kPrimaryWhite,
       body: FutureBuilder<RoomType>(
         future: ApiService.fetchRoomTypeById(id),
         builder: (context, snapshot) {
@@ -76,11 +61,6 @@ class RoomScreen extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Container(
-                      height: hp * 0.12,
-                      width: wp,
-                      decoration: BoxDecoration(color: kPrimaryMaroon),
-                    ),
                     ImageSlideshow(
                       width: double.infinity,
                       height: 250,
@@ -103,10 +83,14 @@ class RoomScreen extends StatelessWidget {
                     ),
                     Expanded(
                       child: SingleChildScrollView(
-                        padding: EdgeInsets.all(20),
+                        padding: EdgeInsets.only(
+                          right: 10,
+                          left: 10,
+                        ),
                         child: Column(
                           children: [
-                            Row(
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
