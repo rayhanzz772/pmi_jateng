@@ -1,89 +1,331 @@
 // Profile_screen.dart
 import 'package:flutter/material.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
+import 'package:get/get.dart';
+import 'package:pmi_jateng/views/history/history_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final hp = MediaQuery.of(context).size.height;
+    final wp = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: kPrimaryColor,
-          automaticallyImplyLeading: false,
-          title: Row(
-            children: [
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.person,
-                    color: kPrimaryWhite,
-                  )),
+        backgroundColor: kPrimaryColor,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: kPrimaryWhite),
+          onPressed: () {
+            Get.toNamed('/home');
+          },
+        ),
+        title: Text(
+          'Profile',
+          style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+              color: kPrimaryWhite),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          height: hp,
+          width: wp,
+          decoration: BoxDecoration(color: kPrimaryWhite),
+          child: Container(
+            margin: EdgeInsets.only(bottom: hp * 0.1),
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Container(
+                width: wp * 0.35,
+                height: hp * 0.2,
+                decoration: BoxDecoration(
+                    border: Border.all(color: kPrimaryMaroon, width: 3),
+                    color: Colors.blue,
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/profile.jpg'),
+                        fit: BoxFit.contain)),
+              ),
+              Column(
+                children: [
+                  Text(
+                    'Albert John Doe',
+                    style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: wp * 0.06,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Text('@johndoe'),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextButton(
+                      onPressed: () {},
+                      child: Container(
+                        height: hp * 0.05,
+                        width: wp * 0.4,
+                        decoration: BoxDecoration(
+                            color: kPrimaryMaroon,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Center(
+                            child: Text(
+                          'Edit Profile',
+                          style: TextStyle(
+                              fontFamily: 'Poppins', color: kPrimaryWhite),
+                        )),
+                      ))
+                ],
+              ),
               SizedBox(
-                width: 8,
+                height: hp * 0.05,
               ),
-              Text(
-                'Profile',
-                style: TextStyle(
-                    fontFamily: 'poppins',
-                    fontWeight: FontWeight.bold,
-                    color: kPrimaryWhite),
+              Container(
+                height: hp * 0.003,
+                width: wp * 0.9,
+                color: kPrimaryMaroon,
+              ),
+              Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 15),
+                    width: wp * 0.9,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              height: hp * 0.06,
+                              width: wp * 0.15,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                shape: BoxShape.rectangle,
+                                color: kPrimaryGrey,
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.settings,
+                                  color: kPrimaryMaroon,
+                                  size: wp * 0.08,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Settings',
+                              style: TextStyle(
+                                  fontFamily: 'Poppins', fontSize: wp * 0.043),
+                            )
+                          ],
+                        ),
+                        Container(
+                          height: hp * 0.03,
+                          width: wp * 0.07,
+                          decoration: BoxDecoration(shape: BoxShape.circle),
+                          child: Center(
+                            child: Icon(
+                              Icons.arrow_circle_right_outlined,
+                              color: kPrimaryMaroon,
+                              size: wp * 0.08,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HistoryScreen()),
+                      );
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 10),
+                      width: wp * 0.9,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: hp * 0.06,
+                                width: wp * 0.15,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  shape: BoxShape.rectangle,
+                                  color: kPrimaryGrey,
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.timelapse,
+                                    color: kPrimaryMaroon,
+                                    size: wp * 0.08,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Transaction History',
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: wp * 0.043),
+                              )
+                            ],
+                          ),
+                          Container(
+                            height: hp * 0.03,
+                            width: wp * 0.07,
+                            decoration: BoxDecoration(shape: BoxShape.circle),
+                            child: Center(
+                              child: Icon(
+                                Icons.arrow_circle_right_outlined,
+                                color: kPrimaryMaroon,
+                                size: wp * 0.08,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    width: wp * 0.9,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              height: hp * 0.06,
+                              width: wp * 0.15,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                shape: BoxShape.rectangle,
+                                color: kPrimaryGrey,
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.verified_user_rounded,
+                                  color: kPrimaryMaroon,
+                                  size: wp * 0.08,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'User Management',
+                              style: TextStyle(
+                                  fontFamily: 'Poppins', fontSize: wp * 0.043),
+                            )
+                          ],
+                        ),
+                        Container(
+                          height: hp * 0.03,
+                          width: wp * 0.07,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.arrow_circle_right_outlined,
+                              color: kPrimaryMaroon,
+                              size: wp * 0.08,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    width: wp * 0.9,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              height: hp * 0.06,
+                              width: wp * 0.15,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                shape: BoxShape.rectangle,
+                                color: kPrimaryGrey,
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.info_outlined,
+                                  color: kPrimaryMaroon,
+                                  size: wp * 0.08,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Information',
+                              style: TextStyle(
+                                  fontFamily: 'Poppins', fontSize: wp * 0.043),
+                            )
+                          ],
+                        ),
+                        Container(
+                          height: hp * 0.03,
+                          width: wp * 0.07,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.arrow_circle_right_outlined,
+                              color: kPrimaryMaroon,
+                              size: wp * 0.08,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 25),
+                    width: wp * 0.9,
+                    height: hp * 0.07,
+                    decoration: BoxDecoration(
+                        color: kPrimaryMaroon,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Center(
+                      child: Text(
+                        'Log Out',
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: wp * 0.05,
+                            color: kPrimaryWhite,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ),
+                ],
               )
-            ],
-          )),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Drawer Header',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              title: Text('Profile'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
+            ]),
+          ),
         ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Welcome to the Profile Screen!',
-              style: TextStyle(fontSize: 24),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Add your onPressed code here!
-              },
-              child: Text('Button'),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        child: Icon(Icons.add),
       ),
     );
   }

@@ -25,6 +25,9 @@ class ApiService {
     final response =
         await http.get(Uri.parse("$baseUrl/api/v1/room_type/getDetail?id=$id"));
 
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
 
@@ -54,30 +57,28 @@ class ApiService {
     }
   }
 
-// Untuk menambahkan data pada booking
-  Future<String?> insertData({
-    required String name,
-    required String phone,
-    required int guests,
-    required String email,
-    required int harga,
-    required DateTime checkinTime,
-    required DateTime checkoutTime,
-  }) async {
+// Untuk menambahkan data pada bookin{g
+  Future<String?> insertData(
+      // {required String user_email,
+      // required int room_type_id,
+      // required String start_date,
+      // required String end_date,
+      // required int amount,
+      // required String side}
+      ) async {
     final Map<String, dynamic> data = {
-      'name': name,
-      'phone': phone,
-      'guests': guests,
-      'email': email,
-      'harga': harga,
-      'checkintime': checkinTime.toIso8601String(),
-      'checkouttime': checkoutTime.toIso8601String(),
+      "user_email": "admin@admin.com",
+      "room_type_id": "2",
+      "start_date": "2024-08-06",
+      "end_date": "2024-08-06",
+      "amount": "2",
+      "side": "client"
     };
 
     try {
       Dio dio = Dio();
       final response = await dio.post(
-        baseUrl,
+        "https://724b-103-148-235-253.ngrok-free.app/booking/generateToken",
         options: Options(
           headers: {
             'Content-Type': 'application/json',
@@ -86,7 +87,7 @@ class ApiService {
         data: data,
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         final responseBody = response.data;
         final snapToken = responseBody['snap_token'];
         return snapToken; // Kembalikan snapToken
