@@ -28,7 +28,7 @@ class UpdatePhone extends BookingEvent {
 }
 
 class UpdateGuests extends BookingEvent {
-  final int guests;
+  final String guests;
 
   UpdateGuests(this.guests);
 
@@ -75,7 +75,7 @@ class UpdateCheckOutTime extends BookingEvent {
 class SubmitBooking extends BookingEvent {
   final String name;
   final String phone;
-  final int guests;
+  final String guests;
   final DateTime checkInDate;
   final TimeOfDay checkInTime;
   final DateTime checkOutDate;
@@ -109,7 +109,7 @@ enum BookingStatus { initial, submitting, success, failure }
 class BookingState extends Equatable {
   final String name;
   final String phone;
-  final int guests;
+  final String guests;
   final DateTime checkInDate;
   final TimeOfDay checkInTime;
   final DateTime checkOutDate;
@@ -120,7 +120,7 @@ class BookingState extends Equatable {
   BookingState({
     this.name = '',
     this.phone = '',
-    this.guests = 1,
+    this.guests = "1",
     DateTime? checkInDate,
     TimeOfDay? checkInTime,
     DateTime? checkOutDate,
@@ -135,7 +135,7 @@ class BookingState extends Equatable {
   BookingState copyWith({
     String? name,
     String? phone,
-    int? guests,
+    String? guests,
     DateTime? checkInDate,
     TimeOfDay? checkInTime,
     DateTime? checkOutDate,
@@ -146,7 +146,7 @@ class BookingState extends Equatable {
     return BookingState(
       name: name ?? this.name,
       phone: phone ?? this.phone,
-      guests: guests ?? this.guests,
+      guests: this.guests,
       checkInDate: checkInDate ?? this.checkInDate,
       checkInTime: checkInTime ?? this.checkInTime,
       checkOutDate: checkOutDate ?? this.checkOutDate,

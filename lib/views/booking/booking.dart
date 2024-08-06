@@ -263,9 +263,7 @@ class BookingFormFields extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       initialValue: state.guests.toString(),
                       onChanged: (value) {
-                        context
-                            .read<BookingBloc>()
-                            .add(UpdateGuests(int.parse(value)));
+                        context.read<BookingBloc>().add(UpdateGuests(value));
                       },
                     );
                   },
@@ -572,13 +570,13 @@ class BookingFormFields extends StatelessWidget {
 
     try {
       final snapToken = await bookingBloc.apiService.insertData(
-          // user_email: "rayhanzz772@gmail.com",
-          // room_type_id: id.toString(), // Convert `id` to String
-          // start_date: "2024-08-04",
-          // end_date: "2024-08-05",
-          // amount: state.guests.toString(), // Convert `state.guests` to String
-          // side: "client",
-          );
+        email: "rayhanzz772@gmail.com",
+        id: id.toString(), // Convert `id` to String
+        start_dt: "2024-08-04",
+        end_dt: "2024-08-05",
+        amo: state.guests.toString(), // Convert `state.guests` to String
+        sd: "client",
+      );
 
       // Dismiss the loading dialog
       Navigator.of(context).pop();
