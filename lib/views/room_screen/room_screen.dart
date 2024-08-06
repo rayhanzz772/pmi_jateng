@@ -14,11 +14,16 @@ class RoomScreen extends StatelessWidget {
 
   const RoomScreen({Key? key, required this.id}) : super(key: key);
 
-  void _handleCheckout(BuildContext context, String roomType, String price) {
+  void _handleCheckout(
+      BuildContext context, String roomType, String price, int id) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BookingForm(roomType: roomType, price: price),
+        builder: (context) => BookingForm(
+          roomType: roomType,
+          price: price,
+          id: id,
+        ),
       ),
     );
   }
@@ -299,11 +304,8 @@ class RoomScreen extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: BottomBar(
-                    onCheckout: () => _handleCheckout(
-                      context,
-                      roomType.roomType,
-                      roomType.price,
-                    ),
+                    onCheckout: () => _handleCheckout(context,
+                        roomType.roomType, roomType.price, roomType.id),
                   ),
                 ),
               ],

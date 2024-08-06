@@ -8,8 +8,9 @@ import 'package:pmi_jateng/views/booking/paymentScreen.dart';
 class BookingForm extends StatelessWidget {
   final String roomType;
   final String price;
+  final int id;
 
-  BookingForm({required this.roomType, required this.price});
+  BookingForm({required this.roomType, required this.price, required this.id});
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -28,6 +29,7 @@ class BookingForm extends StatelessWidget {
           child: BookingFormFields(
             roomType: roomType,
             price: price,
+            id: id,
           ),
         ),
       ),
@@ -39,8 +41,10 @@ class BookingFormFields extends StatelessWidget {
   final ApiService apiService = ApiService();
   final String roomType;
   final String price;
+  final int id;
 
-  BookingFormFields({required this.roomType, required this.price});
+  BookingFormFields(
+      {required this.roomType, required this.price, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -568,14 +572,13 @@ class BookingFormFields extends StatelessWidget {
 
     try {
       final snapToken = await bookingBloc.apiService.insertData(
-        name: state.name,
-        phone: state.phone,
-        guests: state.guests,
-        email: "rayhanzz772@gmail.com",
-        harga: state.guests * 200000,
-        checkinTime: state.checkInDate,
-        checkoutTime: state.checkOutDate,
-      );
+          // user_email: "rayhanzz772@gmail.com",
+          // room_type_id: id.toString(), // Convert `id` to String
+          // start_date: "2024-08-04",
+          // end_date: "2024-08-05",
+          // amount: state.guests.toString(), // Convert `state.guests` to String
+          // side: "client",
+          );
 
       // Dismiss the loading dialog
       Navigator.of(context).pop();
