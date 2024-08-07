@@ -1,28 +1,27 @@
-class RoomType {
+class MeetRoom {
   final int id;
   final String roomType;
   final int capacity;
   final String price;
   final String description;
-  final List<String> roomImages;
-
-  RoomType({
+  final String image;
+  MeetRoom({
     required this.id,
     required this.roomType,
     required this.capacity,
     required this.price,
     required this.description,
-    required this.roomImages,
+    required this.image,
   });
 
-  factory RoomType.fromJson(Map<String, dynamic> json) {
-    return RoomType(
+  factory MeetRoom.fromJson(Map<String, dynamic> json) {
+    return MeetRoom(
       id: json['id'],
       roomType: json['room_type'],
       capacity: json['capacity'],
       price: json['price'],
       description: json['description'],
-      roomImages: List<String>.from(json['room_images']),
+      image: json['image'],
     );
   }
 }

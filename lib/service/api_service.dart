@@ -3,18 +3,20 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pmi_jateng/service/model/room_type.dart';
+import 'package:pmi_jateng/service/model/meeting_room.dart';
+
 import 'config.dart';
 
 class ApiService {
 // Menampilkan jenis ruangan
-  static Future<List<RoomType>> fetchRoomTypes() async {
+  static Future<List<MeetRoom>> fetchRoomTypes() async {
     final response =
         await http.get(Uri.parse("$baseUrl/api/v1/room_type/getAll"));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body);
 
-      return jsonData.map((json) => RoomType.fromJson(json)).toList();
+      return jsonData.map((json) => MeetRoom.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load room types');
     }
@@ -31,29 +33,46 @@ class ApiService {
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
 
-      if (jsonData['room_data'] == null) {
+      // Debugging
+      print('JSON Data: $jsonData');
+
+      final roomData = jsonData['room_data'];
+      final roomImages = jsonData['room_images'];
+
+      if (roomData == null) {
         throw Exception('room_data is null');
       }
 
-      dynamic roomData = jsonData['room_data'];
+      // Check for missing fields in room_data
+      List<String> missingFields = [];
+      if (roomData['id'] == null) missingFields.add('id');
+      if (roomData['room_type'] == null) missingFields.add('room_type');
+      if (roomData['capacity'] == null) missingFields.add('capacity');
+      if (roomData['price'] == null) missingFields.add('price');
+      if (roomData['description'] == null) missingFields.add('description');
 
-      // If room_data is a string, try to decode it
-      if (roomData is String) {
-        try {
-          roomData = json.decode(roomData);
-        } catch (e) {
-          throw Exception('Error decoding room_data string: $e');
-        }
+      if (missingFields.isNotEmpty) {
+        throw Exception(
+            'Missing fields in room_data: ${missingFields.join(', ')}');
       }
 
-      if (roomData is Map<String, dynamic>) {
-        return RoomType.fromJson(roomData);
-      } else {
-        throw Exception(
-            'Unexpected type for room_data: ${roomData.runtimeType}');
+      try {
+        // Create RoomType from room_data and room_images
+        return RoomType(
+          id: roomData['id'],
+          roomType: roomData['room_type'],
+          capacity: roomData['capacity'],
+          price: roomData['price'],
+          description: roomData['description'],
+          roomImages: List<String>.from(
+              roomImages ?? []), // Default to empty list if room_images is null
+        );
+      } catch (e) {
+        throw Exception('Error parsing room data: $e');
       }
     } else {
-      throw Exception('Failed to load room type');
+      throw Exception(
+          'Failed to load room type. Status code: ${response.statusCode}');
     }
   }
 

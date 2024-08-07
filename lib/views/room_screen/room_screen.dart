@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:get/get.dart';
 import 'package:pmi_jateng/component/home_screen/top_bar.dart';
-import 'package:pmi_jateng/service/config.dart';
-import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/service/api_service.dart';
 import 'package:pmi_jateng/service/model/room_type.dart';
+import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/views/booking/booking.dart';
 import 'package:pmi_jateng/views/room_screen/bottombar.dart';
-import 'package:get/get.dart';
 
 class RoomScreen extends StatelessWidget {
   final int id;
@@ -30,7 +29,6 @@ class RoomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int displayPrice;
     final hp = MediaQuery.of(context).size.height;
     final wp = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -63,29 +61,57 @@ class RoomScreen extends StatelessWidget {
             return Center(child: Text('No data available'));
           } else {
             final roomType = snapshot.data!;
+            final List<String> roomImages = roomType.roomImages;
+
             return Stack(
               children: [
                 Column(
                   children: [
-                    ImageSlideshow(
-                      width: double.infinity,
-                      height: 250,
-                      initialPage: 0,
-                      indicatorColor: kPrimaryWhite,
-                      indicatorBackgroundColor: Colors.grey,
-                      children: [
-                        Image.network(roomType.image, fit: BoxFit.cover),
-                        // Image.asset(
-                        //   'assets/images/kamar.jpeg',
-                        //   fit: BoxFit.cover,
-                        // )
-                      ],
-                      onPageChanged: (value) {
-                        print('Page changed: $value');
-                      },
-                      autoPlayInterval: 3000,
-                      isLoop: true,
-                    ),
+                    roomImages.isNotEmpty
+                        ? ImageSlideshow(
+                            width: double.infinity,
+                            height: 250,
+                            initialPage: 0,
+                            indicatorColor: kPrimaryWhite,
+                            indicatorBackgroundColor: Colors.grey,
+                            children: roomImages.map<Widget>((imageUrl) {
+                              print('Loading image: $imageUrl');
+                              try {
+                                Uri uri = Uri.parse(imageUrl);
+                                if (uri.isAbsolute) {
+                                  return Image.network(
+                                    imageUrl,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Image.asset(
+                                        'assets/images/placeholder.png',
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                  );
+                                } else {
+                                  throw Exception('Invalid URL: $imageUrl');
+                                }
+                              } catch (e) {
+                                print(e);
+                                return Image.asset(
+                                  'assets/images/placeholder.png',
+                                  fit: BoxFit.cover,
+                                );
+                              }
+                            }).toList(),
+                            onPageChanged: (value) {
+                              print('Page changed: $value');
+                            },
+                            autoPlayInterval: 3000,
+                            isLoop: true,
+                          )
+                        : Image.asset(
+                            'assets/images/placeholder.png',
+                            width: double.infinity,
+                            height: 250,
+                            fit: BoxFit.cover,
+                          ),
                     Expanded(
                       child: SingleChildScrollView(
                         padding: EdgeInsets.only(
@@ -102,8 +128,7 @@ class RoomScreen extends StatelessWidget {
                                   roomType.roomType.length > 12
                                       ? roomType.roomType.substring(0, 12) +
                                           '...'
-                                      : roomType
-                                          .roomType, // Display room type with truncation
+                                      : roomType.roomType,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 20,
@@ -114,7 +139,7 @@ class RoomScreen extends StatelessWidget {
                                   style: TextStyle(
                                       fontFamily: 'Poppins',
                                       fontSize: wp * 0.03),
-                                )
+                                ),
                               ],
                             ),
                             Row(
@@ -137,12 +162,12 @@ class RoomScreen extends StatelessWidget {
                                       size: 24.0,
                                     ),
                                     Text(
-                                      roomType.price, // Convert int to String
+                                      roomType.price.toString(),
                                       style: TextStyle(
                                         color: kPrimaryFontColor,
                                         fontSize: 16.0,
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ],
@@ -150,8 +175,7 @@ class RoomScreen extends StatelessWidget {
                             SizedBox(height: 10),
                             Container(
                               child: Text(
-                                roomType
-                                    .description, // Display room description
+                                roomType.description,
                                 textAlign: TextAlign.justify,
                               ),
                             ),
@@ -282,7 +306,7 @@ class RoomScreen extends StatelessWidget {
                                                         color:
                                                             kPrimaryFontColor),
                                                     SizedBox(width: 8),
-                                                    Text("2 bed",
+                                                    Text("Kamar Mandi",
                                                         style: TextStyle(
                                                             color:
                                                                 kPrimaryFontColor)),
@@ -291,16 +315,11 @@ class RoomScreen extends StatelessWidget {
                                               ],
                                             ),
                                           ],
-                                        ),
+                                        )
                                       ],
                                     ),
-                                  )
+                                  ),
                                 ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                children: [Text("TEST")],
                               ),
                             ),
                           ],

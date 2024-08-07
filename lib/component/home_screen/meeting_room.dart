@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/views/room_screen/room_screen.dart';
 import 'package:pmi_jateng/service/api_service.dart'; // Pastikan path ini benar
-import 'package:pmi_jateng/service/model/room_type.dart';
+import 'package:pmi_jateng/service/model/meeting_room.dart';
 
 class MeetingRoomCard extends StatelessWidget {
   const MeetingRoomCard({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class MeetingRoomCard extends StatelessWidget {
     final hp = MediaQuery.of(context).size.height;
     final wp = MediaQuery.of(context).size.width;
 
-    return FutureBuilder<List<RoomType>>(
+    return FutureBuilder<List<MeetRoom>>(
       future: ApiService.fetchRoomTypes(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -86,8 +86,7 @@ class MeetingRoomCard extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                      image: NetworkImage(room
-                                          .image), // Use NetworkImage instead of Image.network
+                                      image: NetworkImage(room.image),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
