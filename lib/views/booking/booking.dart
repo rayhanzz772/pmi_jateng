@@ -572,9 +572,9 @@ class BookingFormFields extends StatelessWidget {
       final snapToken = await bookingBloc.apiService.insertData(
         email: "rayhanzz772@gmail.com",
         id: id.toString(), // Convert `id` to String
-        start_dt: "2024-08-04",
-        end_dt: "2024-08-05",
-        amo: state.guests.toString(), // Convert `state.guests` to String
+        start_dt: state.checkInDate.toString(),
+        end_dt: state.checkOutDate.toString(),
+        amo: state.guests, // Convert `state.guests` to String
         sd: "client",
       );
 

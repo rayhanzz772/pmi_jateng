@@ -87,24 +87,24 @@ class ApiService {
     final Map<String, dynamic> data = {
       "user_email": email,
       "room_type_id": id,
-      "start_date": "2024-08-06",
-      "end_date": "2024-08-06",
+      "start_date": start_dt,
+      "end_date": end_dt,
       "amount": amo,
       "side": "client"
     };
 
     print('Sending request with parameters:');
-    // print('user_email: $user_email (type: ${user_email.runtimeType})');
-    // print('room_type_id: $id (type: ${id.runtimeType})');
-    // print('start_date: $start_date (type: ${start_date.runtimeType})');
-    // print('end_date: $end_date (type: ${end_date.runtimeType})');
-    // print('amount: $amount (type: ${amount.runtimeType})');
-    // print('side: $side (type: ${side.runtimeType})');
+    print('user_email: $email (type: ${email.runtimeType})');
+    print('room_type_id: $id (type: ${id.runtimeType})');
+    print('start_date: $start_dt (type: ${start_dt.runtimeType})');
+    print('end_date: $end_dt (type: ${end_dt.runtimeType})');
+    print('amount: $amo (type: ${amo.runtimeType})');
+    print('side: $sd (type: ${sd.runtimeType})');
 
     try {
       Dio dio = Dio();
       final response = await dio.post(
-        "https://724b-103-148-235-253.ngrok-free.app/booking/generateToken",
+        "https://4d63-149-108-20-185.ngrok-free.app/booking/generateToken",
         options: Options(
           headers: {
             'Content-Type': 'application/json',
