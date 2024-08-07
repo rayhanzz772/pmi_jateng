@@ -31,7 +31,8 @@ dependencies:
   get_storage: ^2.1.1
   image_picker: ^0.8.4+4
   intl: ^0.19.0
-  csrf: ^1.0.0
+  quickalert: ^1.1.0
+  # csrf: ^1.0.0
 
 dev_dependencies:
   flutter_test:

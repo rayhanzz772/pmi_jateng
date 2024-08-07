@@ -88,9 +88,19 @@ class AuthControl extends GetxController {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        token.value = data['access_token']; // Save token
-        await _saveToken(token.value); // Save token to SharedPreferences
-        Get.offNamed('/home'); // Navigate to home page
+
+        // Extract email and token from response
+        final extractedEmail = data['data']['email'];
+        final extractedToken = data['access_token'];
+
+        // Debug prints to verify extracted values
+        print('Extracted Email: $extractedEmail');
+        print('Extracted Token: $extractedToken');
+
+        // Save email and token
+        await _saveEmailAndToken(extractedEmail, extractedToken);
+
+        Get.offNamed('/home');
       } else {
         errorMessage.value = 'Failed to sign in: ${response.body}';
       }
@@ -101,10 +111,10 @@ class AuthControl extends GetxController {
     }
   }
 
-  // Save token to SharedPreferences
-  Future<void> _saveToken(String token) async {
+  Future<void> _saveEmailAndToken(String email, String token) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('auth_token', token);
+    await prefs.setString('auth_email', email); // Fixed key name
+    await prefs.setString('auth_token', token); // Fixed key name
   }
 
   // Load token from SharedPreferences

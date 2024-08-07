@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:pmi_jateng/views/history/history_screen.dart';
 import 'package:pmi_jateng/service/auth_control.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pmi_jateng/service/auth_control.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -12,6 +14,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String? _email;
+  String? _token;
+  bool _isLoading = true;
   Future<void> _signOut(BuildContext context) async {
     final authControl = Get.find<AuthControl>();
 
@@ -21,10 +26,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .pushNamedAndRemoveUntil('/sign_in', (Route<dynamic> route) => false);
   }
 
+  void initState() {
+    super.initState();
+    _loadEmailAndToken();
+  }
+
+  Future<void> _loadEmailAndToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _email = prefs.getString('auth_email');
+      _token = prefs.getString('auth_token');
+      _isLoading = false;
+    });
+
+    // Debug print statements
+    print('Email: $_email');
+    print('Token: $_token');
+  }
+
   @override
   Widget build(BuildContext context) {
     final hp = MediaQuery.of(context).size.height;
     final wp = MediaQuery.of(context).size.width;
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: kPrimaryWhite,
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (_token == null || _email == null) {
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Get.offNamed('/sign_in');
+      });
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,

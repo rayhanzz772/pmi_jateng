@@ -3,8 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:pmi_jateng/service/model/room_type.dart';
 import 'package:pmi_jateng/service/model/meeting_room.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
 // Menampilkan jenis ruangan
@@ -72,6 +74,31 @@ class ApiService {
     } else {
       throw Exception(
           'Failed to load room type. Status code: ${response.statusCode}');
+    }
+  }
+
+// Mengambil data transaksi per email
+  static Future<List<Map<String, dynamic>>> fetchUserTransactions(
+      String email, String? token) async {
+    final url =
+        '$baseUrl/api/v1/user_transaction/getUserTransaction?user_email=$email';
+
+    try {
+      final response = await http.get(Uri.parse(url), headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      });
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        return List<Map<String, dynamic>>.from(data);
+      } else {
+        print('Failed to load transactions: ${response.body}');
+        return [];
+      }
+    } catch (e) {
+      print('Error fetching transactions: $e');
+      return [];
     }
   }
 

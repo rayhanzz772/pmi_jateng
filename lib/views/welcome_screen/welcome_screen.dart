@@ -81,7 +81,8 @@ class _MenuSelectScreenState extends State<MenuSelectScreen> {
                               width: wp * 0.27,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('assets/images/logo.png'),
+                                    image:
+                                        AssetImage('assets/images/620x480.png'),
                                     fit: BoxFit.cover),
                               )),
                           SizedBox(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
 import 'package:pmi_jateng/component/home_screen/about_us.dart';
 import 'package:pmi_jateng/component/home_screen/contact_us.dart';
 import 'package:pmi_jateng/component/home_screen/footer.dart';
@@ -11,8 +13,7 @@ import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/component/home_screen/meeting_room.dart';
 import 'package:pmi_jateng/component/home_screen/sidebar.dart';
 import 'package:pmi_jateng/component/home_screen/book_now.dart';
-import 'package:pmi_jateng/service/auth_control.dart';
-import 'package:get/get.dart';
+import 'package:pmi_jateng/service/auth_control.dart'; // Ensure this is the correct path for your AuthControl service
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -20,17 +21,46 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String? _email;
+  String? _token;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadEmailAndToken();
+  }
+
+  Future<void> _loadEmailAndToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _email = prefs.getString('auth_email');
+      _token = prefs.getString('auth_token');
+      _isLoading = false;
+    });
+
+    // Debug print statements
+    print('Email: $_email');
+    print('Token: $_token');
+  }
+
   @override
   Widget build(BuildContext context) {
-    final AuthControl authControl = Get.find<AuthControl>();
     final hp = MediaQuery.of(context).size.height;
     final wp = MediaQuery.of(context).size.width;
 
-    if (authControl.token.value.isEmpty) {
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: kPrimaryWhite,
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (_token == null || _email == null) {
       WidgetsBinding.instance?.addPostFrameCallback((_) {
         Get.offNamed('/sign_in');
       });
     }
+
     return Scaffold(
       backgroundColor: kPrimaryWhite,
       body: Stack(

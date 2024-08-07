@@ -86,28 +86,15 @@ class RoomScreen extends StatelessWidget {
                             indicatorBackgroundColor: Colors.grey,
                             children: roomImages.map<Widget>((imageUrl) {
                               print('Loading image: $imageUrl');
-                              try {
-                                Uri uri = Uri.parse(imageUrl);
-                                if (uri.isAbsolute) {
-                                  return Image.network(
-                                    imageUrl,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Image.asset(
-                                        'assets/images/placeholder.png',
-                                        fit: BoxFit.cover,
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  throw Exception('Invalid URL: $imageUrl');
-                                }
-                              } catch (e) {
-                                print(e);
-                                return Image.asset(
-                                  'assets/images/placeholder.png',
+
+                              Uri uri = Uri.parse(imageUrl);
+                              if (uri.isAbsolute) {
+                                return Image.network(
+                                  imageUrl,
                                   fit: BoxFit.cover,
                                 );
+                              } else {
+                                throw Exception('Invalid URL: $imageUrl');
                               }
                             }).toList(),
                             onPageChanged: (value) {
@@ -116,12 +103,7 @@ class RoomScreen extends StatelessWidget {
                             autoPlayInterval: 3000,
                             isLoop: true,
                           )
-                        : Image.asset(
-                            'assets/images/placeholder.png',
-                            width: double.infinity,
-                            height: 250,
-                            fit: BoxFit.cover,
-                          ),
+                        : Container(),
                     Expanded(
                       child: SingleChildScrollView(
                         padding: EdgeInsets.only(

@@ -1,8 +1,8 @@
-// Profile_screen.dart
 import 'package:flutter/material.dart';
-import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:get/get.dart';
-import 'package:pmi_jateng/views/history/history_screen.dart';
+import 'package:pmi_jateng/utils/color/constant.dart';
+import 'package:pmi_jateng/service/api_service.dart'; // Import file api_service.dart
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryScreen extends StatefulWidget {
   @override
@@ -11,40 +11,58 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   int selectedItem = 0;
-  final List<Map<String, String>> rooms = [
-    {
-      'title': 'Middle meeting room',
-      'date': '07/12/2023',
-      'code': 'xxxxxx',
-      'description':
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      'status': 'Failed',
-      'image': 'assets/images/kamar.jpeg', // Add your image asset here
-    },
-    {
-      'title': 'Middle meeting room',
-      'date': '07/12/2023',
-      'code': 'xxxxxx',
-      'description':
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      'status': 'Sukses',
-      'image': 'assets/images/kamar.jpeg', // Add your image asset here
-    },
+  String? _email;
+  String? _token;
+  bool _isLoading = true;
+  List<Map<String, dynamic>> _transactions = [];
 
-    // Add more items as needed
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _loadEmailAndToken();
+  }
+
+  Future<void> _loadEmailAndToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _email = prefs.getString('auth_email');
+      _token = prefs.getString('auth_token');
+      _isLoading = false;
+    });
+
+    // Debug print statements
+    print('Email: $_email');
+    print('Token: $_token');
+
+    if (_email != null) {
+      _fetchUserTransactions();
+    }
+  }
+
+  Future<void> _fetchUserTransactions() async {
+    if (_email == null || _token == null) return;
+
+    final transactions =
+        await ApiService.fetchUserTransactions(_email!, _token);
+    setState(() {
+      _transactions = transactions;
+    });
+  }
+
   final List<String> labels = [
-    'Semua',
-    'Sukses',
-    'Pending',
-    'Failed',
+    'semua',
+    'sukses',
+    'pending',
+    'failed',
   ];
-  List<Map<String, String>> getFilteredRooms() {
-    if (labels[selectedItem] == 'Semua') {
-      return rooms;
+
+  List<Map<String, dynamic>> getFilteredTransactions() {
+    if (labels[selectedItem] == 'semua') {
+      return _transactions;
     } else {
-      return rooms
-          .where((room) => room['status'] == labels[selectedItem])
+      return _transactions
+          .where((transaction) =>
+              transaction['transaction_status'] == labels[selectedItem])
           .toList();
     }
   }
@@ -53,6 +71,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     final hp = MediaQuery.of(context).size.height;
     final wp = MediaQuery.of(context).size.width;
+
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: kPrimaryWhite,
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (_token == null || _email == null) {
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Get.offNamed('/sign_in');
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
@@ -115,13 +147,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
               margin: EdgeInsets.only(bottom: 200),
               width: wp,
               child: ListView.builder(
-                shrinkWrap:
-                    true, // Added to make ListView.builder take only needed space
-                physics:
-                    NeverScrollableScrollPhysics(), // Disable inner ListView scroll
-                itemCount: getFilteredRooms().length,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: getFilteredTransactions().length,
                 itemBuilder: (context, index) {
-                  final room = getFilteredRooms()[index];
+                  final transaction = getFilteredTransactions()[index];
                   return Container(
                     height: hp * 0.2,
                     margin: EdgeInsets.all(8.0),
@@ -150,14 +180,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                room['title']!,
+                                'TRANSACTION',
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: wp * 0.04,
-                                    fontWeight: FontWeight.w600),
+                                    fontSize: wp * 0.035,
+                                    fontWeight: FontWeight.w700),
                               ),
                               Text(
-                                room['date']!,
+                                transaction['transaction_date']!,
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: wp * 0.03,
@@ -178,7 +208,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: Image.asset(
-                                    room['image']!,
+                                    'assets/images/kamar.jpeg', // Placeholder image
                                     width: wp * 0.3,
                                     height: hp * 0.128,
                                     fit: BoxFit.cover,
@@ -202,7 +232,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            '${room['code']} (kode pemesanan)',
+                                            '${transaction['order_id']}',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontFamily: 'Poppins',
@@ -213,7 +243,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                             padding: const EdgeInsets.only(
                                                 right: 8.0),
                                             child: Text(
-                                              room['description']!,
+                                              '${transaction['amount']} items - Total Price: ${transaction['total_price']}',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily: 'Poppins',
@@ -229,16 +259,22 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     Column(
                                       children: [
                                         Text(
-                                          room['status']!,
+                                          transaction['transaction_status']!,
                                           style: TextStyle(
                                             fontSize: wp * 0.03,
                                             fontFamily: 'Poppins',
                                             fontWeight: FontWeight.w600,
-                                            color: room['status'] == 'Sukses'
+                                            color: transaction[
+                                                        'transaction_status'] ==
+                                                    'sukses'
                                                 ? Colors.green
-                                                : room['status'] == 'Pending'
-                                                    ? Colors.yellow
-                                                    : room['status'] == 'Failed'
+                                                : transaction[
+                                                            'transaction_status'] ==
+                                                        'pending'
+                                                    ? Colors.blue[900]
+                                                    : transaction[
+                                                                'transaction_status'] ==
+                                                            'failed'
                                                         ? Colors.red
                                                         : Colors.black,
                                           ),

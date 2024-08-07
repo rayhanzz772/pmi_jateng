@@ -11,7 +11,8 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthControl authController = Get.put(AuthControl());
-
+    final hp = MediaQuery.of(context).size.height;
+    final wp = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: kPrimaryWhite,
       body: Obx(() {
@@ -34,7 +35,7 @@ class SignInScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 30),
+              SizedBox(height: hp * 0.06),
               Row(
                 children: [
                   IconButton(
@@ -52,7 +53,7 @@ class SignInScreen extends StatelessWidget {
                       width:
                           10), // Add some spacing between the icon and the image
                   Image.asset(
-                    'assets/images/logo_PMI.png',
+                    'assets/images/logoPMI.png',
                     height: 40, // Specify the height of the image
                   ),
                 ],

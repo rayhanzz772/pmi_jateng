@@ -15,7 +15,8 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthControl authController = Get.put(AuthControl());
-
+    final hp = MediaQuery.of(context).size.height;
+    final wp = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: kPrimaryWhite,
       body: Obx(() {
@@ -29,7 +30,7 @@ class SignUpScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 30),
+                SizedBox(height: hp * 0.06),
                 Row(
                   children: [
                     IconButton(
@@ -45,7 +46,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10),
                     Image.asset(
-                      'assets/images/logo_PMI.png',
+                      'assets/images/logoPMI.png',
                       height: 40,
                     ),
                   ],
