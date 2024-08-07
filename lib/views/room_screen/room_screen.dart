@@ -27,6 +27,16 @@ class RoomScreen extends StatelessWidget {
     );
   }
 
+  String _formatPrice(String price) {
+    try {
+      double parsedPrice = double.parse(price);
+      return parsedPrice.toStringAsFixed(0); // Format without decimal part
+    } catch (e) {
+      print('Error parsing price: $e');
+      return price; // Return the original string if there's an error
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final hp = MediaQuery.of(context).size.height;
@@ -156,17 +166,20 @@ class RoomScreen extends StatelessWidget {
                                 ),
                                 Row(
                                   children: [
-                                    Icon(
-                                      Icons.attach_money,
-                                      color: kPrimaryFontColor,
-                                      size: 24.0,
+                                    Text(
+                                      'Rp ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'Poppins',
+                                          fontSize: wp * 0.045,
+                                          color: kPrimaryMaroon),
                                     ),
                                     Text(
-                                      roomType.price.toString(),
+                                      _formatPrice(roomType.price.toString()),
                                       style: TextStyle(
-                                        color: kPrimaryFontColor,
-                                        fontSize: 16.0,
-                                      ),
+                                          color: kPrimaryMaroon,
+                                          fontSize: wp * 0.045,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                   ],
                                 ),
@@ -216,7 +229,7 @@ class RoomScreen extends StatelessWidget {
                                                 Row(
                                                   children: [
                                                     Icon(Icons.wifi,
-                                                        size: 18,
+                                                        size: wp * 0.035,
                                                         color:
                                                             kPrimaryFontColor),
                                                     SizedBox(width: 8),
@@ -234,7 +247,7 @@ class RoomScreen extends StatelessWidget {
                                                     Icon(
                                                         Icons
                                                             .local_fire_department,
-                                                        size: 18,
+                                                        size: wp * 0.035,
                                                         color:
                                                             kPrimaryFontColor),
                                                     SizedBox(width: 8),
@@ -253,7 +266,7 @@ class RoomScreen extends StatelessWidget {
                                                 Row(
                                                   children: [
                                                     Icon(Icons.ac_unit,
-                                                        size: 18,
+                                                        size: wp * 0.035,
                                                         color:
                                                             kPrimaryFontColor),
                                                     SizedBox(width: 8),
@@ -269,7 +282,7 @@ class RoomScreen extends StatelessWidget {
                                                     Icon(
                                                         Icons
                                                             .local_laundry_service,
-                                                        size: 18,
+                                                        size: wp * 0.035,
                                                         color:
                                                             kPrimaryFontColor),
                                                     SizedBox(width: 8),
@@ -288,7 +301,7 @@ class RoomScreen extends StatelessWidget {
                                                 Row(
                                                   children: [
                                                     Icon(Icons.tv,
-                                                        size: 18,
+                                                        size: wp * 0.035,
                                                         color:
                                                             kPrimaryFontColor),
                                                     SizedBox(width: 8),
@@ -302,7 +315,7 @@ class RoomScreen extends StatelessWidget {
                                                 Row(
                                                   children: [
                                                     Icon(Icons.bed,
-                                                        size: 18,
+                                                        size: wp * 0.035,
                                                         color:
                                                             kPrimaryFontColor),
                                                     SizedBox(width: 8),

@@ -104,7 +104,7 @@ class ApiService {
     try {
       Dio dio = Dio();
       final response = await dio.post(
-        "https://4d63-149-108-20-185.ngrok-free.app/booking/generateToken",
+        "$baseUrl/booking/generateToken",
         options: Options(
           headers: {
             'Content-Type': 'application/json',
