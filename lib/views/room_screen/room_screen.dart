@@ -135,13 +135,13 @@ class RoomScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  roomType.roomType.length > 12
-                                      ? roomType.roomType.substring(0, 12) +
+                                  roomType.roomType.length > 20
+                                      ? roomType.roomType.substring(0, 20) +
                                           '...'
                                       : roomType.roomType,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w700,
-                                    fontSize: 20,
+                                    fontSize: wp * 0.04,
                                   ),
                                 ),
                                 Text(
