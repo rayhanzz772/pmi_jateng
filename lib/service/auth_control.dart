@@ -30,7 +30,7 @@ class AuthControl extends GetxController {
     isLoading2.value = true;
     try {
       final response = await http.post(
-        Uri.parse("$baseUrl/api/register"),
+        Uri.parse("$baseUrl/api/v1/register"),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -42,6 +42,9 @@ class AuthControl extends GetxController {
           'password_confirmation': password_confirmation,
         }),
       );
+
+      // Print the response status code
+      print("Response Status Code: ${response.statusCode}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         Get.snackbar('Success', 'Registration successful',
@@ -73,7 +76,7 @@ class AuthControl extends GetxController {
     isLoading.value = true;
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/api/login'),
+        Uri.parse('$baseUrl/api/v1/login'),
         headers: {
           'Content-Type': 'application/json',
         },

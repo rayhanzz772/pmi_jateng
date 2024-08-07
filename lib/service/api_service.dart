@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pmi_jateng/service/model/room_type.dart';
 import 'package:pmi_jateng/service/model/meeting_room.dart';
@@ -104,7 +103,7 @@ class ApiService {
     try {
       Dio dio = Dio();
       final response = await dio.post(
-        "$baseUrl/booking/generateToken",
+        "$baseUrl/api/v1/booking/generateToken",
         options: Options(
           headers: {
             'Content-Type': 'application/json',

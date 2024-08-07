@@ -27,9 +27,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
           onHttpError: (HttpResponseError error) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url.contains('callback-url')) {
+            if (request.url.contains('example.com')) {
               // Handle callback from Midtrans
-              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Transaksi berhasil'),
+                  backgroundColor: Colors.green,
+                ),
+              );
+              Navigator.pushReplacementNamed(context, '/home');
             }
             return NavigationDecision.navigate;
           },
@@ -44,9 +50,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Payment'),
-      ),
       body: WebViewWidget(controller: _controller),
     );
   }
