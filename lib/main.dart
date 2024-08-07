@@ -10,6 +10,7 @@ import 'package:pmi_jateng/views/home_screen/home_screen.dart';
 import 'package:pmi_jateng/views/bottom_bar/bottom_bar.dart';
 import 'package:pmi_jateng/service/auth_control.dart';
 import 'package:pmi_jateng/views/profile_screen/profile_screen.dart';
+import 'package:pmi_jateng/views/profile_screen/edit_profile.dart';
 import 'package:pmi_jateng/views/welcome_screen/welcome_screen.dart';
 
 void main() async {
@@ -37,14 +38,14 @@ class MyApp extends StatelessWidget {
         Get.put(AuthControl());
       }),
       getPages: [
-        GetPage(name: '/', page: () => MenuSelectScreen()),
+        GetPage(name: '/', page: () => SplashScreen()),
         GetPage(name: '/welcome_screen', page: () => MenuSelectScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(name: '/sign_in', page: () => HomeScreen()),
         GetPage(name: '/sign_up', page: () => SignUpScreen()),
-        GetPage(name: '/menu_select', page: () => MenuSelectScreen()),
         GetPage(name: '/home', page: () => HomeScreen()),
         GetPage(name: '/bottom_bar', page: () => BottomBar()),
+        GetPage(name: '/edit_profile', page: () => EditProfile()),
         GetPage(
           name: '/room_screen',
           page: () => RoomScreen(id: Get.arguments as int),

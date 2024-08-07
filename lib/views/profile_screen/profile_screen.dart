@@ -3,8 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:get/get.dart';
 import 'package:pmi_jateng/views/history/history_screen.dart';
+import 'package:pmi_jateng/service/auth_control.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  Future<void> _signOut(BuildContext context) async {
+    final authControl = Get.find<AuthControl>();
+
+    // Call the clearToken method
+    authControl.clearToken();
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/sign_in', (Route<dynamic> route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     final hp = MediaQuery.of(context).size.height;
@@ -62,7 +78,9 @@ class ProfileScreen extends StatelessWidget {
                     height: 10,
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed('/edit_profile');
+                      },
                       child: Container(
                         height: hp * 0.05,
                         width: wp * 0.4,
@@ -303,21 +321,27 @@ class ProfileScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 25),
-                    width: wp * 0.9,
-                    height: hp * 0.07,
-                    decoration: BoxDecoration(
-                        color: kPrimaryMaroon,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Center(
-                      child: Text(
-                        'Log Out',
-                        style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: wp * 0.05,
-                            color: kPrimaryWhite,
-                            fontWeight: FontWeight.w700),
+                  GestureDetector(
+                    onTap: () async {
+                      Navigator.pop(context);
+                      await _signOut(context);
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 25),
+                      width: wp * 0.9,
+                      height: hp * 0.07,
+                      decoration: BoxDecoration(
+                          color: kPrimaryMaroon,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Center(
+                        child: Text(
+                          'Log Out',
+                          style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: wp * 0.05,
+                              color: kPrimaryWhite,
+                              fontWeight: FontWeight.w700),
+                        ),
                       ),
                     ),
                   ),

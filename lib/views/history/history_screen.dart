@@ -18,7 +18,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       'code': 'xxxxxx',
       'description':
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      'status': 'Selesai',
+      'status': 'Failed',
       'image': 'assets/images/kamar.jpeg', // Add your image asset here
     },
     {
@@ -27,7 +27,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       'code': 'xxxxxx',
       'description':
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      'status': 'Selesai',
+      'status': 'Sukses',
       'image': 'assets/images/kamar.jpeg', // Add your image asset here
     },
 
@@ -35,11 +35,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
   ];
   final List<String> labels = [
     'Semua',
-    'Selesai',
-    'Proses',
-    'Verifikasi',
-    'Pending'
+    'Sukses',
+    'Pending',
+    'Failed',
   ];
+  List<Map<String, String>> getFilteredRooms() {
+    if (labels[selectedItem] == 'Semua') {
+      return rooms;
+    } else {
+      return rooms
+          .where((room) => room['status'] == labels[selectedItem])
+          .toList();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final hp = MediaQuery.of(context).size.height;
@@ -110,10 +119,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     true, // Added to make ListView.builder take only needed space
                 physics:
                     NeverScrollableScrollPhysics(), // Disable inner ListView scroll
-                itemCount: rooms.length,
+                itemCount: getFilteredRooms().length,
                 itemBuilder: (context, index) {
-                  final room = rooms[index];
+                  final room = getFilteredRooms()[index];
                   return Container(
+                    height: hp * 0.2,
                     margin: EdgeInsets.all(8.0),
                     padding: EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
@@ -128,58 +138,119 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         ),
                       ],
                     ),
-                    child: Row(
+                    child: Column(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.asset(
-                            room['image']!,
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        Container(
+                          padding: EdgeInsets.only(bottom: 10),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1, color: Colors.grey))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 room['title']!,
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: wp * 0.04,
+                                    fontWeight: FontWeight.w600),
                               ),
                               Text(
                                 room['date']!,
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: wp * 0.03,
+                                ),
                               ),
-                              SizedBox(height: 10),
-                              Text(
-                                '${room['code']} (kode pemesanan)',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 5),
-                              Text(room['description']!),
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
-                        Column(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                iconColor: Colors.green,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
+                        SizedBox(
+                          height: hp * 0.01,
+                        ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.asset(
+                                    room['image']!,
+                                    width: wp * 0.3,
+                                    height: hp * 0.128,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                              child: Text(room['status']!),
-                            ),
-                          ],
-                        ),
+                              SizedBox(
+                                width: 7,
+                              ),
+                              Container(
+                                height: hp * 0.12,
+                                width: wp * 0.58,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${room['code']} (kode pemesanan)',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily: 'Poppins',
+                                                fontSize: wp * 0.03),
+                                          ),
+                                          SizedBox(height: 5),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 8.0),
+                                            child: Text(
+                                              room['description']!,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: wp * 0.025),
+                                              maxLines: 4,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          room['status']!,
+                                          style: TextStyle(
+                                            fontSize: wp * 0.03,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w600,
+                                            color: room['status'] == 'Sukses'
+                                                ? Colors.green
+                                                : room['status'] == 'Pending'
+                                                    ? Colors.yellow
+                                                    : room['status'] == 'Failed'
+                                                        ? Colors.red
+                                                        : Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   );
