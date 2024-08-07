@@ -96,7 +96,7 @@ class MeetingRoomCard extends StatelessWidget {
                                   child: Text(
                                     room.roomType,
                                     style: TextStyle(
-                                      fontSize: wp * 0.05,
+                                      fontSize: wp * 0.04,
                                       color: kPrimaryBlack,
                                       fontWeight: FontWeight.bold,
                                     ),
