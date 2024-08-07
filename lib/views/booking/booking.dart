@@ -163,82 +163,6 @@ class BookingFormFields extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Nama Pemesan"),
-                SizedBox(
-                  height: 3,
-                ),
-                BlocBuilder<BookingBloc, BookingState>(
-                  builder: (context, state) {
-                    return Container(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: kPrimaryWhite),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: kPrimaryFontColor),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
-                        initialValue: state.name,
-                        onChanged: (value) {
-                          context.read<BookingBloc>().add(UpdateName(value));
-                        },
-                      ),
-                    );
-                  },
-                ),
-                SizedBox(
-                  height: 2,
-                ),
-                Text(
-                  "*Isi nama pemesan sesuai KTP/Paspor/SIM",
-                  style: TextStyle(fontSize: 12),
-                ),
-                SizedBox(height: 10),
-                Text("Nomor Hp"),
-                SizedBox(
-                  height: 3,
-                ),
-                BlocBuilder<BookingBloc, BookingState>(
-                  builder: (context, state) {
-                    return TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: kPrimaryWhite),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: kPrimaryFontColor),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                      ),
-                      initialValue: state.phone,
-                      onChanged: (value) {
-                        context.read<BookingBloc>().add(UpdatePhone(value));
-                      },
-                    );
-                  },
-                ),
-                SizedBox(
-                  height: 2,
-                ),
-                Text(
-                  "*Contoh: +62812345678",
-                  style: TextStyle(fontSize: 12),
-                ),
-                SizedBox(height: 10),
                 Text("Banyak Orang"),
                 SizedBox(
                   height: 3,
@@ -306,6 +230,13 @@ class BookingFormFields extends StatelessWidget {
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime(2101),
                               );
+
+                              // Retrieve the current BookingState to check the default value
+                              final currentState =
+                                  context.read<BookingBloc>().state;
+                              final defaultDateString =
+                                  "yyyy-MM-dd"; // Replace with your actual default date format
+
                               if (pickedDate != null) {
                                 // Create a new DateTime object with the picked date and time set to midnight
                                 DateTime dateOnly = DateTime(pickedDate.year,
@@ -322,6 +253,15 @@ class BookingFormFields extends StatelessWidget {
                                 context
                                     .read<BookingBloc>()
                                     .add(UpdateCheckInDate(formattedDate));
+                              } else if (currentState.checkInDate ==
+                                  "yyyy-MM-dd") {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content:
+                                        Text('Masukan tanggal masuk dahulu'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
                               }
                             },
                           ),
@@ -517,13 +457,14 @@ class BookingFormFields extends StatelessWidget {
                   children: [
                     BlocBuilder<BookingBloc, BookingState>(
                       builder: (context, state) {
-                        if (state.status == BookingStatus.submitting) {
-                          return CircularProgressIndicator();
-                        }
+                        bool isDateValid = state.checkInDate != "yyyy-MM-dd" &&
+                            state.checkOutDate != "yyyy-MM-dd";
                         return ElevatedButton(
-                          onPressed: () async {
-                            await handleBooking(context);
-                          },
+                          onPressed: isDateValid
+                              ? () async {
+                                  await handleBooking(context);
+                                }
+                              : null,
                           style: ElevatedButton.styleFrom(
                               backgroundColor: kPrimaryFontColor),
                           child: Text(
@@ -598,7 +539,7 @@ class BookingFormFields extends StatelessWidget {
       // Dismiss the loading dialog
       Navigator.of(context).pop();
 
-      if (snapToken != null) {
+      if (snapToken != null && state.checkInDate != "yyyy-MM-dd") {
         Navigator.push(
           context,
           MaterialPageRoute(

@@ -146,7 +146,7 @@ class BookingState extends Equatable {
     return BookingState(
       name: name ?? this.name,
       phone: phone ?? this.phone,
-      guests: this.guests,
+      guests: guests ?? this.guests,
       checkInDate: checkInDate ?? this.checkInDate,
       checkInTime: checkInTime ?? this.checkInTime,
       checkOutDate: checkOutDate ?? this.checkOutDate,
