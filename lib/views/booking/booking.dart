@@ -589,7 +589,12 @@ class BookingFormFields extends StatelessWidget {
           ),
         );
       } else {
-        print('Failed to get snap token');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Kamar penuh'),
+            duration: Duration(seconds: 2),
+          ),
+        );
       }
     } catch (e) {
       // Dismiss the loading dialog
