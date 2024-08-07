@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pmi_jateng/service/api_service.dart';
+import 'package:flutter/material.dart'; // For TimeOfDay
+import 'package:intl/intl.dart'; // For date formatting
 
 // Events
 abstract class BookingEvent extends Equatable {
@@ -37,7 +39,7 @@ class UpdateGuests extends BookingEvent {
 }
 
 class UpdateCheckInDate extends BookingEvent {
-  final DateTime checkInDate;
+  final String checkInDate;
 
   UpdateCheckInDate(this.checkInDate);
 
@@ -55,7 +57,7 @@ class UpdateCheckInTime extends BookingEvent {
 }
 
 class UpdateCheckOutDate extends BookingEvent {
-  final DateTime checkOutDate;
+  final String checkOutDate;
 
   UpdateCheckOutDate(this.checkOutDate);
 
@@ -110,9 +112,9 @@ class BookingState extends Equatable {
   final String name;
   final String phone;
   final String guests;
-  final DateTime checkInDate;
+  final String checkInDate;
   final TimeOfDay checkInTime;
-  final DateTime checkOutDate;
+  final String checkOutDate;
   final TimeOfDay checkOutTime;
   final BookingStatus status;
   final String errorMessage;
@@ -121,24 +123,22 @@ class BookingState extends Equatable {
     this.name = '',
     this.phone = '',
     this.guests = "1",
-    DateTime? checkInDate,
+    this.checkInDate = "yyyy-MM-dd",
     TimeOfDay? checkInTime,
-    DateTime? checkOutDate,
+    this.checkOutDate = "yyyy-MM-dd",
     TimeOfDay? checkOutTime,
     this.status = BookingStatus.initial,
     this.errorMessage = '',
-  })  : checkInDate = checkInDate ?? DateTime.now(),
-        checkInTime = checkInTime ?? TimeOfDay.now(),
-        checkOutDate = checkOutDate ?? DateTime.now(),
+  })  : checkInTime = checkInTime ?? TimeOfDay.now(),
         checkOutTime = checkOutTime ?? TimeOfDay.now();
 
   BookingState copyWith({
     String? name,
     String? phone,
     String? guests,
-    DateTime? checkInDate,
+    String? checkInDate,
     TimeOfDay? checkInTime,
-    DateTime? checkOutDate,
+    String? checkOutDate,
     TimeOfDay? checkOutTime,
     BookingStatus? status,
     String? errorMessage,

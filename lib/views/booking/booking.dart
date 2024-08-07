@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pmi_jateng/blocs/booking/booking_event.dart';
 import 'package:pmi_jateng/service/api_service.dart';
@@ -297,22 +298,30 @@ class BookingFormFields extends StatelessWidget {
                             ),
                             readOnly: true,
                             controller: TextEditingController(
-                              text: state.checkInDate
-                                  .toLocal()
-                                  .toString()
-                                  .split(' ')[0],
+                              text: state.checkInDate.toString().split(' ')[0],
                             ),
                             onTap: () async {
                               DateTime? pickedDate = await showDatePicker(
                                 context: context,
-                                initialDate: state.checkInDate,
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime(2101),
                               );
                               if (pickedDate != null) {
+                                // Create a new DateTime object with the picked date and time set to midnight
+                                DateTime dateOnly = DateTime(pickedDate.year,
+                                    pickedDate.month, pickedDate.day);
+
+                                // Format the date as "yyyy-MM-dd"
+                                String formattedDate =
+                                    DateFormat('yyyy-MM-dd').format(dateOnly);
+
+                                // Print the formatted date
+                                print('Selected date: $formattedDate');
+
+                                // Dispatch the updated date to the BookingBloc
                                 context
                                     .read<BookingBloc>()
-                                    .add(UpdateCheckInDate(pickedDate));
+                                    .add(UpdateCheckInDate(formattedDate));
                               }
                             },
                           ),
@@ -387,22 +396,30 @@ class BookingFormFields extends StatelessWidget {
                             ),
                             readOnly: true,
                             controller: TextEditingController(
-                              text: state.checkOutDate
-                                  .toLocal()
-                                  .toString()
-                                  .split(' ')[0],
+                              text: state.checkOutDate.toString().split(' ')[0],
                             ),
                             onTap: () async {
                               DateTime? pickedDate = await showDatePicker(
                                 context: context,
-                                initialDate: state.checkOutDate,
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime(2101),
                               );
                               if (pickedDate != null) {
+                                // Create a new DateTime object with the picked date and time set to midnight
+                                DateTime dateOnly = DateTime(pickedDate.year,
+                                    pickedDate.month, pickedDate.day);
+
+                                // Format the date as "yyyy-MM-dd"
+                                String formattedDate =
+                                    DateFormat('yyyy-MM-dd').format(dateOnly);
+
+                                // Print the formatted date
+                                print('Selected date: $formattedDate');
+
+                                // Dispatch the updated date to the BookingBloc
                                 context
                                     .read<BookingBloc>()
-                                    .add(UpdateCheckOutDate(pickedDate));
+                                    .add(UpdateCheckOutDate(formattedDate));
                               }
                             },
                           ),
