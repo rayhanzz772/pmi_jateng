@@ -15,6 +15,7 @@ class AuthControl extends GetxController {
   var isLoading = false.obs;
   var errorMessage = ''.obs;
   var token = ''.obs;
+  var tokenRegister = ''.obs;
 
   var userData = {}.obs;
 
@@ -47,9 +48,13 @@ class AuthControl extends GetxController {
       print("Response Status Code: ${response.statusCode}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+        print('$data');
         Get.snackbar('Success', 'Registration successful',
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
             snackPosition: SnackPosition.BOTTOM);
-        Get.offAllNamed('/home');
+
         return true;
       } else {
         Get.snackbar(
