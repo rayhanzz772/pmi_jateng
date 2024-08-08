@@ -85,34 +85,40 @@ class AuthControl extends GetxController {
           'password': password,
         }),
       );
+      final data = jsonDecode(response.body);
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-
-        // Extract email and token from response
-        final extractedEmail = data['data']['email'];
-        final extractedName = data['data']['name'];
-        final extractedPhone = data['data']['phone'];
-        final extractedEmailVerif = data['data']['email_verified_at'];
-        final extractedToken = data['access_token'];
-
-        // Debug prints to verify extracted values
-        print('Extracted Email: $extractedEmail');
-        print('Extracted Name: $extractedName');
-        print('Extracted Phone: $extractedPhone');
-        print('Extracted Email Verification: $extractedEmailVerif');
-        print('Extracted Token: $extractedToken');
-
-        // Save email and token
-        await _saveLogin(extractedEmail, extractedToken, extractedName,
-            extractedPhone, extractedEmailVerif);
-
-        Get.offNamed('/home');
+      if (data['data'] == null) {
+        errorMessage.value = 'Check your email or password';
       } else {
-        errorMessage.value = 'Failed to sign in: ${response.body}';
+        final extractedEmailVerif = data['data']['email_verified_at'];
+
+        if (extractedEmailVerif == null) {
+          errorMessage.value = 'Verify your email first';
+        } else if (response.statusCode == 200) {
+          // Extract email and token from response
+          final extractedEmail = data['data']['email'];
+          final extractedName = data['data']['name'];
+          final extractedPhone = data['data']['phone'];
+          final extractedToken = data['access_token'];
+
+          // Debug prints to verify extracted values
+          print('Extracted Email: $extractedEmail');
+          print('Extracted Name: $extractedName');
+          print('Extracted Phone: $extractedPhone');
+          print('Extracted Email Verification: $extractedEmailVerif');
+          print('Extracted Token: $extractedToken');
+
+          // Save email and token
+          await _saveLogin(extractedEmail, extractedToken, extractedName,
+              extractedPhone, extractedEmailVerif);
+
+          Get.offNamed('/home');
+        } else {
+          errorMessage.value = 'Failed to sign in: ${response.body}';
+        }
       }
     } catch (e) {
-      errorMessage.value = 'An error occurred: $e';
+      print('$e');
     } finally {
       isLoading.value = false;
     }
