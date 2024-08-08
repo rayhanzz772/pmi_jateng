@@ -22,7 +22,7 @@ class RoomType {
       capacity: json['capacity'],
       price: json['price'],
       description: json['description'],
-      roomImages: List<String>.from(json['room_images']),
+      roomImages: List<String>.from(json['images']),
     );
   }
 }

@@ -80,7 +80,7 @@ class RoomScreen extends StatelessWidget {
                     roomImages.isNotEmpty
                         ? ImageSlideshow(
                             width: double.infinity,
-                            height: 250,
+                            height: hp * 0.31,
                             initialPage: 0,
                             indicatorColor: kPrimaryWhite,
                             indicatorBackgroundColor: Colors.grey,
@@ -89,11 +89,13 @@ class RoomScreen extends StatelessWidget {
 
                               Uri uri = Uri.parse(imageUrl);
                               if (uri.isAbsolute) {
+                                print('Valid URL: $imageUrl');
                                 return Image.network(
                                   imageUrl,
                                   fit: BoxFit.cover,
                                 );
                               } else {
+                                print('Invalid URL: $imageUrl');
                                 throw Exception('Invalid URL: $imageUrl');
                               }
                             }).toList(),
@@ -103,7 +105,10 @@ class RoomScreen extends StatelessWidget {
                             autoPlayInterval: 3000,
                             isLoop: true,
                           )
-                        : Container(),
+                        : Container(
+                            child: Text('No images available',
+                                style: TextStyle(color: Colors.red)),
+                          ),
                     Expanded(
                       child: SingleChildScrollView(
                         padding: EdgeInsets.only(

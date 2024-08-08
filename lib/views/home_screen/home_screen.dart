@@ -13,7 +13,7 @@ import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/component/home_screen/meeting_room.dart';
 import 'package:pmi_jateng/component/home_screen/sidebar.dart';
 import 'package:pmi_jateng/component/home_screen/book_now.dart';
-import 'package:pmi_jateng/service/auth_control.dart'; // Ensure this is the correct path for your AuthControl service
+import 'package:pmi_jateng/service/auth_control.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -22,25 +22,28 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String? _email;
+  String? _name;
   String? _token;
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadEmailAndToken();
+    _saveLogin();
   }
 
-  Future<void> _loadEmailAndToken() async {
+  Future<void> _saveLogin() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _email = prefs.getString('auth_email');
+      _name = prefs.getString('auth_name');
       _token = prefs.getString('auth_token');
       _isLoading = false;
     });
 
     // Debug print statements
     print('Email: $_email');
+    print('name: $_name');
     print('Token: $_token');
   }
 

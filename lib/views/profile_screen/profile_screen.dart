@@ -16,6 +16,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   String? _email;
   String? _token;
+  String? _name;
   bool _isLoading = true;
   Future<void> _signOut(BuildContext context) async {
     final authControl = Get.find<AuthControl>();
@@ -28,20 +29,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void initState() {
     super.initState();
-    _loadEmailAndToken();
+    _saveLogin();
   }
 
-  Future<void> _loadEmailAndToken() async {
+  Future<void> _saveLogin() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _email = prefs.getString('auth_email');
       _token = prefs.getString('auth_token');
+      _name = prefs.getString('auth_name');
+      _email = prefs.getString('auth_email');
       _isLoading = false;
     });
 
     // Debug print statements
     print('Email: $_email');
+    print('Name: $_name');
     print('Token: $_token');
+  }
+
+  String capitalize(String? s) {
+    if (s == null || s.isEmpty) {
+      return 'No Name';
+    }
+    return s
+        .split(' ')
+        .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
+        .join(' ');
   }
 
   @override
@@ -101,13 +114,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Column(
                 children: [
                   Text(
-                    'Albert John Doe',
+                    capitalize(_name) ?? 'no name',
                     style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: wp * 0.06,
                         fontWeight: FontWeight.w600),
                   ),
-                  Text('@johndoe'),
+                  Text(_email ?? 'no email'),
                   SizedBox(
                     height: 10,
                   ),

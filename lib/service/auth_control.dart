@@ -91,14 +91,21 @@ class AuthControl extends GetxController {
 
         // Extract email and token from response
         final extractedEmail = data['data']['email'];
+        final extractedName = data['data']['name'];
+        final extractedPhone = data['data']['phone'];
+        final extractedEmailVerif = data['data']['email_verified_at'];
         final extractedToken = data['access_token'];
 
         // Debug prints to verify extracted values
         print('Extracted Email: $extractedEmail');
+        print('Extracted Name: $extractedName');
+        print('Extracted Phone: $extractedPhone');
+        print('Extracted Email Verification: $extractedEmailVerif');
         print('Extracted Token: $extractedToken');
 
         // Save email and token
-        await _saveEmailAndToken(extractedEmail, extractedToken);
+        await _saveLogin(extractedEmail, extractedToken, extractedName,
+            extractedPhone, extractedEmailVerif);
 
         Get.offNamed('/home');
       } else {
@@ -111,10 +118,14 @@ class AuthControl extends GetxController {
     }
   }
 
-  Future<void> _saveEmailAndToken(String email, String token) async {
+  Future<void> _saveLogin(String email, String token, String name, String phone,
+      String email_verified_at) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('auth_email', email); // Fixed key name
-    await prefs.setString('auth_token', token); // Fixed key name
+    await prefs.setString('auth_email', email);
+    await prefs.setString('auth_name', name);
+    await prefs.setString('auth_phone', phone);
+    await prefs.setString('auth_email_verif', email_verified_at);
+    await prefs.setString('auth_token', token);
   }
 
   // Load token from SharedPreferences
