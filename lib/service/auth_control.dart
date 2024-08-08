@@ -93,6 +93,17 @@ class AuthControl extends GetxController {
         final extractedEmailVerif = data['data']['email_verified_at'];
 
         if (extractedEmailVerif == null) {
+          final extractedEmail = data['data']['email'];
+          final extractedName = data['data']['name'];
+          final extractedPhone = data['data']['phone'];
+          final extractedToken = data['access_token'];
+
+          // Debug prints to verify extracted values
+          print('Extracted Email: $extractedEmail');
+          print('Extracted Name: $extractedName');
+          print('Extracted Phone: $extractedPhone');
+          print('Extracted Email Verification: $extractedEmailVerif');
+          print('Extracted Token: $extractedToken');
           errorMessage.value = 'Verify your email first';
         } else if (response.statusCode == 200) {
           // Extract email and token from response
