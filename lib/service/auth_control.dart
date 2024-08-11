@@ -67,9 +67,13 @@ class AuthControl extends GetxController {
         return false;
       }
     } catch (e) {
-      errorMessage2.value = 'An error occurred: $e';
-      Get.snackbar('Error', 'An error occurred: $e',
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar(
+        'Error',
+        '$e',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+      );
       return false;
     } finally {
       isLoading2.value = false;

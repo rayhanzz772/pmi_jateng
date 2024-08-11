@@ -38,7 +38,7 @@ class ApiService {
       print('JSON Data: $jsonData');
 
       final roomData = jsonData['room_data'];
-      final roomImages = jsonData['images'];
+      final roomImages = jsonData['room_images'];
 
       if (roomData == null) {
         throw Exception('room_data is null');
