@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:pmi_jateng/service/model/room_type.dart';
 import 'package:pmi_jateng/service/model/meeting_room.dart';
@@ -165,6 +168,81 @@ class ApiService {
       return json.decode(response.body);
     } else {
       throw Exception('Failed to load data');
+    }
+  }
+
+  Future<void> forgotPassword(BuildContext context) async {
+    // Tampilkan dialog input email
+    final TextEditingController emailController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Forgot Password'),
+        content: TextField(
+          controller: emailController,
+          decoration: InputDecoration(hintText: "Enter your email"),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('Submit'),
+            onPressed: () async {
+              final email = emailController.text;
+              if (email.isNotEmpty) {
+                Navigator.of(context).pop(); // Close the dialog
+                await sendForgotPasswordRequest(email);
+              } else {
+                Get.snackbar(
+                  'Error',
+                  'Please enter your email',
+                  snackPosition: SnackPosition.BOTTOM,
+                  backgroundColor: Colors.red,
+                  colorText: Colors.white,
+                );
+              }
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> sendForgotPasswordRequest(String email) async {
+    try {
+      final response = await http.post(
+        Uri.parse("$baseUrl/api/v1/forgotPassword"),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'email': email,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        Get.snackbar('Success', 'Password reset email sent',
+            snackPosition: SnackPosition.BOTTOM);
+      } else {
+        Get.snackbar(
+          'Error',
+          'Failed to send password reset email',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 }
