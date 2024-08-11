@@ -6,6 +6,7 @@ import 'package:pmi_jateng/service/model/meeting_room.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'config.dart';
+import 'package:pmi_jateng/service/auth_control.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
@@ -152,6 +153,37 @@ class ApiService {
     } catch (e) {
       print('Error: $e');
       return null;
+    }
+  }
+
+  //
+  static Future<bool> updateUserProfile(
+      String name, String phone, String? token) async {
+    final url = '$baseUrl/api/v1/updateProfile';
+
+    try {
+      final response = await http.put(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'name': name,
+          'phone': phone,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print('Profile updated successfully');
+        return true;
+      } else {
+        print('Failed to update profile: ${response.body}');
+        return false;
+      }
+    } catch (e) {
+      print('Error updating profile: $e');
+      return false;
     }
   }
 

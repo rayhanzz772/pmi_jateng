@@ -1,12 +1,11 @@
-// Profile_screen.dart
 import 'package:flutter/material.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:get/get.dart';
 import 'package:pmi_jateng/views/history/history_screen.dart';
 import 'package:pmi_jateng/service/auth_control.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pmi_jateng/service/auth_control.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
+import 'dart:io';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -18,19 +17,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? _token;
   String? _name;
   bool _isLoading = true;
-  Future<void> _signOut(BuildContext context) async {
-    final authControl = Get.find<AuthControl>();
-
-    // Call the clearToken method
-    authControl.clearToken();
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil('/sign_in', (Route<dynamic> route) => false);
-  }
-
-  void initState() {
-    super.initState();
-    _saveLogin();
-  }
+  File? _profileImage;
+  final ImagePicker _picker = ImagePicker();
 
   Future<void> _saveLogin() async {
     final prefs = await SharedPreferences.getInstance();
@@ -40,11 +28,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _email = prefs.getString('auth_email');
       _isLoading = false;
     });
+  }
 
-    // Debug print statements
-    print('Email: $_email');
-    print('Name: $_name');
-    print('Token: $_token');
+  Future<void> _signOut(BuildContext context) async {
+    final authControl = Get.find<AuthControl>();
+    authControl.clearToken();
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/sign_in', (Route<dynamic> route) => false);
+  }
+
+  Future<void> _loadProfileImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final imagePath = prefs.getString('profile_image_path');
+    if (imagePath != null) {
+      setState(() {
+        _profileImage = File(imagePath);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _saveLogin();
+    _loadProfileImage();
   }
 
   String capitalize(String? s) {
@@ -57,73 +64,86 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .join(' ');
   }
 
+  Future<bool> _onWillPop() async {
+    // Navigate to HomeScreen when the back button is pressed
+    Get.offNamedUntil('/home', (route) => false);
+    return false; // Prevent default back navigation
+  }
+
   @override
   Widget build(BuildContext context) {
     final hp = MediaQuery.of(context).size.height;
     final wp = MediaQuery.of(context).size.width;
+
     if (_isLoading) {
       return Scaffold(
         backgroundColor: kPrimaryWhite,
         body: Center(child: CircularProgressIndicator()),
       );
     }
+
     if (_token == null || _email == null) {
       WidgetsBinding.instance?.addPostFrameCallback((_) {
         Get.offNamed('/sign_in');
       });
     }
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: kPrimaryWhite),
-          onPressed: () {
-            Get.toNamed('/home');
-          },
+
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kPrimaryColor,
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: kPrimaryWhite),
+            onPressed: () {
+              Get.toNamed('/home');
+            },
+          ),
+          title: Text(
+            'Profile',
+            style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+                fontSize: 20,
+                color: kPrimaryWhite),
+          ),
         ),
-        title: Text(
-          'Profile',
-          style: TextStyle(
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w600,
-              fontSize: 20,
-              color: kPrimaryWhite),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
+        body: Container(
           height: hp,
           width: wp,
           decoration: BoxDecoration(color: kPrimaryWhite),
-          child: Container(
-            margin: EdgeInsets.only(bottom: hp * 0.1),
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               Container(
-                width: wp * 0.35,
+                width: wp * 0.45,
                 height: hp * 0.2,
                 decoration: BoxDecoration(
-                    border: Border.all(color: kPrimaryMaroon, width: 3),
-                    color: Colors.blue,
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/profile.jpg'),
-                        fit: BoxFit.contain)),
+                  border: Border.all(color: kPrimaryMaroon, width: 3),
+                  color: Colors.blue,
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: _profileImage != null
+                        ? FileImage(_profileImage!)
+                        : AssetImage('assets/images/profile.jpg')
+                            as ImageProvider,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
+              SizedBox(height: 20),
               Column(
                 children: [
                   Text(
-                    capitalize(_name) ?? 'no name',
+                    capitalize(_name) ?? 'No Name',
                     style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: wp * 0.06,
                         fontWeight: FontWeight.w600),
                   ),
-                  Text(_email ?? 'no email'),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  Text(_email ?? 'No Email'),
+                  SizedBox(height: 10),
                   TextButton(
                       onPressed: () {
                         Get.toNamed('/edit_profile');
@@ -144,66 +164,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ))
                 ],
               ),
-              SizedBox(
-                height: hp * 0.05,
-              ),
+              SizedBox(height: 20),
               Container(
-                height: hp * 0.003,
+                height: 1,
                 width: wp * 0.9,
                 color: kPrimaryMaroon,
               ),
+              SizedBox(height: 20),
               Column(
                 children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 15),
-                    width: wp * 0.9,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: hp * 0.06,
-                              width: wp * 0.15,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                shape: BoxShape.rectangle,
-                                color: kPrimaryGrey,
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.settings,
-                                  color: kPrimaryMaroon,
-                                  size: wp * 0.08,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Settings',
-                              style: TextStyle(
-                                  fontFamily: 'Poppins', fontSize: wp * 0.043),
-                            )
-                          ],
-                        ),
-                        Container(
-                          height: hp * 0.03,
-                          width: wp * 0.07,
-                          decoration: BoxDecoration(shape: BoxShape.circle),
-                          child: Center(
-                            child: Icon(
-                              Icons.arrow_circle_right_outlined,
-                              color: kPrimaryMaroon,
-                              size: wp * 0.08,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -237,9 +206,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
+                              SizedBox(width: 10),
                               Text(
                                 'Transaction History',
                                 style: TextStyle(
@@ -264,108 +231,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    width: wp * 0.9,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: hp * 0.06,
-                              width: wp * 0.15,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                shape: BoxShape.rectangle,
-                                color: kPrimaryGrey,
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.verified_user_rounded,
-                                  color: kPrimaryMaroon,
-                                  size: wp * 0.08,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HistoryScreen()),
+                      );
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 10),
+                      width: wp * 0.9,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: hp * 0.06,
+                                width: wp * 0.15,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  shape: BoxShape.rectangle,
+                                  color: kPrimaryGrey,
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.info_outlined,
+                                    color: kPrimaryMaroon,
+                                    size: wp * 0.08,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'User Management',
-                              style: TextStyle(
-                                  fontFamily: 'Poppins', fontSize: wp * 0.043),
-                            )
-                          ],
-                        ),
-                        Container(
-                          height: hp * 0.03,
-                          width: wp * 0.07,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
+                              SizedBox(width: 10),
+                              Text(
+                                'Information',
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: wp * 0.043),
+                              )
+                            ],
                           ),
-                          child: Center(
-                            child: Icon(
-                              Icons.arrow_circle_right_outlined,
-                              color: kPrimaryMaroon,
-                              size: wp * 0.08,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    width: wp * 0.9,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: hp * 0.06,
-                              width: wp * 0.15,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                shape: BoxShape.rectangle,
-                                color: kPrimaryGrey,
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.info_outlined,
-                                  color: kPrimaryMaroon,
-                                  size: wp * 0.08,
-                                ),
+                          Container(
+                            height: hp * 0.03,
+                            width: wp * 0.07,
+                            decoration: BoxDecoration(shape: BoxShape.circle),
+                            child: Center(
+                              child: Icon(
+                                Icons.arrow_circle_right_outlined,
+                                color: kPrimaryMaroon,
+                                size: wp * 0.08,
                               ),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Information',
-                              style: TextStyle(
-                                  fontFamily: 'Poppins', fontSize: wp * 0.043),
-                            )
-                          ],
-                        ),
-                        Container(
-                          height: hp * 0.03,
-                          width: wp * 0.07,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.arrow_circle_right_outlined,
-                              color: kPrimaryMaroon,
-                              size: wp * 0.08,
-                            ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   GestureDetector(
@@ -374,27 +295,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       await _signOut(context);
                     },
                     child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 25),
+                      margin: EdgeInsets.only(top: hp * 0.16),
                       width: wp * 0.9,
                       height: hp * 0.07,
                       decoration: BoxDecoration(
                           color: kPrimaryMaroon,
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: Center(
-                        child: Text(
-                          'Log Out',
-                          style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontSize: wp * 0.05,
-                              color: kPrimaryWhite,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
+                          child: Text(
+                        'Log Out',
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: kPrimaryWhite,
+                            fontWeight: FontWeight.w600,
+                            fontSize: wp * 0.04),
+                      )),
                     ),
-                  ),
+                  )
                 ],
               )
-            ]),
+            ],
           ),
         ),
       ),

@@ -1,12 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io';
 
-class TopBar extends StatelessWidget {
+class TopBar extends StatefulWidget {
+  @override
+  _TopBarState createState() => _TopBarState();
+}
+
+class _TopBarState extends State<TopBar> {
+  File? _profileImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileImage();
+  }
+
+  Future<void> _loadProfileImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final imagePath = prefs.getString('profile_image_path');
+    if (imagePath != null) {
+      setState(() {
+        _profileImage = File(imagePath);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final hp = MediaQuery.of(context).size.height;
     final wp = MediaQuery.of(context).size.width;
+
     return Positioned(
       top: 50,
       left: 0,
@@ -122,8 +148,12 @@ class TopBar extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.account_circle),
-                  iconSize: hp * 0.05,
+                  icon: _profileImage != null
+                      ? CircleAvatar(
+                          backgroundImage: FileImage(_profileImage!),
+                          radius: hp * 0.025, // Adjust size as needed
+                        )
+                      : Icon(Icons.account_circle, size: hp * 0.05),
                   onPressed: () {
                     Get.offNamed('/profile');
                   },
