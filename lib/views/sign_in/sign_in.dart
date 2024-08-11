@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pmi_jateng/service/api_service.dart';
 import 'package:pmi_jateng/service/auth_control.dart'; // Pastikan import ini sesuai dengan lokasi file Anda
 import 'package:pmi_jateng/views/sign_up/sign_up.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
@@ -155,10 +156,18 @@ class BoxForm extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 16.0),
-                Text(
-                  "Forgot Password?",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
+                GestureDetector(
+                  onTap: () {
+                    // Panggil logika pemulihan kata sandi dari api_service.dart
+                    ApiService().forgotPassword(context);
+                  },
+                  child: Text(
+                    "Forgot Password?",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors
+                          .blue, // Tambahkan warna biru agar terlihat seperti tautan
+                    ),
                   ),
                 ),
                 SizedBox(height: 16.0),
