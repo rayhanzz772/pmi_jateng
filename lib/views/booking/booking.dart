@@ -1,17 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pmi_jateng/blocs/booking/booking_event.dart';
 import 'package:pmi_jateng/service/api_service.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/views/booking/paymentScreen.dart';
 
-class BookingForm extends StatelessWidget {
+class BookingForm extends StatefulWidget {
+  @override
   final String roomType;
   final String price;
   final int id;
 
   BookingForm({required this.roomType, required this.price, required this.id});
+  _BookingFormState createState() => _BookingFormState();
+}
+
+class _BookingFormState extends State<BookingForm> {
+  String? _email;
+  String? _token;
+  String? _name;
+  bool _isLoading = true;
+
+  Future<void> _saveLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _token = prefs.getString('auth_token');
+      _name = prefs.getString('auth_name');
+      _email = prefs.getString('auth_email');
+      _isLoading = false;
+    });
+    print('Email: $_email');
+    print('name: $_name');
+    print('Token: $_token');
+  }
+
+  void initState() {
+    super.initState();
+    _saveLogin();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -28,9 +58,9 @@ class BookingForm extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: BookingFormFields(
-            roomType: roomType,
-            price: price,
-            id: id,
+            roomType: widget.roomType,
+            price: widget.price,
+            id: widget.id,
           ),
         ),
       ),
@@ -527,8 +557,10 @@ class BookingFormFields extends StatelessWidget {
     );
 
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final email = prefs.getString('auth_email') ?? 'default@example.com';
       final snapToken = await bookingBloc.apiService.insertData(
-        email: "rayhanzz772@gmail.com",
+        email: email,
         id: id.toString(), // Convert `id` to String
         start_dt: state.checkInDate.toString(),
         end_dt: state.checkOutDate.toString(),

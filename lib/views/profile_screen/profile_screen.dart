@@ -28,6 +28,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _email = prefs.getString('auth_email');
       _isLoading = false;
     });
+    print('Email: $_email');
+    print('name: $_name');
+    print('Token: $_token');
   }
 
   Future<void> _signOut(BuildContext context) async {
