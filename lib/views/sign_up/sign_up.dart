@@ -182,93 +182,15 @@ class SignUpScreen extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(height: 16.0),
-                                  Text("or sign up with"),
-                                  SizedBox(height: 16.0),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            // Your onPressed logic for Google sign up
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            fixedSize: Size.fromHeight(45),
-                                            alignment: Alignment.centerLeft,
-                                            backgroundColor: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            side: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 152, 152, 152),
-                                              width: 0.5,
-                                            ),
-                                          ),
-                                          child: Container(
-                                            child: Image.asset(
-                                              'assets/images/google.png',
-                                              width: 35,
-                                              height: 35,
-                                            ),
-                                          ),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            // Your onPressed logic for another sign up method
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            fixedSize: Size.fromHeight(45),
-                                            alignment: Alignment.centerLeft,
-                                            backgroundColor: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            side: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 152, 152, 152),
-                                              width: 0.5,
-                                            ),
-                                          ),
-                                          child: Container(
-                                            child: Image.asset(
-                                              'assets/images/x.png',
-                                              width: 27,
-                                              height: 27,
-                                            ),
-                                          ),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            // Your onPressed logic for another sign up method
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            fixedSize: Size.fromHeight(45),
-                                            alignment: Alignment.centerLeft,
-                                            backgroundColor: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            side: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 152, 152, 152),
-                                              width: 0.5,
-                                            ),
-                                          ),
-                                          child: Container(
-                                            child: Image.asset(
-                                              'assets/images/facebook.png',
-                                              width: 30,
-                                              height: 30,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(context,
+                                          "/sign_in"); // Ganti dengan route yang sesuai
+                                    },
+                                    child: Text(
+                                      "Don't have an account? Sign In!",
+                                      style: TextStyle(
+                                          fontSize: 13, color: Colors.blue),
                                     ),
                                   ),
                                   SizedBox(height: 34),

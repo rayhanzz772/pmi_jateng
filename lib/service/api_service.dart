@@ -266,7 +266,7 @@ class ApiService {
 
         Get.snackbar(
           'Error',
-          'Failed to send password reset email',
+          'Failed to send password reset email, please re-type your email',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
