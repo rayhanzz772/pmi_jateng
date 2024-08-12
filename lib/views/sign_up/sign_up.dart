@@ -184,8 +184,7 @@ class SignUpScreen extends StatelessWidget {
                                   SizedBox(height: 16.0),
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.pushNamed(context,
-                                          "/sign_in"); // Ganti dengan route yang sesuai
+                                      Get.offAllNamed("/sign_in");
                                     },
                                     child: Text(
                                       "Don't have an account? Sign In!",

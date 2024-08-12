@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/welcome_screen', page: () => MenuSelectScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(name: '/sign_up', page: () => SignUpScreen()),
+        GetPage(name: '/sign_in', page: () => SignInScreen()),
         GetPage(name: '/home', page: () => HomeScreen()),
         GetPage(name: '/bottom_bar', page: () => BottomBar()),
         GetPage(name: '/edit_profile', page: () => EditProfile()),

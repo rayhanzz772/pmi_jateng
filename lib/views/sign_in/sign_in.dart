@@ -200,8 +200,7 @@ class BoxForm extends StatelessWidget {
                 SizedBox(height: 16.0),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(
-                        context, "/sign_up"); // Ganti dengan route yang sesuai
+                    Navigator.pushNamed(context, "/sign_up");
                   },
                   child: Text(
                     "Don't have an account? Sign Up!",
