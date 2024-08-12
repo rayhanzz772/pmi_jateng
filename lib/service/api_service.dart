@@ -226,9 +226,12 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
+        print('Response status: ${response.statusCode}');
         Get.snackbar('Success', 'Password reset email sent',
             snackPosition: SnackPosition.BOTTOM);
       } else {
+        print('Response status: ${response.statusCode}');
+
         Get.snackbar(
           'Error',
           'Failed to send password reset email',
