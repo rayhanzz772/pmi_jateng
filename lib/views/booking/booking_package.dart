@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:get/get.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pmi_jateng/blocs/booking/booking_event.dart';
 import 'package:pmi_jateng/service/api_service.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
-import 'package:pmi_jateng/views/booking/paymentScreen.dart';
+import 'package:pmi_jateng/views/booking/paymentScreenRegular.dart';
 
-class BookingForm extends StatefulWidget {
+class BookingFormPackage extends StatefulWidget {
   @override
-  final String roomType;
-  final String price;
+  final String name;
+  final String price_per_person;
   final int id;
 
-  BookingForm({required this.roomType, required this.price, required this.id});
-  _BookingFormState createState() => _BookingFormState();
+  BookingFormPackage(
+      {required this.name, required this.price_per_person, required this.id});
+  _BookingFormPackageState createState() => _BookingFormPackageState();
 }
 
-class _BookingFormState extends State<BookingForm> {
+class _BookingFormPackageState extends State<BookingFormPackage> {
   String? _email;
   String? _token;
   String? _name;
@@ -44,22 +45,34 @@ class _BookingFormState extends State<BookingForm> {
 
   @override
   Widget build(BuildContext context) {
+    final hp = MediaQuery.of(context).size.height;
+    final wp = MediaQuery.of(context).size.width;
     return BlocProvider(
       create: (_) => BookingBloc(apiService: ApiService()),
       child: Scaffold(
         backgroundColor: kPrimaryWhite,
         appBar: AppBar(
-          backgroundColor: kPrimaryFontColor,
+          backgroundColor: kPrimaryMaroon,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: kPrimaryWhite),
+            onPressed: () {
+              Get.back();
+            },
+          ),
           title: Text(
             'Form Pemesanan Kamar',
-            style: TextStyle(color: kPrimaryWhite, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+                fontSize: wp * 0.045,
+                color: kPrimaryWhite),
           ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: BookingFormFields(
-            roomType: widget.roomType,
-            price: widget.price,
+          child: BookingFormPackageFields(
+            name: widget.name,
+            price_per_person: widget.price_per_person,
             id: widget.id,
           ),
         ),
@@ -68,14 +81,14 @@ class _BookingFormState extends State<BookingForm> {
   }
 }
 
-class BookingFormFields extends StatelessWidget {
+class BookingFormPackageFields extends StatelessWidget {
   final ApiService apiService = ApiService();
-  final String roomType;
-  final String price;
+  final String name;
+  final String price_per_person;
   final int id;
 
-  BookingFormFields(
-      {required this.roomType, required this.price, required this.id});
+  BookingFormPackageFields(
+      {required this.name, required this.price_per_person, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +106,7 @@ class BookingFormFields extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "Tipe Kamar : $roomType",
+                      "Tipe Kamar : $price_per_person",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -445,7 +458,7 @@ class BookingFormFields extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Harga Kamar"),
-                        Text("Rp. $price"),
+                        Text("Rp. $name"),
                       ],
                     ),
                     SizedBox(
@@ -470,7 +483,7 @@ class BookingFormFields extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "$price",
+                          "$name",
                           style: TextStyle(
                               color: kPrimaryFontColor,
                               fontWeight: FontWeight.bold),
@@ -559,12 +572,12 @@ class BookingFormFields extends StatelessWidget {
     try {
       final prefs = await SharedPreferences.getInstance();
       final email = prefs.getString('auth_email') ?? 'default@example.com';
-      final snapToken = await bookingBloc.apiService.insertData(
-        email: email,
-        id: id.toString(), // Convert `id` to String
+      final snapToken = await bookingBloc.apiService.BookingPackage(
+        user_email: email,
+        package_id: id.toString(), // Convert `id` to String
         start_dt: state.checkInDate.toString(),
         end_dt: state.checkOutDate.toString(),
-        amo: state.guests, // Convert `state.guests` to String
+        person_count: state.guests, // Convert `state.guests` to String
         sd: "client",
       );
 
@@ -575,7 +588,7 @@ class BookingFormFields extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PaymentScreen(snapToken: snapToken),
+            builder: (context) => PaymentScreenRegular(snapToken: snapToken),
           ),
         );
       } else {

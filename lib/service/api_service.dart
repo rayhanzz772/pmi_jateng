@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:pmi_jateng/service/model/room_type.dart';
+import 'package:pmi_jateng/service/model/package_type.dart';
 import 'package:pmi_jateng/service/model/meeting_room.dart';
+import 'package:pmi_jateng/service/model/meeting_room_paket.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'config.dart';
@@ -22,6 +24,19 @@ class ApiService {
       final List<dynamic> jsonData = json.decode(response.body);
 
       return jsonData.map((json) => MeetRoom.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load room types');
+    }
+  }
+
+  static Future<List<MeetRoomPaket>> fetchPackageTypes() async {
+    final response =
+        await http.get(Uri.parse("$baseUrl/api/v1/packages/getAll"));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = json.decode(response.body);
+
+      return jsonData.map((json) => MeetRoomPaket.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load room types');
     }
@@ -81,6 +96,22 @@ class ApiService {
     }
   }
 
+  static Future<PackageType> fetchPackageTypeById(int id) async {
+    final response =
+        await http.get(Uri.parse('$baseUrl/api/v1/packages/getDetail?id=$id'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      if (data.isNotEmpty) {
+        return PackageType.fromJson(data[0]);
+      } else {
+        throw Exception('No data found');
+      }
+    } else {
+      throw Exception('Failed to load package details');
+    }
+  }
+
 // Mengambil data transaksi per email
   static Future<List<Map<String, dynamic>>> fetchUserTransactions(
       String email, String? token) async {
@@ -107,7 +138,7 @@ class ApiService {
   }
 
 // Untuk menambahkan data pada booking
-  Future<String?> insertData(
+  Future<String?> BookingRegular(
       {required String email,
       required String id,
       required String start_dt,
@@ -135,6 +166,59 @@ class ApiService {
       Dio dio = Dio();
       final response = await dio.post(
         "$baseUrl/api/v1/booking/generateToken",
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+        data: data,
+      );
+
+      if (response.statusCode == 200) {
+        final responseBody = response.data;
+        final snapToken = responseBody['snap_token'];
+        return snapToken; // Kembalikan snapToken
+      } else {
+        print('Failed to insert data');
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.data}');
+        return null;
+      }
+    } catch (e) {
+      print('Error: $e');
+      return null;
+    }
+  }
+
+  // Untuk menambahkan data pada booking
+  Future<String?> BookingPackage(
+      {required String user_email,
+      required String package_id,
+      required String start_dt,
+      required String end_dt,
+      required String person_count,
+      required String sd}) async {
+    final Map<String, dynamic> data = {
+      "user_email": user_email,
+      "package_id": package_id,
+      "start_date": start_dt,
+      "end_date": end_dt,
+      "person_count": person_count,
+      "side": "client"
+    };
+
+    print('Sending request with parameters:');
+    print('user_email: $user_email (type: ${user_email.runtimeType})');
+    print('package_id: $package_id (type: ${package_id.runtimeType})');
+    print('start_date: $start_dt (type: ${start_dt.runtimeType})');
+    print('end_date: $end_dt (type: ${end_dt.runtimeType})');
+    print('person_count: $person_count (type: ${person_count.runtimeType})');
+    print('side: $sd (type: ${sd.runtimeType})');
+
+    try {
+      Dio dio = Dio();
+      final response = await dio.post(
+        "$baseUrl/api/v1/booking/packageToken",
         options: Options(
           headers: {
             'Content-Type': 'application/json',

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/views/home_screen/home_screen.dart';
-import 'package:pmi_jateng/views/booking/booking.dart';
+import 'package:pmi_jateng/views/booking/booking_regular.dart';
 import 'package:pmi_jateng/views/notification_screen/notification_screen.dart';
 import 'package:pmi_jateng/views/profile_screen/profile_screen.dart';
 

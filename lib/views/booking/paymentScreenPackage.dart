@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class PaymentScreen extends StatefulWidget {
+class PaymentScreenPackage extends StatefulWidget {
   final String snapToken;
 
-  PaymentScreen({required this.snapToken});
+  PaymentScreenPackage({required this.snapToken});
 
   @override
-  _PaymentScreenState createState() => _PaymentScreenState();
+  _PaymentScreenPackageState createState() => _PaymentScreenPackageState();
 }
 
-class _PaymentScreenState extends State<PaymentScreen> {
+class _PaymentScreenPackageState extends State<PaymentScreenPackage> {
   late WebViewController _controller;
 
   @override

@@ -3,24 +3,26 @@ import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:get/get.dart';
 import 'package:pmi_jateng/component/home_screen/top_bar.dart';
 import 'package:pmi_jateng/service/api_service.dart';
+import 'package:pmi_jateng/service/model/package_type.dart';
 import 'package:pmi_jateng/service/model/room_type.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
-import 'package:pmi_jateng/views/booking/booking.dart';
+import 'package:pmi_jateng/views/booking/booking_package.dart';
+import 'package:pmi_jateng/views/booking/booking_regular.dart';
 import 'package:pmi_jateng/views/room_screen/bottombar.dart';
 
-class RoomScreen extends StatelessWidget {
+class RoomScreenPackage extends StatelessWidget {
   final int id;
 
-  const RoomScreen({Key? key, required this.id}) : super(key: key);
+  const RoomScreenPackage({Key? key, required this.id}) : super(key: key);
 
   void _handleCheckout(
-      BuildContext context, String roomType, String price, int id) {
+      BuildContext context, String price_per_person, String name, int id) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BookingForm(
-          roomType: roomType,
-          price: price,
+        builder: (context) => BookingFormPackage(
+          name: name,
+          price_per_person: price_per_person,
           id: id,
         ),
       ),
@@ -60,8 +62,8 @@ class RoomScreen extends StatelessWidget {
         ),
       ),
       backgroundColor: kPrimaryWhite,
-      body: FutureBuilder<RoomType>(
-        future: ApiService.fetchRoomTypeById(id),
+      body: FutureBuilder<PackageType>(
+        future: ApiService.fetchPackageTypeById(id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -71,7 +73,7 @@ class RoomScreen extends StatelessWidget {
             return Center(child: Text('No data available'));
           } else {
             final roomType = snapshot.data!;
-            final List<String> roomImages = roomType.roomImages;
+            final List<String> roomImages = roomType.images;
 
             return Stack(
               children: [
@@ -122,10 +124,9 @@ class RoomScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  roomType.roomType.length > 20
-                                      ? roomType.roomType.substring(0, 20) +
-                                          '...'
-                                      : roomType.roomType,
+                                  roomType.name.length > 20
+                                      ? roomType.name.substring(0, 20) + '...'
+                                      : roomType.name,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: wp * 0.04,
@@ -162,7 +163,8 @@ class RoomScreen extends StatelessWidget {
                                           color: kPrimaryMaroon),
                                     ),
                                     Text(
-                                      _formatPrice(roomType.price.toString()),
+                                      _formatPrice(
+                                          roomType.pricePerPerson.toString()),
                                       style: TextStyle(
                                           color: kPrimaryMaroon,
                                           fontSize: wp * 0.045,
@@ -335,8 +337,8 @@ class RoomScreen extends StatelessWidget {
                   child: BottomBar(
                     // onCheckout: () => _handleCheckout(
                     //     context, roomType.roomType, roomType.price.toString()),
-                    onCheckout: () => _handleCheckout(context,
-                        roomType.roomType, roomType.price, roomType.id),
+                    onCheckout: () => _handleCheckout(context, roomType.name,
+                        roomType.pricePerPerson, roomType.id),
                   ),
                 ),
               ],
