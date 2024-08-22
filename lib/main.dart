@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         Get.put(AuthControl());
       }),
       getPages: [
-        GetPage(name: '/', page: () => SplashScreen()),
+        GetPage(name: '/', page: () => HomeScreen()),
         GetPage(name: '/welcome_screen', page: () => MenuSelectScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(name: '/sign_up', page: () => SignUpScreen()),
