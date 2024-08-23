@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pmi_jateng/views/booking/booking_regular.dart';
 import 'package:pmi_jateng/views/history/detail/history_detail.dart';
 import 'package:pmi_jateng/views/history/history_screen.dart';
+import 'package:pmi_jateng/views/profile_screen/information.dart';
 import 'package:pmi_jateng/views/room_screen/room_screen_package.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pmi_jateng/views/room_screen/room_screen_regular.dart';
@@ -57,6 +58,11 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/room_screen_package',
           page: () => RoomScreenPackage(id: Get.arguments as int),
+        ),
+        GetPage(
+          name: '/history_detail',
+          page: () => HistoryDetail(
+              id: Get.arguments as int, user_email: Get.arguments as String),
         ),
       ],
     );

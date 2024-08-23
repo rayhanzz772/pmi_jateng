@@ -585,7 +585,7 @@ class BookingFormRegularFields extends StatelessWidget {
       Navigator.of(context).pop();
 
       if (snapToken != null && state.checkInDate != "yyyy-MM-dd") {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => PaymentScreenRegular(snapToken: snapToken),

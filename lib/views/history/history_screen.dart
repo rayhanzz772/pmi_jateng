@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/service/api_service.dart'; // Import file api_service.dart
+import 'package:pmi_jateng/views/history/detail/history_detail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -152,142 +153,152 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 itemCount: getFilteredTransactions().length,
                 itemBuilder: (context, index) {
                   final transaction = getFilteredTransactions()[index];
-                  return Container(
-                    height: hp * 0.2,
-                    margin: EdgeInsets.all(8.0),
-                    padding: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(bottom: 10),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      width: 1, color: Colors.grey))),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'TRANSACTION',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: wp * 0.035,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              Text(
-                                transaction['transaction_date']!,
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: wp * 0.03,
-                                ),
-                              ),
-                            ],
+                  return GestureDetector(
+                    onTap: () {
+                      print(
+                          'GestureDetector tapped. ID: ${transaction['id']}, User Email: $_email');
+                      Get.to(() => HistoryDetail(
+                            id: transaction['id'], // Assuming 'id' exists
+                            user_email: _email!,
+                          ));
+                    },
+                    child: Container(
+                      height: hp * 0.2,
+                      margin: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
                           ),
-                        ),
-                        SizedBox(
-                          height: hp * 0.01,
-                        ),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.asset(
-                                    'assets/images/kamar.jpeg', // Placeholder image
-                                    width: wp * 0.3,
-                                    height: hp * 0.128,
-                                    fit: BoxFit.cover,
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(bottom: 10),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 1, color: Colors.grey))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'TRANSACTION',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: wp * 0.035,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                Text(
+                                  transaction['transaction_date']!,
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: wp * 0.03,
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 7,
-                              ),
-                              Container(
-                                height: hp * 0.12,
-                                width: wp * 0.58,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: hp * 0.01,
+                          ),
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.asset(
+                                      'assets/images/kamar.jpeg', // Placeholder image
+                                      width: wp * 0.3,
+                                      height: hp * 0.128,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 7,
+                                ),
+                                Container(
+                                  height: hp * 0.12,
+                                  width: wp * 0.58,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '${transaction['order_id']}',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: wp * 0.03),
+                                            ),
+                                            SizedBox(height: 5),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 8.0),
+                                              child: Text(
+                                                '${transaction['amount']} items - Total Price: ${transaction['total_price']}',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: wp * 0.025),
+                                                maxLines: 4,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Column(
                                         children: [
                                           Text(
-                                            '${transaction['order_id']}',
+                                            transaction['transaction_status']!,
                                             style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontFamily: 'Poppins',
-                                                fontSize: wp * 0.03),
-                                          ),
-                                          SizedBox(height: 5),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 8.0),
-                                            child: Text(
-                                              '${transaction['amount']} items - Total Price: ${transaction['total_price']}',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: wp * 0.025),
-                                              maxLines: 4,
-                                              overflow: TextOverflow.ellipsis,
+                                              fontSize: wp * 0.03,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w600,
+                                              color: transaction[
+                                                          'transaction_status'] ==
+                                                      'success'
+                                                  ? Colors.green
+                                                  : transaction[
+                                                              'transaction_status'] ==
+                                                          'pending'
+                                                      ? Colors.blue[900]
+                                                      : transaction[
+                                                                  'transaction_status'] ==
+                                                              'failed'
+                                                          ? Colors.red
+                                                          : Colors.black,
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          transaction['transaction_status']!,
-                                          style: TextStyle(
-                                            fontSize: wp * 0.03,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w600,
-                                            color: transaction[
-                                                        'transaction_status'] ==
-                                                    'sukses'
-                                                ? Colors.green
-                                                : transaction[
-                                                            'transaction_status'] ==
-                                                        'pending'
-                                                    ? Colors.blue[900]
-                                                    : transaction[
-                                                                'transaction_status'] ==
-                                                            'failed'
-                                                        ? Colors.red
-                                                        : Colors.black,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   );
                 },

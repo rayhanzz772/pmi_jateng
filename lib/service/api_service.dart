@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:pmi_jateng/service/model/booking_detail.dart';
 import 'package:pmi_jateng/service/model/room_type.dart';
 import 'package:pmi_jateng/service/model/package_type.dart';
 import 'package:pmi_jateng/service/model/meeting_room.dart';
@@ -134,6 +135,26 @@ class ApiService {
     } catch (e) {
       print('Error fetching transactions: $e');
       return [];
+    }
+  }
+
+  static Future<BookingDetail?> fetchUserTransactionsById(
+      int id, String userEmail) async {
+    final response = await http.get(Uri.parse(
+        '$baseUrl/api/v1/user_transaction/detail?id=$id&user_email=$userEmail'));
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+
+      // Check if 'data' is not null and contains the expected structure
+      if (data.isNotEmpty) {
+        return BookingDetail.fromJson(data);
+      } else {
+        // Handle case where data is empty or null
+        return null;
+      }
+    } else {
+      throw Exception('Failed to load transaction details');
     }
   }
 

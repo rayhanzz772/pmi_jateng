@@ -3,6 +3,7 @@ import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:get/get.dart';
 import 'package:pmi_jateng/views/history/history_screen.dart';
 import 'package:pmi_jateng/service/auth_control.dart';
+import 'package:pmi_jateng/views/profile_screen/information.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -239,7 +240,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => HistoryScreen()),
+                            builder: (context) => InformationScreen()),
                       );
                     },
                     child: Container(
