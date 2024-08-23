@@ -52,7 +52,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   final List<String> labels = [
     'semua',
-    'sukses',
+    'success',
     'pending',
     'failed',
   ];
