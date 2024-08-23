@@ -23,7 +23,7 @@ class MeetingRoomCard extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
+                return Center(child: CircularProgressIndicator());
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return Center(child: Text('No data available'));
               } else {
@@ -171,7 +171,7 @@ class MeetingRoomCard extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
+                return Center(child: CircularProgressIndicator());
               } else if (!snapshot.hasData) {
                 return Center(child: Text('No package data available'));
               } else {
