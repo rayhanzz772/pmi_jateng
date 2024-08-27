@@ -153,7 +153,11 @@ class _TopBarState extends State<TopBar> {
                           backgroundImage: FileImage(_profileImage!),
                           radius: hp * 0.025, // Adjust size as needed
                         )
-                      : Icon(Icons.account_circle, size: hp * 0.05),
+                      : CircleAvatar(
+                          backgroundImage:
+                              AssetImage('assets/images/profile.jpg'),
+                          radius: hp * 0.025, // Adjust size as needed
+                        ),
                   onPressed: () {
                     Get.offNamed('/profile');
                   },

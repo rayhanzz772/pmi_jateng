@@ -6,7 +6,7 @@ class PackageType {
   final int hasLodgeRoom;
   final int hasMeetingRoom;
   final String description;
-  final List<String> images;
+  final String images;
 
   PackageType({
     required this.id,
@@ -21,14 +21,14 @@ class PackageType {
 
   factory PackageType.fromJson(Map<String, dynamic> json) {
     return PackageType(
-      id: json['id'],
-      name: json['name'],
-      pricePerPerson: json['price_per_person'],
-      minPersonQuantity: json['min_person_quantity'],
-      hasLodgeRoom: json['hasLodgeRoom'],
-      hasMeetingRoom: json['hasMeetingRoom'],
-      description: json['description'],
-      images: List<String>.from(json['images']),
+      id: json['id'] ?? 0,
+      name: json['name'] ?? 'Unknown',
+      pricePerPerson: json['price_per_person'] ?? '0',
+      minPersonQuantity: json['min_person_quantity'] ?? 1,
+      hasLodgeRoom: json['hasLodgeRoom'] ?? 0,
+      hasMeetingRoom: json['hasMeetingRoom'] ?? 0,
+      description: json['description'] ?? '',
+      images: json['thumbnail'] ?? '',
     );
   }
 }

@@ -217,8 +217,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 Container(
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.asset(
-                                      'assets/images/kamar.jpeg', // Placeholder image
+                                    child: Image.network(
+                                      '${transaction['room_image']}', // Placeholder image
                                       width: wp * 0.3,
                                       height: hp * 0.128,
                                       fit: BoxFit.cover,

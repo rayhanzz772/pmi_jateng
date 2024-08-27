@@ -15,6 +15,7 @@ class _AboutUsState extends State<AboutUs> {
 
     return Container(
       height: hp * 0.35,
+      margin: EdgeInsets.only(top: hp * 0.01),
       child: Row(
         children: [
           Container(
@@ -23,8 +24,7 @@ class _AboutUsState extends State<AboutUs> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.only(bottom: 5, left: 5),
-                  decoration: BoxDecoration(),
+                  padding: EdgeInsets.only(left: 5),
                   child: Text(
                     'About Us',
                     style: TextStyle(
@@ -35,13 +35,7 @@ class _AboutUsState extends State<AboutUs> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(width: 2, color: kPrimaryMaroon),
-                      bottom: BorderSide(width: 2, color: kPrimaryMaroon),
-                    ),
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Container(
                     height: hp * 0.13,
                     width: wp * 0.8,
@@ -49,7 +43,7 @@ class _AboutUsState extends State<AboutUs> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage('assets/images/about_us.png'),
-                            fit: BoxFit.contain)),
+                            fit: BoxFit.cover)),
                   ),
                 ),
               ],
@@ -57,22 +51,9 @@ class _AboutUsState extends State<AboutUs> {
           ),
           Container(
             width: wp * 0.6,
-            decoration: BoxDecoration(
-                border: Border(
-                    top: BorderSide(
-                      color: kPrimaryMaroon,
-                      width: 2,
-                    ),
-                    left: BorderSide(
-                      color: kPrimaryMaroon,
-                      width: 2,
-                    ),
-                    bottom: BorderSide(
-                      color: kPrimaryMaroon,
-                      width: 2,
-                    ))),
+            height: hp * 0.25,
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.symmetric(horizontal: 5),
               child: Text(
                 style: TextStyle(
                     fontFamily: 'Poppins',

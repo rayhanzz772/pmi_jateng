@@ -202,9 +202,21 @@ class BoxForm extends StatelessWidget {
                   onTap: () {
                     Navigator.pushNamed(context, "/sign_up");
                   },
-                  child: Text(
-                    "Don't have an account? Sign Up!",
-                    style: TextStyle(fontSize: 13, color: Colors.blue),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Don't have an account?",
+                        style: TextStyle(fontSize: 13, color: kPrimaryBlack),
+                      ),
+                      Text(
+                        " Sign Up",
+                        style: TextStyle(
+                            fontSize: 13,
+                            color: kPrimaryMaroon,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 34),

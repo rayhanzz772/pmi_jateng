@@ -34,6 +34,14 @@ class Sidebar extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Profile'),
+            onTap: () {
+              Navigator.pop(context); // Close the drawer
+              Navigator.pushNamed(context, '/profile'); // Navigate to home
+            },
+          ),
+          ListTile(
             leading: Icon(Icons.home),
             title: Text('Home'),
             onTap: () {
@@ -42,13 +50,14 @@ class Sidebar extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
+            leading: Icon(Icons.history),
+            title: Text('History'),
             onTap: () {
               Navigator.pop(context); // Close the drawer
-              Navigator.pushNamed(context, '/settings'); // Navigate to settings
+              Navigator.pushNamed(context, '/history'); // Navigate to home
             },
           ),
+
           ListTile(
             leading: Icon(Icons.logout),
             title: Text('Keluar'),

@@ -30,20 +30,6 @@ class ApiService {
     }
   }
 
-  static Future<List<MeetRoomPaket>> fetchPackageTypes() async {
-    final response =
-        await http.get(Uri.parse("$baseUrl/api/v1/packages/getAll"));
-
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonData = json.decode(response.body);
-
-      return jsonData.map((json) => MeetRoomPaket.fromJson(json)).toList();
-    } else {
-      throw Exception('Failed to load room types');
-    }
-  }
-
-// Mengambil data dari ruangan yang dipilih
   static Future<RoomType> fetchRoomTypeById(int id) async {
     final response =
         await http.get(Uri.parse("$baseUrl/api/v1/room_type/getDetail?id=$id"));
@@ -85,8 +71,7 @@ class ApiService {
           capacity: roomData['capacity'],
           price: roomData['price'],
           description: roomData['description'],
-          roomImages: List<String>.from(
-              roomImages ?? []), // Default to empty list if room_images is null
+          roomImages: List<String>.from(roomImages ?? []),
         );
       } catch (e) {
         throw Exception('Error parsing room data: $e');
@@ -96,6 +81,21 @@ class ApiService {
           'Failed to load room type. Status code: ${response.statusCode}');
     }
   }
+
+  static Future<List<MeetRoomPaket>> fetchPackageTypes() async {
+    final response =
+        await http.get(Uri.parse("$baseUrl/api/v1/packages/getAll"));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = json.decode(response.body);
+
+      return jsonData.map((json) => MeetRoomPaket.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load room types');
+    }
+  }
+
+// Mengambil data dari ruangan yang dipilih
 
   static Future<PackageType> fetchPackageTypeById(int id) async {
     final response =

@@ -186,6 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       );
                     },
                     child: Container(
+                      color: kPrimaryWhite,
                       margin: EdgeInsets.symmetric(vertical: 10),
                       width: wp * 0.9,
                       child: Row(
@@ -244,6 +245,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       );
                     },
                     child: Container(
+                      color: kPrimaryWhite,
                       margin: EdgeInsets.symmetric(vertical: 10),
                       width: wp * 0.9,
                       child: Row(

@@ -511,7 +511,7 @@ class BookingFormPackageFields extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: kPrimaryFontColor),
                           child: Text(
-                            'Submit',
+                            'Book Now',
                             style: TextStyle(color: kPrimaryWhite),
                           ),
                         );
@@ -574,10 +574,10 @@ class BookingFormPackageFields extends StatelessWidget {
       final email = prefs.getString('auth_email') ?? 'default@example.com';
       final snapToken = await bookingBloc.apiService.BookingPackage(
         user_email: email,
-        package_id: id.toString(), // Convert `id` to String
+        package_id: id.toString(),
         start_dt: state.checkInDate.toString(),
         end_dt: state.checkOutDate.toString(),
-        person_count: state.guests, // Convert `state.guests` to String
+        person_count: state.guests,
         sd: "client",
       );
 
@@ -585,7 +585,7 @@ class BookingFormPackageFields extends StatelessWidget {
       Navigator.of(context).pop();
 
       if (snapToken != null && state.checkInDate != "yyyy-MM-dd") {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => PaymentScreenRegular(snapToken: snapToken),

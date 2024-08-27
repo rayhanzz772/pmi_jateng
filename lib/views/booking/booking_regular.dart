@@ -511,7 +511,7 @@ class BookingFormRegularFields extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: kPrimaryFontColor),
                           child: Text(
-                            'Submit',
+                            'Book Now',
                             style: TextStyle(color: kPrimaryWhite),
                           ),
                         );

@@ -186,10 +186,24 @@ class SignUpScreen extends StatelessWidget {
                                     onTap: () {
                                       Get.offAllNamed("/sign_in");
                                     },
-                                    child: Text(
-                                      "Don't have an account? Sign In!",
-                                      style: TextStyle(
-                                          fontSize: 13, color: Colors.blue),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Already have an account?",
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: kPrimaryBlack),
+                                        ),
+                                        Text(
+                                          " Sign In",
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: kPrimaryMaroon,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   SizedBox(height: 34),

@@ -17,6 +17,7 @@ class _EditProfileState extends State<EditProfile> {
   String? _email;
   String? _token;
   String? _name;
+  String? _phone;
   bool _isLoading = true;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -36,7 +37,9 @@ class _EditProfileState extends State<EditProfile> {
       _token = prefs.getString('auth_token');
       _name = prefs.getString('auth_name');
       _email = prefs.getString('auth_email');
+      _phone = prefs.getString('auth_phone');
       _nameController.text = _name ?? '';
+      _phoneController.text = _phone ?? '';
       _isLoading = false;
     });
   }

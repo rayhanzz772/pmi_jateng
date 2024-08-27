@@ -73,44 +73,46 @@ class RoomScreenPackage extends StatelessWidget {
             return Center(child: Text('No data available'));
           } else {
             final roomType = snapshot.data!;
-            final List<String> roomImages = roomType.images;
 
             return Stack(
               children: [
                 Column(
                   children: [
-                    roomImages.isNotEmpty
-                        ? ImageSlideshow(
-                            width: double.infinity,
-                            height: hp * 0.31,
-                            initialPage: 0,
-                            indicatorColor: kPrimaryWhite,
-                            indicatorBackgroundColor: Colors.grey,
-                            children: roomImages.map<Widget>((imageUrl) {
-                              print('Loading image: $imageUrl');
-
-                              Uri uri = Uri.parse(imageUrl);
-                              if (uri.isAbsolute) {
-                                print('Valid URL: $imageUrl');
-                                return Image.network(
-                                  imageUrl,
-                                  fit: BoxFit.cover,
+                    Container(
+                      height: 250,
+                      width: wp,
+                      child: roomType.images.isNotEmpty
+                          ? Image.network(
+                              roomType.images,
+                              fit: BoxFit.cover,
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            (loadingProgress
+                                                    .expectedTotalBytes ??
+                                                1)
+                                        : null,
+                                  ),
                                 );
-                              } else {
-                                print('Invalid URL: $imageUrl');
-                                throw Exception('Invalid URL: $imageUrl');
-                              }
-                            }).toList(),
-                            onPageChanged: (value) {
-                              print('Page changed: $value');
-                            },
-                            autoPlayInterval: 3000,
-                            isLoop: true,
-                          )
-                        : Container(
-                            child: Text('No images available',
-                                style: TextStyle(color: Colors.red)),
-                          ),
+                              },
+                              errorBuilder: (BuildContext context, Object error,
+                                  StackTrace? stackTrace) {
+                                return Center(
+                                    child: Text(
+                                        'Failed to load image')); // Show error message
+                              },
+                            )
+                          : Center(
+                              child: Text(
+                                  'No images available')), // Handle empty images list
+                    ),
                     Expanded(
                       child: SingleChildScrollView(
                         padding: EdgeInsets.only(

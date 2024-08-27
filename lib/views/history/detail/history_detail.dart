@@ -80,7 +80,9 @@ class HistoryDetail extends StatelessWidget {
                                 Text(
                                   bookingDetail.paymentStatus == 'pending'
                                       ? "Pesanan belum dibayar. Kami tunggu "
-                                      : "Pesanan telah selesai. Kami tunggu ",
+                                      : bookingDetail.paymentStatus == 'success'
+                                          ? "Pesanan telah selesai. Kami tunggu "
+                                          : "Pesanan gagal. Coba lagi",
                                   style: TextStyle(
                                     color: kPrimaryWhite,
                                   ),

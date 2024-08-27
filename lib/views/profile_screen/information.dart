@@ -12,7 +12,7 @@ class InformationScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: kPrimaryWhite),
           onPressed: () {
-            Get.toNamed('/home');
+            Get.toNamed('/profile');
           },
         ),
         title: Text(

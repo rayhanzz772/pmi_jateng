@@ -29,12 +29,7 @@ class _PaymentScreenPackageState extends State<PaymentScreenPackage> {
           onNavigationRequest: (NavigationRequest request) {
             if (request.url.contains('example.com')) {
               // Handle callback from Midtrans
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Transaksi berhasil'),
-                  backgroundColor: Colors.green,
-                ),
-              );
+
               Navigator.pushReplacementNamed(context, '/home');
             }
             return NavigationDecision.navigate;

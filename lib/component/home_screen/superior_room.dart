@@ -15,9 +15,9 @@ class _SuperiorRoomState extends State<SuperiorRoom> {
     'assets/images/our_room.jpg',
   ];
   final List<String> textList = [
-    '1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    '2 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    '3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    'This room is a perfect blend of comfort and style, It offers a serene and inviting atmosphere that makes you feel right at home',
+    'The design of this room is truly exceptional, Every detail has been thoughtfully considered to create a space that exudes both elegance and warmth.',
+    'This room stands out with its impeccable style and attention to detail, It’s a space where luxury meets coziness, making it the ideal retreat.',
   ];
 
   @override
@@ -36,7 +36,6 @@ class _SuperiorRoomState extends State<SuperiorRoom> {
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   border: Border(
-                    top: BorderSide(color: kPrimaryMaroon, width: 2),
                     bottom: BorderSide(color: kPrimaryMaroon, width: 2),
                   ),
                 ),
@@ -120,7 +119,6 @@ class _SuperiorRoomState extends State<SuperiorRoom> {
                 width: wp * 0.06,
                 decoration: BoxDecoration(
                   border: Border(
-                    top: BorderSide(color: kPrimaryMaroon, width: 2),
                     bottom: BorderSide(color: kPrimaryMaroon, width: 2),
                   ),
                 ),
@@ -163,7 +161,6 @@ class _SuperiorRoomState extends State<SuperiorRoom> {
                 width: wp * 0.54,
                 decoration: BoxDecoration(
                   border: Border(
-                    top: BorderSide(color: kPrimaryMaroon, width: 2),
                     bottom: BorderSide(color: kPrimaryMaroon, width: 2),
                   ),
                 ),
@@ -187,14 +184,14 @@ class _SuperiorRoomState extends State<SuperiorRoom> {
                         color: kPrimaryMaroon,
                       ),
                     ),
-                    SizedBox(height: 15), // Adjust the spacing
+                    SizedBox(height: 15),
                     CarouselSlider(
                       options: CarouselOptions(
                         height: hp * 0.2,
                         enlargeCenterPage: true,
                         autoPlay: true,
                         aspectRatio: 2.0,
-                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayInterval: Duration(seconds: 5),
                         onPageChanged: (index, reason) {
                           setState(() {
                             _current = index;
@@ -235,41 +232,6 @@ class _SuperiorRoomState extends State<SuperiorRoom> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class DetailPage extends StatelessWidget {
-  final String image;
-  final String text;
-
-  DetailPage({required this.image, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Detail Page'),
-        backgroundColor: kPrimaryMaroon,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(image),
-            SizedBox(height: 20),
-            Text(
-              text,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 18,
-                color: kPrimaryBlack,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
