@@ -6,8 +6,8 @@ import 'package:pmi_jateng/views/room_screen/room_screen_regular.dart';
 import 'package:pmi_jateng/service/api_service.dart';
 import 'package:pmi_jateng/service/model/meeting_room.dart';
 
-class MeetingRoomCard extends StatelessWidget {
-  const MeetingRoomCard({Key? key}) : super(key: key);
+class PackageRoomCard extends StatelessWidget {
+  const PackageRoomCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,19 +40,20 @@ class MeetingRoomCard extends StatelessWidget {
     }
 
     return SingleChildScrollView(
-      child: FutureBuilder<List<MeetRoom>>(
-        future: ApiService.fetchRoomTypes(),
+      child: FutureBuilder<List<MeetRoomPaket>>(
+        future: ApiService.fetchPackageTypes(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: CircularProgressIndicator());
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No data available'));
+          } else if (!snapshot.hasData) {
+            return Center(child: Text('No package data available'));
           } else {
-            final rooms = snapshot.data!;
+            final package = snapshot.data!;
 
             return Container(
+              key: _regularRoomKey,
               height: hp * 0.62,
               width: wp,
               padding: EdgeInsets.symmetric(horizontal: 7, vertical: hp * 0.02),
@@ -65,7 +66,7 @@ class MeetingRoomCard extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          'Regular',
+                          'Paket',
                           style: TextStyle(
                               fontFamily: 'Freehand',
                               fontSize: wp * 0.08,
@@ -86,17 +87,17 @@ class MeetingRoomCard extends StatelessWidget {
                   Expanded(
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: rooms.length,
+                      itemCount: package.length,
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
-                        final room = rooms[index];
+                        final packages = package[index];
                         return GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    RoomScreenRegular(id: room.id),
+                                    RoomScreenPackage(id: packages.id),
                               ),
                             );
                           },
@@ -115,7 +116,7 @@ class MeetingRoomCard extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       image: DecorationImage(
-                                        image: NetworkImage(room.image),
+                                        image: NetworkImage(packages.thumbnail),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -123,7 +124,7 @@ class MeetingRoomCard extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      room.roomType,
+                                      packages.name,
                                       style: TextStyle(
                                         fontSize: wp * 0.04,
                                         color: kPrimaryBlack,
@@ -135,7 +136,7 @@ class MeetingRoomCard extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8.0),
                                     child: Text(
-                                      room.description,
+                                      packages.description,
                                       style: TextStyle(
                                         fontFamily: 'poppins',
                                         fontSize: wp * 0.035,

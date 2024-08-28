@@ -242,16 +242,26 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              '${transaction['order_id']}',
+                                              '${transaction['room_type']}',
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: wp * 0.03,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              transaction['order_id'].length >
+                                                      10
+                                                  ? '${transaction['order_id'].substring(0, 20)}...'
+                                                  : transaction['order_id'],
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w400,
                                                   fontFamily: 'Poppins',
                                                   fontSize: wp * 0.03),
                                             ),
                                             SizedBox(height: 5),
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  right: 8.0),
+                                                  right: 40.0),
                                               child: Text(
                                                 '${transaction['amount']} items - Total Price: ${transaction['total_price']}',
                                                 style: TextStyle(

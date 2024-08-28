@@ -223,6 +223,8 @@ class RoomScreenRegular extends StatelessWidget {
                                                     Text(
                                                       "Wifi",
                                                       style: TextStyle(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize: wp * 0.04,
                                                           color:
                                                               kPrimaryFontColor),
                                                     ),
@@ -240,6 +242,9 @@ class RoomScreenRegular extends StatelessWidget {
                                                     SizedBox(width: 8),
                                                     Text("Air Hangat",
                                                         style: TextStyle(
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            fontSize: wp * 0.04,
                                                             color:
                                                                 kPrimaryFontColor)),
                                                   ],
@@ -259,6 +264,9 @@ class RoomScreenRegular extends StatelessWidget {
                                                     SizedBox(width: 8),
                                                     Text("AC",
                                                         style: TextStyle(
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            fontSize: wp * 0.04,
                                                             color:
                                                                 kPrimaryFontColor)),
                                                   ],
@@ -275,6 +283,9 @@ class RoomScreenRegular extends StatelessWidget {
                                                     SizedBox(width: 8),
                                                     Text("Laundry",
                                                         style: TextStyle(
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            fontSize: wp * 0.04,
                                                             color:
                                                                 kPrimaryFontColor)),
                                                   ],
@@ -294,6 +305,9 @@ class RoomScreenRegular extends StatelessWidget {
                                                     SizedBox(width: 8),
                                                     Text("TV",
                                                         style: TextStyle(
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            fontSize: wp * 0.04,
                                                             color:
                                                                 kPrimaryFontColor)),
                                                   ],
@@ -308,6 +322,9 @@ class RoomScreenRegular extends StatelessWidget {
                                                     SizedBox(width: 8),
                                                     Text("Kamar Mandi",
                                                         style: TextStyle(
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            fontSize: wp * 0.04,
                                                             color:
                                                                 kPrimaryFontColor)),
                                                   ],

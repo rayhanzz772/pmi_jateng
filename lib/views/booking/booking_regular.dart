@@ -92,6 +92,9 @@ class BookingFormRegularFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hp = MediaQuery.of(context).size.height;
+    final wp = MediaQuery.of(context).size.width;
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -127,7 +130,10 @@ class BookingFormRegularFields extends StatelessWidget {
                             SizedBox(width: 8),
                             Text(
                               "Wifi",
-                              style: TextStyle(color: kPrimaryFontColor),
+                              style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: wp * 0.035,
+                                  color: kPrimaryFontColor),
                             ),
                           ],
                         ),
@@ -138,7 +144,10 @@ class BookingFormRegularFields extends StatelessWidget {
                                 size: 18, color: kPrimaryFontColor),
                             SizedBox(width: 8),
                             Text("Air Hangat",
-                                style: TextStyle(color: kPrimaryFontColor)),
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: wp * 0.035,
+                                    color: kPrimaryFontColor)),
                           ],
                         ),
                       ],
@@ -152,7 +161,10 @@ class BookingFormRegularFields extends StatelessWidget {
                                 size: 18, color: kPrimaryFontColor),
                             SizedBox(width: 8),
                             Text("AC",
-                                style: TextStyle(color: kPrimaryFontColor)),
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: wp * 0.035,
+                                    color: kPrimaryFontColor)),
                           ],
                         ),
                         SizedBox(height: 11),
@@ -162,7 +174,10 @@ class BookingFormRegularFields extends StatelessWidget {
                                 size: 18, color: kPrimaryFontColor),
                             SizedBox(width: 8),
                             Text("Laundry",
-                                style: TextStyle(color: kPrimaryFontColor)),
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: wp * 0.035,
+                                    color: kPrimaryFontColor)),
                           ],
                         ),
                       ],
@@ -175,7 +190,10 @@ class BookingFormRegularFields extends StatelessWidget {
                             Icon(Icons.tv, size: 18, color: kPrimaryFontColor),
                             SizedBox(width: 8),
                             Text("TV",
-                                style: TextStyle(color: kPrimaryFontColor)),
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: wp * 0.035,
+                                    color: kPrimaryFontColor)),
                           ],
                         ),
                         SizedBox(height: 11),
@@ -184,7 +202,10 @@ class BookingFormRegularFields extends StatelessWidget {
                             Icon(Icons.bed, size: 18, color: kPrimaryFontColor),
                             SizedBox(width: 8),
                             Text("2 Single Bed",
-                                style: TextStyle(color: kPrimaryFontColor)),
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: wp * 0.035,
+                                    color: kPrimaryFontColor)),
                           ],
                         ),
                       ],
@@ -237,7 +258,7 @@ class BookingFormRegularFields extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 10),
-                Text("Tanggal dan Pukul masuk"),
+                Text("Tanggal masuk"),
                 SizedBox(
                   height: 3,
                 ),
@@ -310,48 +331,48 @@ class BookingFormRegularFields extends StatelessWidget {
                           ),
                         ),
                         SizedBox(width: 10),
-                        Expanded(
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'Pukul Masuk',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: kPrimaryWhite),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: kPrimaryFontColor),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                            ),
-                            readOnly: true,
-                            controller: TextEditingController(
-                              text: state.checkInTime.format(context),
-                            ),
-                            onTap: () async {
-                              TimeOfDay? pickedTime = await showTimePicker(
-                                context: context,
-                                initialTime: state.checkInTime,
-                              );
-                              if (pickedTime != null) {
-                                context
-                                    .read<BookingBloc>()
-                                    .add(UpdateCheckInTime(pickedTime));
-                              }
-                            },
-                          ),
-                        ),
+                        // Expanded(
+                        //   child: TextFormField(
+                        //     decoration: InputDecoration(
+                        //       labelText: 'Pukul Masuk',
+                        //       border: OutlineInputBorder(
+                        //         borderRadius: BorderRadius.circular(8),
+                        //       ),
+                        //       enabledBorder: OutlineInputBorder(
+                        //         borderSide: BorderSide(color: kPrimaryWhite),
+                        //         borderRadius: BorderRadius.circular(8),
+                        //       ),
+                        //       focusedBorder: OutlineInputBorder(
+                        //         borderSide:
+                        //             BorderSide(color: kPrimaryFontColor),
+                        //         borderRadius: BorderRadius.circular(8),
+                        //       ),
+                        //       filled: true,
+                        //       fillColor: Colors.white,
+                        //     ),
+                        //     readOnly: true,
+                        //     controller: TextEditingController(
+                        //       text: state.checkInTime.format(context),
+                        //     ),
+                        //     onTap: () async {
+                        //       TimeOfDay? pickedTime = await showTimePicker(
+                        //         context: context,
+                        //         initialTime: state.checkInTime,
+                        //       );
+                        //       if (pickedTime != null) {
+                        //         context
+                        //             .read<BookingBloc>()
+                        //             .add(UpdateCheckInTime(pickedTime));
+                        //       }
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     );
                   },
                 ),
                 SizedBox(height: 10),
-                Text("Tanggal dan Pukul keluar"),
+                Text("Tanggal keluar"),
                 SizedBox(
                   height: 3,
                 ),
@@ -411,42 +432,42 @@ class BookingFormRegularFields extends StatelessWidget {
                         SizedBox(
                           height: 3,
                         ),
-                        Expanded(
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'Pukul Keluar',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: kPrimaryWhite),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: kPrimaryFontColor),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                            ),
-                            readOnly: true,
-                            controller: TextEditingController(
-                              text: state.checkOutTime.format(context),
-                            ),
-                            onTap: () async {
-                              TimeOfDay? pickedTime = await showTimePicker(
-                                context: context,
-                                initialTime: state.checkOutTime,
-                              );
-                              if (pickedTime != null) {
-                                context
-                                    .read<BookingBloc>()
-                                    .add(UpdateCheckOutTime(pickedTime));
-                              }
-                            },
-                          ),
-                        ),
+                        // Expanded(
+                        //   child: TextFormField(
+                        //     decoration: InputDecoration(
+                        //       labelText: 'Pukul Keluar',
+                        //       border: OutlineInputBorder(
+                        //         borderRadius: BorderRadius.circular(8),
+                        //       ),
+                        //       enabledBorder: OutlineInputBorder(
+                        //         borderSide: BorderSide(color: kPrimaryWhite),
+                        //         borderRadius: BorderRadius.circular(8),
+                        //       ),
+                        //       focusedBorder: OutlineInputBorder(
+                        //         borderSide:
+                        //             BorderSide(color: kPrimaryFontColor),
+                        //         borderRadius: BorderRadius.circular(8),
+                        //       ),
+                        //       filled: true,
+                        //       fillColor: Colors.white,
+                        //     ),
+                        //     readOnly: true,
+                        //     controller: TextEditingController(
+                        //       text: state.checkOutTime.format(context),
+                        //     ),
+                        //     onTap: () async {
+                        //       TimeOfDay? pickedTime = await showTimePicker(
+                        //         context: context,
+                        //         initialTime: state.checkOutTime,
+                        //       );
+                        //       if (pickedTime != null) {
+                        //         context
+                        //             .read<BookingBloc>()
+                        //             .add(UpdateCheckOutTime(pickedTime));
+                        //       }
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     );
                   },
