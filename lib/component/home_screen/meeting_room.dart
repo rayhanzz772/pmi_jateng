@@ -44,9 +44,13 @@ class MeetingRoomCard extends StatelessWidget {
         future: ApiService.fetchRoomTypes(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+                child: CircularProgressIndicator(color: kPrimaryMaroon));
           } else if (snapshot.hasError) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+                child: CircularProgressIndicator(
+              color: kPrimaryMaroon,
+            ));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(child: Text('No data available'));
           } else {
