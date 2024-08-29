@@ -95,6 +95,7 @@ class AuthControl extends GetxController {
 
       if (data['data'] == null) {
         errorMessage.value = 'Check your email or password';
+        print("errror");
       } else {
         final extractedEmailVerif = data['data']['email_verified_at'];
 
