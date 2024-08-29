@@ -46,11 +46,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
     final transactions =
         await ApiService.fetchUserTransactions(_email!, _token);
 
+    // Sort by date and time in descending order
     transactions.sort((a, b) {
-      DateTime dateA = DateTime.parse(a['transaction_date']);
-      DateTime dateB = DateTime.parse(b['transaction_date']);
-      return dateB.compareTo(dateA); // Descending order
+      DateTime dateTimeA = DateTime.parse(a['transaction_date']);
+      DateTime dateTimeB = DateTime.parse(b['transaction_date']);
+
+      // Compare both date and time in descending order
+      return dateTimeB.compareTo(dateTimeA);
     });
+
     setState(() {
       _transactions = transactions;
     });
@@ -86,7 +90,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     if (_isLoading) {
       return Scaffold(
         backgroundColor: kPrimaryWhite,
-        body: Center(child: CircularProgressIndicator()),
+        body: Center(child: CircularProgressIndicator(color: kPrimaryMaroon)),
       );
     }
 
@@ -185,7 +189,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           borderRadius: BorderRadius.circular(8.0),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.5),
+                              color: Colors.black.withOpacity(0.2),
                               spreadRadius: 2,
                               blurRadius: 5,
                               offset: Offset(0, 3),

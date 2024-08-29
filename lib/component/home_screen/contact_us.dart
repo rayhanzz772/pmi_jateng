@@ -43,7 +43,7 @@ class _ContactUsState extends State<ContactUs> {
             height: hp * 0.01,
           ),
           Text(
-            'Rachmatdandy',
+            'Admin PMI',
             style: TextStyle(
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w600,
