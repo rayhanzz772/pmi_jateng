@@ -559,7 +559,7 @@ class BookingFormPackageFields extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CircularProgressIndicator(),
+                CircularProgressIndicator(color: kPrimaryMaroon),
                 SizedBox(width: 16),
                 Text("Processing booking..."),
               ],

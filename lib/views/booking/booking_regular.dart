@@ -475,44 +475,58 @@ class BookingFormRegularFields extends StatelessWidget {
                 SizedBox(height: 30),
                 Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Harga Kamar"),
-                        Text("Rp. $price"),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Pajak dan biaya lainnya"),
-                        Text("Rp. -"),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.grey, // Color of the line
-                      thickness: 2, // Thickness of the line
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Harga Total",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "$price",
-                          style: TextStyle(
-                              color: kPrimaryFontColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    BlocBuilder<BookingBloc, BookingState>(
+                      builder: (context, state) {
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Harga Kamar"),
+                                Text("Rp. $price"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Pajak dan biaya lainnya"),
+                                Text("Rp. -"),
+                              ],
+                            ),
+                            Divider(
+                              color: Colors.grey, // Color of the line
+                              thickness: 2, // Thickness of the line
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Harga Total",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                // Kalkulasi harga total berdasarkan harga per kamar dan jumlah orang
+                                Text(
+                                  "Rp. ${(int.tryParse(price) ?? 0) * (int.tryParse(state.guests) ?? 0)}",
+                                  style: TextStyle(
+                                    color: kPrimaryFontColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),
+
                 SizedBox(
                   height: 50,
                 ),
@@ -580,7 +594,7 @@ class BookingFormRegularFields extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CircularProgressIndicator(),
+                CircularProgressIndicator(color: kPrimaryMaroon),
                 SizedBox(width: 16),
                 Text("Processing booking..."),
               ],

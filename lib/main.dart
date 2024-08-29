@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pmi_jateng/views/available/available_room.dart';
 import 'package:pmi_jateng/views/booking/booking_regular.dart';
 import 'package:pmi_jateng/views/history/detail/history_detail.dart';
 import 'package:pmi_jateng/views/history/history_screen.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         Get.put(AuthControl());
       }),
       getPages: [
-        GetPage(name: '/', page: () => HomeScreen()),
+        GetPage(name: '/', page: () => SplashScreen()),
         GetPage(name: '/welcome_screen', page: () => MenuSelectScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(name: '/sign_up', page: () => SignUpScreen()),
@@ -51,6 +52,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/bottom_bar', page: () => BottomBar()),
         GetPage(name: '/edit_profile', page: () => EditProfile()),
         GetPage(name: '/history', page: () => HistoryScreen()),
+        GetPage(
+            name: '/available',
+            page: () => AvailableScreen(data: Get.arguments['data'])),
         GetPage(
           name: '/room_screen_regular',
           page: () => RoomScreenRegular(id: Get.arguments as int),
