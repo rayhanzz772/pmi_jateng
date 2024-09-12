@@ -10,13 +10,41 @@ import 'package:pmi_jateng/views/booking/paymentScreenPackage.dart';
 import 'package:pmi_jateng/views/booking/paymentScreenRegular.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HistoryDetail extends StatelessWidget {
-  final int id;
-  final String user_email;
+class HistoryDetail extends StatefulWidget {
+  @override
+  final int id; // Tambahkan parameter id
+  final String user_email; // Tambahkan parameter user_email
 
   const HistoryDetail({Key? key, required this.id, required this.user_email})
       : super(key: key);
-  @override
+  _HistoryDetailState createState() => _HistoryDetailState();
+}
+
+class _HistoryDetailState extends State<HistoryDetail> {
+  String? _token;
+
+  void initState() {
+    super.initState();
+    _saveLogin();
+  }
+
+  Future<void> _saveLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _token =
+          prefs.getString('auth_token'); // Ambil token dari SharedPreferences
+    });
+  }
+
+  Future<BookingDetail?> _fetchBookingDetail() async {
+    if (_token != null) {
+      return ApiService.fetchUserTransactionsById(widget.id, widget.user_email,
+          _token!); // Sertakan token dalam API call
+    } else {
+      throw Exception('Token not available');
+    }
+  }
+
   Widget build(BuildContext context) {
     final hp = MediaQuery.of(context).size.height;
     final wp = MediaQuery.of(context).size.width;
@@ -42,7 +70,7 @@ class HistoryDetail extends StatelessWidget {
         ),
       ),
       body: FutureBuilder<BookingDetail?>(
-          future: ApiService.fetchUserTransactionsById(id, user_email),
+          future: _fetchBookingDetail(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(

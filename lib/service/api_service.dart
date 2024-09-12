@@ -150,33 +150,51 @@ class ApiService {
   }
 
   static Future<BookingDetail?> fetchUserTransactionsById(
-      int id, String userEmail) async {
-    final response = await http.get(Uri.parse(
-        '$baseUrl/api/v2/user_transaction/detail?id=$id&user_email=$userEmail'));
+      int id, String userEmail, String? token) async {
+    // Bangun URL dengan id dan email
+    final url =
+        '$baseUrl/api/v2/user_transaction/detail?id=$id&user_email=$userEmail';
 
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = json.decode(response.body);
+    try {
+      // Mengirim permintaan GET dengan header otorisasi
+      final response = await http.get(Uri.parse(url), headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      });
 
-      // Check if 'data' is not null and contains the expected structure
-      if (data.isNotEmpty) {
-        return BookingDetail.fromJson(data);
+      // Cek apakah respon sukses
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = json.decode(response.body);
+
+        // Memastikan data tidak null atau kosong
+        if (data.isNotEmpty) {
+          return BookingDetail.fromJson(data);
+        } else {
+          // Jika data kosong, kembalikan null
+          return null;
+        }
       } else {
-        // Handle case where data is empty or null
-        return null;
+        throw Exception(
+            'Failed to load transaction details, status code: ${response.statusCode}');
       }
-    } else {
-      throw Exception('Failed to load transaction details');
+    } catch (e) {
+      // Tangani error
+      print('Error fetching transaction details: $e');
+      return null;
     }
   }
 
 // Untuk menambahkan data pada booking
-  Future<String?> BookingRegular(
-      {required String email,
-      required String id,
-      required String start_dt,
-      required String end_dt,
-      required String amo,
-      required String sd}) async {
+  Future<String?> BookingRegular({
+    required String email,
+    required String id,
+    required String start_dt,
+    required String end_dt,
+    required String amo,
+    required String sd,
+    required String token,
+  }) async {
+    // Persiapan data untuk POST request
     final Map<String, dynamic> data = {
       "user_email": email,
       "room_type_id": id,
@@ -187,33 +205,37 @@ class ApiService {
     };
 
     print('Sending request with parameters:');
-    print('user_email: $email (type: ${email.runtimeType})');
-    print('room_type_id: $id (type: ${id.runtimeType})');
-    print('start_date: $start_dt (type: ${start_dt.runtimeType})');
-    print('end_date: $end_dt (type: ${end_dt.runtimeType})');
-    print('amount: $amo (type: ${amo.runtimeType})');
-    print('side: $sd (type: ${sd.runtimeType})');
+    data.forEach((key, value) {
+      print('$key: $value (type: ${value.runtimeType})');
+    });
 
     try {
-      Dio dio = Dio();
-      final response = await dio.post(
-        "$baseUrl/api/v2/booking/generateToken",
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        ),
-        data: data,
+      // Menggunakan http untuk POST request
+      final response = await http.post(
+        Uri.parse(
+            "$baseUrl/api/v2/booking/generateToken"), // Ganti dengan URL yang benar
+        headers: {
+          'Authorization': 'Bearer $token', // Gunakan token otorisasi
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(data), // Konversi body ke JSON
       );
 
+      // Cek status code dari response
       if (response.statusCode == 200) {
-        final responseBody = response.data;
-        final snapToken = responseBody['snap_token'];
-        return snapToken; // Kembalikan snapToken
+        final responseBody = jsonDecode(response.body);
+
+        if (responseBody != null && responseBody['snap_token'] != null) {
+          final snapToken = responseBody['snap_token'];
+          return snapToken; // Kembalikan snapToken
+        } else {
+          print('Invalid response data: ${response.body}');
+          return null;
+        }
       } else {
         print('Failed to insert data');
         print('Response status: ${response.statusCode}');
-        print('Response body: ${response.data}');
+        print('Response body: ${response.body}');
         return null;
       }
     } catch (e) {
@@ -229,6 +251,7 @@ class ApiService {
       required String start_dt,
       required String end_dt,
       required String person_count,
+      required String token,
       required String sd}) async {
     final Map<String, dynamic> data = {
       "user_email": user_email,
@@ -248,25 +271,28 @@ class ApiService {
     print('side: $sd (type: ${sd.runtimeType})');
 
     try {
-      Dio dio = Dio();
-      final response = await dio.post(
-        "$baseUrl/api/v2/booking/packageToken",
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        ),
-        data: data,
-      );
+      final response =
+          await http.post(Uri.parse("$baseUrl/api/v2/booking/packageToken"),
+              headers: {
+                'Authorization': 'Bearer $token', // Gunakan token otorisasi
+                'Content-Type': 'application/json',
+              },
+              body: jsonEncode(data));
 
       if (response.statusCode == 200) {
-        final responseBody = response.data;
-        final snapToken = responseBody['snap_token'];
-        return snapToken; // Kembalikan snapToken
+        final responseBody = jsonDecode(response.body);
+
+        if (responseBody != null && responseBody['snap_token'] != null) {
+          final snapToken = responseBody['snap_token'];
+          return snapToken; // Kembalikan snapToken
+        } else {
+          print('Invalid response data: ${response.body}');
+          return null;
+        }
       } else {
         print('Failed to insert data');
         print('Response status: ${response.statusCode}');
-        print('Response body: ${response.data}');
+        print('Response body: ${response.body}');
         return null;
       }
     } catch (e) {

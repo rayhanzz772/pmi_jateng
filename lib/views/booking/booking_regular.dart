@@ -535,12 +535,29 @@ class BookingFormRegularFields extends StatelessWidget {
     try {
       final prefs = await SharedPreferences.getInstance();
       final email = prefs.getString('auth_email') ?? 'default@example.com';
+      final token = prefs.getString('auth_token');
+
+      // Pastikan token tidak null
+      if (token == null) {
+        // Dismiss the loading dialog
+        Navigator.of(context).pop();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Token tidak ditemukan, silakan masuk kembali.'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+        return;
+      }
+
       final snapToken = await bookingBloc.apiService.BookingRegular(
+        token: token,
         email: email,
-        id: id.toString(), // Convert `id` to String
+        id: id.toString(),
         start_dt: state.checkInDate.toString(),
         end_dt: state.checkOutDate.toString(),
-        amo: state.guests, // Convert `state.guests` to String
+        amo: state.guests.toString(), // Convert `state.guests` to String
         sd: "client",
       );
 
@@ -568,6 +585,12 @@ class BookingFormRegularFields extends StatelessWidget {
 
       // Handle the error if necessary
       print('Error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Terjadi kesalahan, silakan coba lagi.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 }
