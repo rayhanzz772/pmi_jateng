@@ -3,6 +3,7 @@ import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:get/get.dart';
 import 'package:pmi_jateng/views/history/history_screen.dart';
 import 'package:pmi_jateng/service/auth_control.dart';
+import 'package:pmi_jateng/views/profile_screen/change_password.dart';
 import 'package:pmi_jateng/views/profile_screen/information.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
@@ -241,6 +242,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
+                            builder: (context) => ChangePassword()),
+                      );
+                    },
+                    child: Container(
+                      color: kPrimaryWhite,
+                      margin: EdgeInsets.symmetric(vertical: 10),
+                      width: wp * 0.9,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: hp * 0.06,
+                                width: wp * 0.15,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  shape: BoxShape.rectangle,
+                                  color: kPrimaryGrey,
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.password_outlined,
+                                    color: kPrimaryMaroon,
+                                    size: wp * 0.08,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Change Password',
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: wp * 0.043),
+                              )
+                            ],
+                          ),
+                          Container(
+                            height: hp * 0.03,
+                            width: wp * 0.07,
+                            decoration: BoxDecoration(shape: BoxShape.circle),
+                            child: Center(
+                              child: Icon(
+                                Icons.arrow_circle_right_outlined,
+                                color: kPrimaryMaroon,
+                                size: wp * 0.08,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
                             builder: (context) => InformationScreen()),
                       );
                     },
@@ -301,7 +361,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       await _signOut(context);
                     },
                     child: Container(
-                      margin: EdgeInsets.only(top: hp * 0.16),
+                      margin: EdgeInsets.only(top: hp * 0.09),
                       width: wp * 0.9,
                       height: hp * 0.07,
                       decoration: BoxDecoration(

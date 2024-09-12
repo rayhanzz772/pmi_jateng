@@ -2,7 +2,7 @@ class MeetRoomPaket {
   final int id;
   final String name;
   final String price_per_person;
-  final String description;
+  final String? description;
   final String thumbnail;
   MeetRoomPaket({
     required this.id,

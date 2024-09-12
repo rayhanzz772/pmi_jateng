@@ -138,7 +138,8 @@ class PackageRoomCard extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8.0),
                                     child: Text(
-                                      packages.description,
+                                      packages.description ??
+                                          'Description is null',
                                       style: TextStyle(
                                         fontFamily: 'poppins',
                                         fontSize: wp * 0.035,

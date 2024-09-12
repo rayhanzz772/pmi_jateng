@@ -4,6 +4,7 @@ import 'package:pmi_jateng/views/available/available_room.dart';
 import 'package:pmi_jateng/views/booking/booking_regular.dart';
 import 'package:pmi_jateng/views/history/detail/history_detail.dart';
 import 'package:pmi_jateng/views/history/history_screen.dart';
+import 'package:pmi_jateng/views/profile_screen/change_password.dart';
 import 'package:pmi_jateng/views/profile_screen/information.dart';
 import 'package:pmi_jateng/views/room_screen/room_screen_package.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/bottom_bar', page: () => BottomBar()),
         GetPage(name: '/edit_profile', page: () => EditProfile()),
         GetPage(name: '/history', page: () => HistoryScreen()),
+        GetPage(name: '/change_password', page: () => ChangePassword()),
         GetPage(
             name: '/available',
             page: () => AvailableScreen(data: Get.arguments['data'])),

@@ -86,11 +86,16 @@ class ApiService {
     final response =
         await http.get(Uri.parse("$baseUrl/api/v1/packages/getAll"));
 
+    print('Status code: ${response.statusCode}');
+    print('Response body: ${response.body}'); // Tambahkan logging
+
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body);
+      print('Parsed data: $jsonData'); // Tambahkan logging untuk parsed data
 
       return jsonData.map((json) => MeetRoomPaket.fromJson(json)).toList();
     } else {
+      print('Error: ${response.body}');
       throw Exception('Failed to load room types');
     }
   }
@@ -99,7 +104,7 @@ class ApiService {
 
   static Future<PackageType> fetchPackageTypeById(int id) async {
     final response =
-        await http.get(Uri.parse('$baseUrl/api/v1/packages/getDetail?id=$id'));
+        await http.get(Uri.parse("$baseUrl/api/v1/packages/getDetail?id=$id"));
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
@@ -117,7 +122,7 @@ class ApiService {
   static Future<List<Map<String, dynamic>>> fetchUserTransactions(
       String email, String? token) async {
     final url =
-        '$baseUrl/api/v1/user_transaction/getUserTransaction?user_email=$email';
+        '$baseUrl/api/v2/user_transaction/getUserTransaction?user_email=$email';
 
     try {
       final response = await http.get(Uri.parse(url), headers: {
@@ -126,8 +131,14 @@ class ApiService {
       });
 
       if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
-        return List<Map<String, dynamic>>.from(data);
+        // Parsing JSON response as a Map<String, dynamic>
+        final Map<String, dynamic> data = jsonDecode(response.body);
+
+        // Convert the map values to a list of transactions
+        final List<Map<String, dynamic>> transactions =
+            data.values.map((e) => Map<String, dynamic>.from(e)).toList();
+
+        return transactions;
       } else {
         print('Failed to load transactions: ${response.body}');
         return [];
@@ -141,7 +152,7 @@ class ApiService {
   static Future<BookingDetail?> fetchUserTransactionsById(
       int id, String userEmail) async {
     final response = await http.get(Uri.parse(
-        '$baseUrl/api/v1/user_transaction/detail?id=$id&user_email=$userEmail'));
+        '$baseUrl/api/v2/user_transaction/detail?id=$id&user_email=$userEmail'));
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
@@ -186,7 +197,7 @@ class ApiService {
     try {
       Dio dio = Dio();
       final response = await dio.post(
-        "$baseUrl/api/v1/booking/generateToken",
+        "$baseUrl/api/v2/booking/generateToken",
         options: Options(
           headers: {
             'Content-Type': 'application/json',
@@ -239,7 +250,7 @@ class ApiService {
     try {
       Dio dio = Dio();
       final response = await dio.post(
-        "$baseUrl/api/v1/booking/packageToken",
+        "$baseUrl/api/v2/booking/packageToken",
         options: Options(
           headers: {
             'Content-Type': 'application/json',
