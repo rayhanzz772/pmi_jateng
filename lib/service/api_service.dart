@@ -422,4 +422,63 @@ class ApiService {
       );
     }
   }
+
+  Future<bool> changePassword(String currentPassword, String newPassword,
+      String confirmPassword, String? token) async {
+    try {
+      // Kirim POST request ke endpoint untuk update password
+      final response = await http.put(
+        Uri.parse("$baseUrl/api/v1/updatePassword"),
+        headers: {
+          'Authorization': 'Bearer $token', // Token JWT perlu dikirim di header
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'current_password': currentPassword, // Password lama
+          'password': newPassword, // Password baru
+          'password_confirmation': confirmPassword,
+        }),
+      );
+
+      // Log untuk debugging
+      print("Response status: ${response.statusCode}");
+      print("Response body: ${response.body}");
+
+      // Cek status kode dari response
+      if (response.statusCode == 200) {
+        // Coba parsing responsenya hanya jika JSON
+        if (response.headers['content-type']?.contains('application/json') ??
+            false) {
+          final responseData = jsonDecode(response.body);
+
+          // Lakukan apa yang diperlukan, misalnya simpan token baru
+          final newToken = responseData['access_token'];
+          print("Password updated successfully. New token: $newToken");
+
+          // Simpan token baru jika diperlukan
+          // await saveNewToken(newToken);
+
+          return true; // Indicate success
+        } else {
+          print("Unexpected content type: ${response.headers['content-type']}");
+          return false; // Indicate failure
+        }
+      } else {
+        // Jika gagal, tampilkan pesan kesalahan
+        if (response.headers['content-type']?.contains('application/json') ??
+            false) {
+          final errorData = jsonDecode(response.body);
+          print("Failed to update password: ${errorData['error']}");
+        } else {
+          print(
+              "Failed to update password. Response body: ${response.statusCode}");
+        }
+        return false; // Indicate failure
+      }
+    } catch (error) {
+      // Tangani error saat melakukan request
+      print("An error occurred: $error");
+      return false; // Indicate failure in case of an error
+    }
+  }
 }

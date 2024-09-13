@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pmi_jateng/views/available/available_room.dart';
 import 'package:pmi_jateng/views/booking/booking_regular.dart';
+import 'package:pmi_jateng/views/forgot_password/forgot_password.dart';
 import 'package:pmi_jateng/views/history/detail/history_detail.dart';
 import 'package:pmi_jateng/views/history/history_screen.dart';
 import 'package:pmi_jateng/views/profile_screen/change_password.dart';

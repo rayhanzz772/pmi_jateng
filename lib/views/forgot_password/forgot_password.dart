@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pmi_jateng/service/api_service.dart';
 import 'package:pmi_jateng/service/auth_control.dart'; // Pastikan import ini sesuai dengan lokasi file Anda
-import 'package:pmi_jateng/views/forgot_password/forgot_password.dart';
-import 'package:pmi_jateng/views/sign_up/sign_up.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 
-class SignInScreen extends StatelessWidget {
+class ForgotPasswordScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final AuthControl authController = Get.put(AuthControl());
     final hp = MediaQuery.of(context).size.height;
     final wp = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: kPrimaryWhite,
       body: Obx(() {
@@ -51,12 +49,10 @@ class SignInScreen extends StatelessWidget {
                       Navigator.pushNamed(context, "/welcome_screen");
                     },
                   ),
-                  SizedBox(
-                      width:
-                          10), // Add some spacing between the icon and the image
+                  SizedBox(width: 10),
                   Image.asset(
                     'assets/images/logoPMI.png',
-                    height: 40, // Specify the height of the image
+                    height: 40,
                   ),
                 ],
               ),
@@ -66,12 +62,9 @@ class SignInScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: 35),
-                    TopText(), // Gunakan widget TopText disini
+                    TopText(),
                     SizedBox(height: 60),
-                    BoxForm(
-                      emailController: emailController,
-                      passwordController: passwordController,
-                    ),
+                    EmailForm(emailController: emailController),
                   ],
                 ),
               ),
@@ -83,7 +76,7 @@ class SignInScreen extends StatelessWidget {
   }
 }
 
-// Definisikan widget TopText dalam file yang sama
+// Widget untuk teks di bagian atas layar
 class TopText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -91,22 +84,32 @@ class TopText extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 10),
-        Container(
-          padding: EdgeInsets.only(right: 100),
+        Text(
+          "Reset Your Password",
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: kPrimaryBlack,
+          ),
+        ),
+        SizedBox(height: 10),
+        Text(
+          "Enter your email address and we'll send you a link to reset your password.",
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.black54,
+          ),
         ),
       ],
     );
   }
 }
 
-class BoxForm extends StatelessWidget {
+// Widget untuk form input email
+class EmailForm extends StatelessWidget {
   final TextEditingController emailController;
-  final TextEditingController passwordController;
 
-  BoxForm({
-    required this.emailController,
-    required this.passwordController,
-  });
+  EmailForm({required this.emailController});
 
   @override
   Widget build(BuildContext context) {
@@ -119,19 +122,9 @@ class BoxForm extends StatelessWidget {
       ),
       child: Column(
         children: [
-          SizedBox(height: 22),
-          Text(
-            "SIGN IN",
-            style: TextStyle(
-              fontSize: 22,
-              fontFamily: "Poppins",
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
           SizedBox(height: 10),
-          Container(
-            padding: EdgeInsets.only(left: 30, right: 30),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               children: [
                 TextField(
@@ -145,46 +138,27 @@ class BoxForm extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 16.0),
-                TextField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: TextStyle(
-                      fontSize: 13,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                Align(
-                  alignment: Alignment.center,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ForgotPasswordScreen(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      "Forgot Password?",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () async {
                     String email = emailController.text;
-                    String password = passwordController.text;
-                    try {
-                      await authController.signInWithEmail(email, password);
-                    } catch (e) {
-                      print('Error during sign-in: $e');
+                    if (email.isNotEmpty) {
+                      try {
+                        await ApiService().sendForgotPasswordRequest(email);
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Failed to send reset link'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Please enter a valid email address'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -195,7 +169,7 @@ class BoxForm extends StatelessWidget {
                     backgroundColor: kPrimaryColor,
                   ),
                   child: Text(
-                    'Sign In',
+                    'Send Reset Link',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
@@ -203,28 +177,6 @@ class BoxForm extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 16.0),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, "/sign_up");
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have an account?",
-                        style: TextStyle(fontSize: 13, color: kPrimaryBlack),
-                      ),
-                      Text(
-                        " Sign Up",
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: kPrimaryMaroon,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 34),
               ],
             ),
           ),
