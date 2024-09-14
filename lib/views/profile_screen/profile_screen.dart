@@ -361,17 +361,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       QuickAlert.show(
                         context: context,
                         type: QuickAlertType.warning,
-                        title: 'Konfirmasi',
+                        title: 'Confirmation',
                         text: 'Are you sure to logout?',
+                        confirmBtnColor: kPrimaryMaroon,
                         confirmBtnText: 'Ya',
                         cancelBtnText: 'Tidak',
                         onConfirmBtnTap: () async {
-                          Navigator.of(context).pop(); // Tutup alert
-                          Navigator.pop(context); // Kembali ke layar sebelumnya
-                          await _signOut(context); // Proses logout
+                          Navigator.of(context).pop();
+                          Navigator.pop(context);
+                          await _signOut(context);
                         },
                         onCancelBtnTap: () {
-                          Navigator.of(context).pop(); // Tutup alert
+                          Navigator.of(context).pop();
                         },
                       );
                     },
