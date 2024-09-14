@@ -8,6 +8,7 @@ import 'package:pmi_jateng/views/profile_screen/information.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:quickalert/quickalert.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -357,8 +358,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      Navigator.pop(context);
-                      await _signOut(context);
+                      QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.warning,
+                        title: 'Konfirmasi',
+                        text: 'Are you sure to logout?',
+                        confirmBtnText: 'Ya',
+                        cancelBtnText: 'Tidak',
+                        onConfirmBtnTap: () async {
+                          Navigator.of(context).pop(); // Tutup alert
+                          Navigator.pop(context); // Kembali ke layar sebelumnya
+                          await _signOut(context); // Proses logout
+                        },
+                        onCancelBtnTap: () {
+                          Navigator.of(context).pop(); // Tutup alert
+                        },
+                      );
                     },
                     child: Container(
                       margin: EdgeInsets.only(top: hp * 0.09),

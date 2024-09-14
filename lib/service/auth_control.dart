@@ -94,8 +94,13 @@ class AuthControl extends GetxController {
       final data = jsonDecode(response.body);
 
       if (data['data'] == null) {
-        errorMessage.value = 'Check your email or password';
-        print("errror");
+        Get.snackbar(
+          'Error',
+          'Check your email or password',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+        );
       } else {
         final extractedEmailVerif = data['data']['email_verified_at'];
 
