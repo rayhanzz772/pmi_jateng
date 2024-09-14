@@ -131,14 +131,24 @@ class ApiService {
       });
 
       if (response.statusCode == 200) {
-        // Parsing JSON response as a Map<String, dynamic>
-        final Map<String, dynamic> data = jsonDecode(response.body);
+        final dynamic data = jsonDecode(response.body);
 
-        // Convert the map values to a list of transactions
-        final List<Map<String, dynamic>> transactions =
-            data.values.map((e) => Map<String, dynamic>.from(e)).toList();
-
-        return transactions;
+        // Jika respons adalah List
+        if (data is List) {
+          return data
+              .where((item) =>
+                  item is Map<String, dynamic>) // Memfilter hanya elemen Map
+              .map((item) =>
+                  Map<String, dynamic>.from(item)) // Konversi elemen Map
+              .toList();
+        }
+        // Jika respons adalah Map
+        else if (data is Map<String, dynamic>) {
+          return [data]; // Kembalikan dalam list dengan 1 item
+        } else {
+          print('Unexpected data format: $data');
+          return [];
+        }
       } else {
         print('Failed to load transactions: ${response.body}');
         return [];
