@@ -111,7 +111,13 @@ class AuthControl extends GetxController {
           print('Extracted Phone: $extractedPhone');
           print('Extracted Email Verification: $extractedEmailVerif');
           print('Extracted Token: $extractedToken');
-          errorMessage.value = 'Verify your email first';
+          Get.snackbar(
+            'Error',
+            'Verify your email first',
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+            snackPosition: SnackPosition.BOTTOM,
+          );
         } else if (response.statusCode == 200) {
           // Extract email and token from response
           final extractedEmail = data['data']['email'];
