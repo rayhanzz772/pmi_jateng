@@ -360,7 +360,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () async {
                       QuickAlert.show(
                         context: context,
-                        type: QuickAlertType.warning,
+                        type: QuickAlertType.error,
                         title: 'Confirmation',
                         text: 'Are you sure to logout?',
                         confirmBtnColor: kPrimaryMaroon,
