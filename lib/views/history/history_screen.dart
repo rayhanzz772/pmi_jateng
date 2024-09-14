@@ -35,8 +35,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
     print('Email: $_email');
     print('Token: $_token');
 
-    if (_email != null) {
-      _fetchUserTransactions();
+    if (_email != null && _token != null) {
+      await _fetchUserTransactions(); // Tunggu hingga data berhasil dimuat
     }
   }
 

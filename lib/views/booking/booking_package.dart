@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pmi_jateng/views/booking/paymentScreenPackage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -514,7 +515,7 @@ class BookingFormPackageFields extends StatelessWidget {
         );
         return;
       }
-      final snapToken = await bookingBloc.apiService.BookingPackage(
+      final result = await bookingBloc.apiService.BookingPackage(
         token: token,
         user_email: email,
         package_id: id.toString(),
@@ -524,20 +525,35 @@ class BookingFormPackageFields extends StatelessWidget {
         sd: "client",
       );
 
-      // Dismiss the loading dialog
+// Dismiss the loading dialog
       Navigator.of(context).pop();
 
-      if (snapToken != null && state.checkInDate != "yyyy-MM-dd") {
+      if (result.containsKey('snapToken') &&
+          state.checkInDate != "yyyy-MM-dd") {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => PaymentScreenRegular(snapToken: snapToken),
+            builder: (context) =>
+                PaymentScreenPackage(snapToken: result['snapToken']),
           ),
         );
       } else {
+        String errorMessage;
+
+        if (result['statusCode'] == 400) {
+          errorMessage = 'Kamar penuh atau data tidak valid.';
+        } else if (result['statusCode'] == 401) {
+          errorMessage = 'Anda tidak memiliki izin. Silakan masuk kembali.';
+        } else if (result['statusCode'] == 500) {
+          errorMessage = 'Terjadi kesalahan server. Coba lagi nanti.';
+        } else {
+          errorMessage =
+              result['error'] ?? 'Terjadi kesalahan yang tidak diketahui.';
+        }
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Kamar penuh'),
+            content: Text(errorMessage),
             duration: Duration(seconds: 2),
           ),
         );

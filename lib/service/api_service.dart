@@ -255,61 +255,66 @@ class ApiService {
   }
 
   // Untuk menambahkan data pada booking
-  Future<String?> BookingPackage(
-      {required String user_email,
-      required String package_id,
-      required String start_dt,
-      required String end_dt,
-      required String person_count,
-      required String token,
-      required String sd}) async {
-    final Map<String, dynamic> data = {
-      "user_email": user_email,
-      "package_id": package_id,
-      "start_date": start_dt,
-      "end_date": end_dt,
-      "person_count": person_count,
-      "side": "client"
-    };
+Future<Map<String, dynamic>> BookingPackage(
+    {required String user_email,
+    required String package_id,
+    required String start_dt,
+    required String end_dt,
+    required String person_count,
+    required String token,
+    required String sd}) async {
+  final Map<String, dynamic> data = {
+    "user_email": user_email,
+    "package_id": package_id,
+    "start_date": start_dt,
+    "end_date": end_dt,
+    "person_count": person_count,
+    "side": "client"
+  };
 
-    print('Sending request with parameters:');
-    print('user_email: $user_email (type: ${user_email.runtimeType})');
-    print('package_id: $package_id (type: ${package_id.runtimeType})');
-    print('start_date: $start_dt (type: ${start_dt.runtimeType})');
-    print('end_date: $end_dt (type: ${end_dt.runtimeType})');
-    print('person_count: $person_count (type: ${person_count.runtimeType})');
-    print('side: $sd (type: ${sd.runtimeType})');
+  print('Sending request with parameters:');
+  print('user_email: $user_email (type: ${user_email.runtimeType})');
+  print('package_id: $package_id (type: ${package_id.runtimeType})');
+  print('start_date: $start_dt (type: ${start_dt.runtimeType})');
+  print('end_date: $end_dt (type: ${end_dt.runtimeType})');
+  print('person_count: $person_count (type: ${person_count.runtimeType})');
+  print('side: $sd (type: ${sd.runtimeType})');
 
-    try {
-      final response =
-          await http.post(Uri.parse("$baseUrl/api/v2/booking/packageToken"),
-              headers: {
-                'Authorization': 'Bearer $token', // Gunakan token otorisasi
-                'Content-Type': 'application/json',
-              },
-              body: jsonEncode(data));
+  try {
+    final response = await http.post(
+      Uri.parse("$baseUrl/api/v2/booking/packageToken"),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(data),
+    );
 
-      if (response.statusCode == 200) {
-        final responseBody = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      final responseBody = jsonDecode(response.body);
 
-        if (responseBody != null && responseBody['snap_token'] != null) {
-          final snapToken = responseBody['snap_token'];
-          return snapToken; // Kembalikan snapToken
-        } else {
-          print('Invalid response data: ${response.body}');
-          return null;
-        }
+      if (responseBody != null && responseBody['snap_token'] != null) {
+        final snapToken = responseBody['snap_token'];
+        return {'snapToken': snapToken, 'statusCode': 200}; // Kembalikan snapToken dan statusCode
       } else {
-        print('Failed to insert data');
-        print('Response status: ${response.statusCode}');
-        print('Response body: ${response.body}');
-        return null;
+        print('Invalid response data: ${response.body}');
+        return {'error': 'Invalid response data', 'statusCode': response.statusCode};
       }
-    } catch (e) {
-      print('Error: $e');
-      return null;
+    } else {
+      print('Failed to insert data');
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      return {
+        'error': jsonDecode(response.body)['message'] ?? 'Unknown error',
+        'statusCode': response.statusCode,
+      };
     }
+  } catch (e) {
+    print('Error: $e');
+    return {'error': e.toString(), 'statusCode': 500};
   }
+}
+
 
   //
   static Future<bool> updateUserProfile(

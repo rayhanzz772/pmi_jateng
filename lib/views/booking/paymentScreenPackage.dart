@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PaymentScreenPackage extends StatefulWidget {
   final String snapToken;
@@ -11,41 +11,32 @@ class PaymentScreenPackage extends StatefulWidget {
 }
 
 class _PaymentScreenPackageState extends State<PaymentScreenPackage> {
-  late WebViewController _controller;
-
   @override
   void initState() {
     super.initState();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {},
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onHttpError: (HttpResponseError error) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            if (request.url.contains('example.com')) {
-              // Handle callback from Midtrans
+    _openPaymentUrl();
+  }
 
-              Navigator.pushReplacementNamed(context, '/home');
-            }
-            return NavigationDecision.navigate;
-          },
-        ),
-      )
-      ..loadRequest(
-        Uri.parse(
-            'https://app.sandbox.midtrans.com/snap/v2/vtweb/${widget.snapToken}'),
-      );
+  Future<void> _openPaymentUrl() async {
+    final paymentUrl =
+        'https://app.sandbox.midtrans.com/snap/v2/vtweb/${widget.snapToken}';
+
+    // Gunakan url_launcher untuk membuka URL pembayaran Midtrans di browser
+    if (await canLaunch(paymentUrl)) {
+      await launch(paymentUrl);
+    } else {
+      throw 'Could not launch $paymentUrl';
+    }
+
+    // Setelah membuka URL, langsung kembali ke halaman home
+    Navigator.pushReplacementNamed(context, '/home');
   }
 
   @override
   Widget build(BuildContext context) {
+    // Scaffold kosong karena kita langsung membuka URL dan kembali ke home
     return Scaffold(
-      body: WebViewWidget(controller: _controller),
+      body: Container(), // Kosongkan isi Scaffold
     );
   }
 }
