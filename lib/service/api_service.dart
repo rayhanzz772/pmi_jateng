@@ -123,7 +123,6 @@ class ApiService {
       String email, String? token) async {
     final url =
         '$baseUrl/api/v2/user_transaction/getUserTransaction?user_email=$email';
-
     try {
       final response = await http.get(Uri.parse(url), headers: {
         'Authorization': 'Bearer $token',
@@ -131,24 +130,17 @@ class ApiService {
       });
 
       if (response.statusCode == 200) {
-        final dynamic data = jsonDecode(response.body);
+        // Print the entire response body for debugging
+        print('Response body: ${response.body}');
 
-        // Jika respons adalah List
-        if (data is List) {
-          return data
-              .where((item) =>
-                  item is Map<String, dynamic>) // Memfilter hanya elemen Map
-              .map((item) =>
-                  Map<String, dynamic>.from(item)) // Konversi elemen Map
-              .toList();
-        }
-        // Jika respons adalah Map
-        else if (data is Map<String, dynamic>) {
-          return [data]; // Kembalikan dalam list dengan 1 item
-        } else {
-          print('Unexpected data format: $data');
-          return [];
-        }
+        // Parse the response as a Map<String, dynamic>
+        final Map<String, dynamic> data = jsonDecode(response.body);
+
+        // Convert the map values to a list of transactions
+        final List<Map<String, dynamic>> transactions =
+            data.values.map((e) => Map<String, dynamic>.from(e)).toList();
+
+        return transactions;
       } else {
         print('Failed to load transactions: ${response.body}');
         return [];
@@ -255,66 +247,61 @@ class ApiService {
   }
 
   // Untuk menambahkan data pada booking
-Future<Map<String, dynamic>> BookingPackage(
-    {required String user_email,
-    required String package_id,
-    required String start_dt,
-    required String end_dt,
-    required String person_count,
-    required String token,
-    required String sd}) async {
-  final Map<String, dynamic> data = {
-    "user_email": user_email,
-    "package_id": package_id,
-    "start_date": start_dt,
-    "end_date": end_dt,
-    "person_count": person_count,
-    "side": "client"
-  };
+  Future<String?> BookingPackage(
+      {required String user_email,
+      required String package_id,
+      required String start_dt,
+      required String end_dt,
+      required String person_count,
+      required String token,
+      required String sd}) async {
+    final Map<String, dynamic> data = {
+      "user_email": user_email,
+      "package_id": package_id,
+      "start_date": start_dt,
+      "end_date": end_dt,
+      "person_count": person_count,
+      "side": "client"
+    };
 
-  print('Sending request with parameters:');
-  print('user_email: $user_email (type: ${user_email.runtimeType})');
-  print('package_id: $package_id (type: ${package_id.runtimeType})');
-  print('start_date: $start_dt (type: ${start_dt.runtimeType})');
-  print('end_date: $end_dt (type: ${end_dt.runtimeType})');
-  print('person_count: $person_count (type: ${person_count.runtimeType})');
-  print('side: $sd (type: ${sd.runtimeType})');
+    print('Sending request with parameters:');
+    print('user_email: $user_email (type: ${user_email.runtimeType})');
+    print('package_id: $package_id (type: ${package_id.runtimeType})');
+    print('start_date: $start_dt (type: ${start_dt.runtimeType})');
+    print('end_date: $end_dt (type: ${end_dt.runtimeType})');
+    print('person_count: $person_count (type: ${person_count.runtimeType})');
+    print('side: $sd (type: ${sd.runtimeType})');
 
-  try {
-    final response = await http.post(
-      Uri.parse("$baseUrl/api/v2/booking/packageToken"),
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(data),
-    );
+    try {
+      final response =
+          await http.post(Uri.parse("$baseUrl/api/v2/booking/packageToken"),
+              headers: {
+                'Authorization': 'Bearer $token', // Gunakan token otorisasi
+                'Content-Type': 'application/json',
+              },
+              body: jsonEncode(data));
 
-    if (response.statusCode == 200) {
-      final responseBody = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body);
 
-      if (responseBody != null && responseBody['snap_token'] != null) {
-        final snapToken = responseBody['snap_token'];
-        return {'snapToken': snapToken, 'statusCode': 200}; // Kembalikan snapToken dan statusCode
+        if (responseBody != null && responseBody['snap_token'] != null) {
+          final snapToken = responseBody['snap_token'];
+          return snapToken; // Kembalikan snapToken
+        } else {
+          print('Invalid response data: ${response.body}');
+          return null;
+        }
       } else {
-        print('Invalid response data: ${response.body}');
-        return {'error': 'Invalid response data', 'statusCode': response.statusCode};
+        print('Failed to insert data');
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        return null;
       }
-    } else {
-      print('Failed to insert data');
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-      return {
-        'error': jsonDecode(response.body)['message'] ?? 'Unknown error',
-        'statusCode': response.statusCode,
-      };
+    } catch (e) {
+      print('Error: $e');
+      return null;
     }
-  } catch (e) {
-    print('Error: $e');
-    return {'error': e.toString(), 'statusCode': 500};
   }
-}
-
 
   //
   static Future<bool> updateUserProfile(

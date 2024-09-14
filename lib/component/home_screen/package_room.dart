@@ -120,6 +120,7 @@ class PackageRoomCard extends StatelessWidget {
                                       image: DecorationImage(
                                         image: NetworkImage(packages.thumbnail),
                                         fit: BoxFit.cover,
+                                        // Add a placeholder for loading and error handling
                                       ),
                                     ),
                                   ),

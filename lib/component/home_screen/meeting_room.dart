@@ -121,6 +121,7 @@ class MeetingRoomCard extends StatelessWidget {
                                       image: DecorationImage(
                                         image: NetworkImage(room.image),
                                         fit: BoxFit.cover,
+                                        // Add a placeholder for loading and error handling
                                       ),
                                     ),
                                   ),
