@@ -169,7 +169,7 @@ class BoxForm extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      "Forgot Password?",
+                      "Lupa Password?",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                       ),
@@ -211,7 +211,7 @@ class BoxForm extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don't have an account?",
+                        "Belum punya akun?",
                         style: TextStyle(fontSize: 13, color: kPrimaryBlack),
                       ),
                       Text(

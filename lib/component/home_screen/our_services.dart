@@ -23,10 +23,10 @@ class _OurServicesState extends State<OurServices> {
 
     List<Widget> _buildServiceItems() {
       List<Map<String, String>> services = [
-        {'icon': 'assets/images/delicious_food.svg', 'label': 'Delicious Food'},
+        {'icon': 'assets/images/delicious_food.svg', 'label': 'Makanan lezat'},
         {'icon': 'assets/images/restaurant.svg', 'label': 'Restaurant'},
         {'icon': 'assets/images/fitness.svg', 'label': 'Fitness'},
-        {'icon': 'assets/images/spa.svg', 'label': 'Beauty Spa'},
+        {'icon': 'assets/images/spa.svg', 'label': 'Spa indah'},
       ];
 
       List<Widget> items = [];

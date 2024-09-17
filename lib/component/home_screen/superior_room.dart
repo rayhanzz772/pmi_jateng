@@ -15,9 +15,9 @@ class _SuperiorRoomState extends State<SuperiorRoom> {
     'assets/images/our_room.jpg',
   ];
   final List<String> textList = [
-    'This room is a perfect blend of comfort and style, It offers a serene and inviting atmosphere that makes you feel right at home',
-    'The design of this room is truly exceptional, Every detail has been thoughtfully considered to create a space that exudes both elegance and warmth.',
-    'This room stands out with its impeccable style and attention to detail, It’s a space where luxury meets coziness, making it the ideal retreat.',
+    "Ruangan ini merupakan perpaduan sempurna antara kenyamanan dan gaya, menawarkan suasana yang tenang dan mengundang sehingga membuat Anda merasa seperti di rumah sendiri.",
+    "Desain ruangan ini benar-benar luar biasa, setiap detail dipertimbangkan dengan cermat untuk menciptakan ruang yang memancarkan keanggunan dan kehangatan.",
+    "Ruangan ini menonjol dengan gaya yang tak tertandingi dan perhatian pada detail, menjadi tempat di mana kemewahan bertemu dengan kenyamanan, menjadikannya tempat istirahat yang ideal.",
   ];
 
   @override

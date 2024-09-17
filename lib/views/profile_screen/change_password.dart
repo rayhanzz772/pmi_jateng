@@ -52,7 +52,7 @@ class _ChangePasswordState extends State<ChangePassword> {
             },
           ),
           title: Text(
-            'Change Password',
+            'Ubah Password',
             style: TextStyle(
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w600,

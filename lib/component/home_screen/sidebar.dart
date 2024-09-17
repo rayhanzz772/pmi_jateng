@@ -35,7 +35,7 @@ class Sidebar extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.person),
-            title: Text('Profile'),
+            title: Text('Profil'),
             onTap: () {
               Navigator.pop(context); // Close the drawer
               Navigator.pushNamed(context, '/profile'); // Navigate to home
@@ -51,7 +51,7 @@ class Sidebar extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.history),
-            title: Text('History'),
+            title: Text('Transaksi'),
             onTap: () {
               Navigator.pop(context); // Close the drawer
               Navigator.pushNamed(context, '/history'); // Navigate to home

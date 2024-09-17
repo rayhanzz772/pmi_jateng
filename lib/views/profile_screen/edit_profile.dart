@@ -164,7 +164,7 @@ class _EditProfileState extends State<EditProfile> {
           },
         ),
         title: Text(
-          'Edit Profile',
+          'Ubah Profil',
           style: TextStyle(
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w600,

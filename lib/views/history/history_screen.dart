@@ -111,7 +111,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           },
         ),
         title: Text(
-          'History',
+          'Transaksi',
           style: TextStyle(
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w600,

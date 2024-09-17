@@ -18,8 +18,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ApiService {
 // Menampilkan jenis ruangan
   static Future<List<MeetRoom>> fetchRoomTypes() async {
-    final response =
-        await http.get(Uri.parse("$baseUrl/api/v1/room_type/getAll"));
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/v1/room_type/getAll'),
+      headers: {
+        'Accept': 'application/json',
+      },
+    );
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body);
@@ -119,10 +123,17 @@ class ApiService {
   }
 
 // Mengambil data transaksi per email
-  static Future<List<Map<String, dynamic>>> fetchUserTransactions(
-      String email, String? token) async {
+   static Future<List<Map<String, dynamic>>> fetchUserTransactions(
+      String? email, String? token) async {
+    // Jika email atau token null, langsung return list kosong
+    if (email == null || token == null) {
+      print('Email atau token kosong, tidak ada transaksi yang diambil.');
+      return [];
+    }
+
     final url =
-        '$baseUrl/api/v2/user_transaction/getUserTransaction?user_email=$email';
+        "$baseUrl/api/v2/user_transaction/getUserTransaction?user_email=$email";
+
     try {
       final response = await http.get(Uri.parse(url), headers: {
         'Authorization': 'Bearer $token',
@@ -130,19 +141,33 @@ class ApiService {
       });
 
       if (response.statusCode == 200) {
-        // Print the entire response body for debugging
         print('Response body: ${response.body}');
 
-        // Parse the response as a Map<String, dynamic>
-        final Map<String, dynamic> data = jsonDecode(response.body);
+        // Parsing response body
+        final jsonData = jsonDecode(response.body);
 
-        // Convert the map values to a list of transactions
-        final List<Map<String, dynamic>> transactions =
-            data.values.map((e) => Map<String, dynamic>.from(e)).toList();
+        // Debug: Cetak jsonData untuk memeriksa formatnya
+        print('Parsed JSON data: $jsonData');
+
+        List<Map<String, dynamic>> transactions = [];
+
+        // Memeriksa apakah jsonData adalah list atau map
+        if (jsonData is List) {
+          // Jika data adalah list
+          transactions =
+              jsonData.map((item) => Map<String, dynamic>.from(item)).toList();
+        } else if (jsonData is Map) {
+          // Jika data adalah map, ambil semua nilai
+          transactions = jsonData.values
+              .map((item) => Map<String, dynamic>.from(item))
+              .toList();
+        } else {
+          print('Data tidak dalam format yang diharapkan.');
+        }
 
         return transactions;
       } else {
-        print('Failed to load transactions: ${response.body}');
+        print('Gagal memuat transaksi: ${response.body}');
         return [];
       }
     } catch (e) {
@@ -155,7 +180,7 @@ class ApiService {
       int id, String userEmail, String? token) async {
     // Bangun URL dengan id dan email
     final url =
-        '$baseUrl/api/v2/user_transaction/detail?id=$id&user_email=$userEmail';
+        "$baseUrl/api/v2/user_transaction/detail?id=$id&user_email=$userEmail";
 
     try {
       // Mengirim permintaan GET dengan header otorisasi

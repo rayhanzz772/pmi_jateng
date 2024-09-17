@@ -236,7 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                'Our rooms',
+                                                'Data ruang',
                                                 style: TextStyle(
                                                     fontFamily: 'poppins',
                                                     fontSize: wp * 0.037,
@@ -308,7 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                'Package',
+                                                'Data Paket',
                                                 style: TextStyle(
                                                     fontFamily: 'poppins',
                                                     fontSize: wp * 0.037,

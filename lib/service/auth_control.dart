@@ -47,7 +47,7 @@ class AuthControl extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = jsonDecode(response.body);
         print('$data');
-        Get.snackbar('Success', 'Registration successful',
+        Get.snackbar('Success', 'Verifikasi email telah terkirim',
             backgroundColor: Colors.green,
             colorText: Colors.white,
             snackPosition: SnackPosition.BOTTOM);
@@ -56,7 +56,7 @@ class AuthControl extends GetxController {
       } else {
         Get.snackbar(
           'Error',
-          'Registration failed',
+          'Registrasi gagal',
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -96,7 +96,7 @@ class AuthControl extends GetxController {
       if (data['data'] == null) {
         Get.snackbar(
           'Error',
-          'Check your email or password',
+          'Email atau password anda salah',
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -118,7 +118,7 @@ class AuthControl extends GetxController {
           print('Extracted Token: $extractedToken');
           Get.snackbar(
             'Error',
-            'Verify your email first',
+            'Verifikasi email terlebih dahulu',
             backgroundColor: Colors.red,
             colorText: Colors.white,
             snackPosition: SnackPosition.BOTTOM,

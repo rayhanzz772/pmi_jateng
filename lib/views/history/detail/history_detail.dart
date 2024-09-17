@@ -52,7 +52,7 @@ class _HistoryDetailState extends State<HistoryDetail> {
     return Scaffold(
       backgroundColor: kPrimaryWhite,
       appBar: AppBar(
-        backgroundColor: kPrimaryFontColor,
+        backgroundColor: kPrimaryColor,
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: kPrimaryWhite),
@@ -61,7 +61,7 @@ class _HistoryDetailState extends State<HistoryDetail> {
           },
         ),
         title: Text(
-          'History',
+          'Detail Transaksi',
           style: TextStyle(
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w600,
@@ -297,10 +297,24 @@ class _HistoryDetailState extends State<HistoryDetail> {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(10.0),
                                       child: Image.network(
-                                        bookingDetail.roomImage,
+                                        (bookingDetail.roomImage != null &&
+                                                bookingDetail
+                                                    .roomImage.isNotEmpty)
+                                            ? bookingDetail.roomImage
+                                            : 'assets/images/kamar.jpeg',
                                         width: 90.0,
                                         height: 90.0,
                                         fit: BoxFit.fill,
+                                        errorBuilder: (BuildContext context,
+                                            Object error,
+                                            StackTrace? stackTrace) {
+                                          return Image.asset(
+                                            'assets/images/kamar.jpeg', // Gambar lokal
+                                            width: 90.0,
+                                            height: 90.0,
+                                            fit: BoxFit.fill,
+                                          );
+                                        },
                                       ),
                                     ),
                                     SizedBox(
@@ -697,60 +711,68 @@ class _HistoryDetailState extends State<HistoryDetail> {
                           ],
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.all(
-                            16.0), // Optional: add padding to the container
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Ensure bookingDetail is accessible and has snapToken
-                            if (bookingDetail.snapToken != null) {
-                              // Check the number of rooms booked
-                              if (bookingDetail.roomBooked >= 1 &&
-                                  bookingDetail.roomBooked <= 100) {
-                                // Navigate to PaymentScreenPackage if roomBooked is between 1 and 100
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PaymentScreenPackage(
-                                      snapToken: bookingDetail.snapToken,
+                      if (bookingDetail.paymentStatus != 'success')
+                        Container(
+                          margin: EdgeInsets.only(top: 30),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (bookingDetail.snapToken != null) {
+                                if (bookingDetail.roomBooked >= 1 &&
+                                    bookingDetail.roomBooked <= 100) {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          PaymentScreenPackage(
+                                        snapToken: bookingDetail.snapToken,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              } else if (bookingDetail.roomBooked >= 200) {
-                                // Navigate to PaymentScreenRegular if roomBooked is 200 or more
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PaymentScreenRegular(
-                                      snapToken: bookingDetail.snapToken,
+                                  );
+                                } else if (bookingDetail.roomBooked >= 200) {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          PaymentScreenRegular(
+                                        snapToken: bookingDetail.snapToken,
+                                      ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          'Invalid number of rooms booked'),
+                                    ),
+                                  );
+                                }
                               } else {
-                                // Handle cases where roomBooked is outside the specified ranges (optional)
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                      content: Text(
-                                          'Invalid number of rooms booked')),
+                                    content:
+                                        Text('Snap token is not available'),
+                                  ),
                                 );
                               }
-                            } else {
-                              // Handle the case when snapToken is null (optional)
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content:
-                                        Text('Snap token is not available')),
-                              );
-                            }
-                          },
-                          child: Text('Go to Payment'),
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 12.0, horizontal: 20.0),
-                            textStyle: TextStyle(fontSize: 16),
+                            },
+                            child: Text('Go to Payment'),
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 12.0, horizontal: 20.0),
+                              textStyle: TextStyle(fontSize: 16),
+                            ),
                           ),
                         ),
-                      )
+
+                      // Jika paymentStatus 'success', tampilkan status sukses (opsional)
+                      if (bookingDetail.paymentStatus == 'success')
+                        Text(
+                          '',
+                          style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: wp * 0.03,
+                              color: Colors.green[400]),
+                        ),
                     ],
                   ),
                 ),

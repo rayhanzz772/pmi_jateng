@@ -130,7 +130,7 @@ class SignUpScreen extends StatelessWidget {
                                     controller: confirmpasswordController,
                                     obscureText: true,
                                     decoration: InputDecoration(
-                                      labelText: 'Confirm Password',
+                                      labelText: 'Konfirmasi Password',
                                       labelStyle: TextStyle(
                                         fontSize: 13,
                                         color: Colors.black,
@@ -149,7 +149,7 @@ class SignUpScreen extends StatelessWidget {
                                       if (password != confirmPassword) {
                                         Get.snackbar(
                                           'Error',
-                                          'Passwords do not match',
+                                          'Password tidak sama',
                                           backgroundColor: Colors.red,
                                           colorText: Colors.white,
                                         );
@@ -162,7 +162,7 @@ class SignUpScreen extends StatelessWidget {
                                         if (success) {
                                           Get.offNamed('/sign_in');
                                         } else {
-                                          print('Registration failed');
+                                          print('Registrasi gagal');
                                         }
                                       });
                                     },
@@ -191,7 +191,7 @@ class SignUpScreen extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          "Already have an account?",
+                                          "Sudah punya akun?",
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: kPrimaryBlack),

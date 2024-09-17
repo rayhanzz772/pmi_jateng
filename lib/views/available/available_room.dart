@@ -63,7 +63,7 @@ class _AvailableScreenState extends State<AvailableScreen> {
           ),
         ),
         title: Text(
-          'Available Room',
+          'Ruang Tersedia',
           style: TextStyle(
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w600,
@@ -195,7 +195,7 @@ class _AvailableScreenState extends State<AvailableScreen> {
                                   return Icon(
                                     Icons.star,
                                     color: kPrimaryBlack,
-                                    size: wp * 0.04,
+                                    size: wp * 0.02,
                                   );
                                 }),
                               ),
@@ -203,7 +203,7 @@ class _AvailableScreenState extends State<AvailableScreen> {
                                 height: hp * 0.01,
                               ),
                               Container(
-                                height: hp * 0.028,
+                                height: hp * 0.02,
                                 width: wp * 0.52,
                                 child: Align(
                                   alignment: Alignment.centerRight,

@@ -107,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             },
           ),
           title: Text(
-            'Profile',
+            'Profil',
             style: TextStyle(
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w600,
@@ -163,7 +163,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 BorderRadius.all(Radius.circular(10))),
                         child: Center(
                             child: Text(
-                          'Edit Profile',
+                          'Ubah Profil',
                           style: TextStyle(
                               fontFamily: 'Poppins', color: kPrimaryWhite),
                         )),
@@ -215,7 +215,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               SizedBox(width: 10),
                               Text(
-                                'Transaction History',
+                                'Transaksi',
                                 style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: wp * 0.043),
@@ -274,7 +274,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               SizedBox(width: 10),
                               Text(
-                                'Change Password',
+                                'Ubah Password',
                                 style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: wp * 0.043),
@@ -333,7 +333,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               SizedBox(width: 10),
                               Text(
-                                'Information',
+                                'Informasi',
                                 style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: wp * 0.043),
@@ -361,8 +361,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       QuickAlert.show(
                         context: context,
                         type: QuickAlertType.error,
-                        title: 'Confirmation',
-                        text: 'Are you sure to logout?',
+                        title: 'Konfirmasi',
+                        text: 'Anda yakin ingin logout?',
                         confirmBtnColor: kPrimaryMaroon,
                         confirmBtnText: 'Ya',
                         cancelBtnText: 'Tidak',

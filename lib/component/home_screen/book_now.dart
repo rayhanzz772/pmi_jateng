@@ -97,7 +97,7 @@ class _BookNowState extends State<BookNow> {
               children: [
                 Center(
                   child: Text(
-                    "Check Available Rooms",
+                    "Ketersediaan Ruang",
                     style: TextStyle(
                       fontFamily: 'JosefinSans',
                       fontSize: hp * 0.028,
@@ -111,7 +111,7 @@ class _BookNowState extends State<BookNow> {
                 // Start Date Picker with label
                 _buildDatePicker(
                   context: context,
-                  label: 'Start Date',
+                  label: 'Tanggal datang',
                   controller: startDateController,
                   onDateSelected: (date) {
                     setState(() {
@@ -126,7 +126,7 @@ class _BookNowState extends State<BookNow> {
                 // End Date Picker with label
                 _buildDatePicker(
                   context: context,
-                  label: 'End Date',
+                  label: 'Tanggal pergi',
                   controller: endDateController,
                   onDateSelected: (date) {
                     setState(() {
@@ -142,7 +142,7 @@ class _BookNowState extends State<BookNow> {
                 TextField(
                   controller: amountController,
                   decoration: InputDecoration(
-                    labelText: 'Enter Amount',
+                    labelText: 'Jumlah tamu',
                     labelStyle: TextStyle(color: kPrimaryWhite),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
