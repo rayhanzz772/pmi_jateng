@@ -8,7 +8,9 @@ import 'package:pmi_jateng/service/model/booking_detail.dart';
 import 'package:pmi_jateng/utils/color/constant.dart';
 import 'package:pmi_jateng/views/booking/paymentScreenPackage.dart';
 import 'package:pmi_jateng/views/booking/paymentScreenRegular.dart';
+import 'package:pmi_jateng/views/history/detail/component/history_status.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class HistoryDetail extends StatefulWidget {
   @override
@@ -22,6 +24,9 @@ class HistoryDetail extends StatefulWidget {
 
 class _HistoryDetailState extends State<HistoryDetail> {
   String? _token;
+  String? _email;
+  final TextEditingController _reviewController = TextEditingController();
+  double _rating = 0; // Variable to hold the rating value
 
   void initState() {
     super.initState();
@@ -32,7 +37,8 @@ class _HistoryDetailState extends State<HistoryDetail> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _token =
-          prefs.getString('auth_token'); // Ambil token dari SharedPreferences
+          prefs.getString('auth_token'); //ambil token dari SharedPreferences
+      _email = prefs.getString('auth_email');
     });
   }
 
@@ -447,9 +453,6 @@ class _HistoryDetailState extends State<HistoryDetail> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    SizedBox(
-                                      height: 12,
-                                    ),
                                     Text(
                                       "Tamu utama",
                                       style: TextStyle(
@@ -711,6 +714,13 @@ class _HistoryDetailState extends State<HistoryDetail> {
                           ],
                         ),
                       ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Review(
+                          transactionId: widget.id,
+                          id: widget.id,
+                          user_email: widget.user_email),
                       if (bookingDetail.paymentStatus != 'success')
                         Container(
                           margin: EdgeInsets.only(top: 30),

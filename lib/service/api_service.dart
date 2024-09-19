@@ -123,7 +123,7 @@ class ApiService {
   }
 
 // Mengambil data transaksi per email
-   static Future<List<Map<String, dynamic>>> fetchUserTransactions(
+  static Future<List<Map<String, dynamic>>> fetchUserTransactions(
       String? email, String? token) async {
     // Jika email atau token null, langsung return list kosong
     if (email == null || token == null) {
@@ -506,6 +506,62 @@ class ApiService {
       // Tangani error saat melakukan request
       print("An error occurred: $error");
       return false; // Indicate failure in case of an error
+    }
+  }
+
+  static Future<bool> postReview(String? userEmail, int transactionId,
+      String review, int score, String? token) async {
+    try {
+      final response = await http.post(
+        Uri.parse("$baseUrl/api/v1/review/postReview"),
+        headers: {
+          'Authorization': 'Bearer $token', // Include the token if needed
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'user_email': userEmail,
+          'user_transaction_id': transactionId,
+          'review': review,
+          'score': score,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print('Review submitted successfully!');
+        return true;
+      } else {
+        print('Failed to submit review: ${response.body}');
+        return false;
+      }
+    } catch (e) {
+      print('Error submitting review: $e');
+      return false;
+    }
+  }
+
+  static Future<Map<String, dynamic>> getReviewForCurrentTransaction(
+      int transactionId, String? token) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '$baseUrl/api/v1/review/getReviewForCurrentTransaction?user_transaction_id=$transactionId'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+
+        return data; // Return the parsed data
+      } else {
+        print('Failed to fetch review: ${response.body}');
+        return {'status': false}; // Return a default value indicating failure
+      }
+    } catch (e) {
+      print('Error fetching review: $e');
+      return {'status': false}; // Return a default value indicating failure
     }
   }
 }
