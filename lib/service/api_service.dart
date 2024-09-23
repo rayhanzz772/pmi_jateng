@@ -509,8 +509,14 @@ class ApiService {
     }
   }
 
-  static Future<bool> postReview(String? userEmail, int transactionId,
-      String review, int score, String? token) async {
+  static Future<bool> postReview(
+      String? userEmail,
+      int transactionId,
+      String review,
+      int score,
+      String? token,
+      List<int> roomTypeIds // Tambahkan roomTypeIds sebagai List<int>
+      ) async {
     try {
       final response = await http.post(
         Uri.parse("$baseUrl/api/v1/review/postReview"),
@@ -523,6 +529,7 @@ class ApiService {
           'user_transaction_id': transactionId,
           'review': review,
           'score': score,
+          'room_types': roomTypeIds, // Kirim array room_type_id
         }),
       );
 

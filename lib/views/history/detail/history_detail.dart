@@ -718,6 +718,7 @@ class _HistoryDetailState extends State<HistoryDetail> {
                         height: 20,
                       ),
                       Review(
+                        roomTypeIds: bookingDetail.roomTypeId,
                           transactionId: widget.id,
                           id: widget.id,
                           user_email: widget.user_email),

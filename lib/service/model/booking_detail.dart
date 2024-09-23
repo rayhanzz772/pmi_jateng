@@ -13,6 +13,7 @@ class BookingDetail {
   final String roomPerNightPrice;
   final String totalPrice;
   final String snapToken;
+  List<int> roomTypeId; // Buat properti untuk room_type_id
 
   BookingDetail({
     required this.userName,
@@ -29,6 +30,7 @@ class BookingDetail {
     required this.roomPerNightPrice,
     required this.totalPrice,
     required this.snapToken,
+    required this.roomTypeId, // Pastikan roomTypeId ada di sini
   });
 
   factory BookingDetail.fromJson(Map<String, dynamic> json) {
@@ -47,6 +49,8 @@ class BookingDetail {
       roomPerNightPrice: json['payment_information']['room_per_night_price'],
       totalPrice: json['payment_information']['total_price'],
       snapToken: json['payment_information']['snap_token'],
+      roomTypeId: List<int>.from(json['room_detail']
+          ['room_type_id']), // Parsing room_type_id sebagai List<int>
     );
   }
 }

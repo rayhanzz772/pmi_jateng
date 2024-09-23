@@ -10,10 +10,12 @@ class Review extends StatefulWidget {
   final int transactionId; // Pass transaction ID when creating this widget
   final String? token; // Pass the auth token if needed
   final int id;
+  final List<int> roomTypeIds;
   final String user_email; // Tambahkan parameter user_email
 
   Review(
-      {required this.transactionId,
+      {required this.roomTypeIds,
+      required this.transactionId,
       this.token,
       required this.id,
       required this.user_email});
@@ -260,12 +262,12 @@ class _ReviewState extends State<Review> {
                       });
 
                       bool success = await ApiService.postReview(
-                        widget.user_email,
-                        widget.transactionId,
-                        _reviewController.text,
-                        _rating,
-                        widget.token,
-                      );
+                          widget.user_email,
+                          widget.transactionId,
+                          _reviewController.text,
+                          _rating,
+                          widget.token,
+                          [1]);
 
                       setState(() {
                         _isLoading = false; // Hide loading indicator
