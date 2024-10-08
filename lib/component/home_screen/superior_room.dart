@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' as carousel_slider;
 import 'package:pmi_jateng/utils/color/constant.dart';
 
 class SuperiorRoom extends StatefulWidget {
@@ -185,8 +185,8 @@ class _SuperiorRoomState extends State<SuperiorRoom> {
                       ),
                     ),
                     SizedBox(height: 15),
-                    CarouselSlider(
-                      options: CarouselOptions(
+                    carousel_slider.CarouselSlider(
+                      options: carousel_slider.CarouselOptions(
                         height: hp * 0.2,
                         enlargeCenterPage: true,
                         autoPlay: true,
