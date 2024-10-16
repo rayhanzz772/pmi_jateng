@@ -19,4 +19,7 @@ RUN flutter pub get
 RUN flutter build web
 
 FROM nginx:1.21.1-alpine
+
+EXPOSE 120
+
 COPY --from=build-env /app/build/web /usr/share/nginx/html
