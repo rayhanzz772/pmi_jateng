@@ -156,6 +156,7 @@ class ApiService {
           // Jika data adalah list
           transactions =
               jsonData.map((item) => Map<String, dynamic>.from(item)).toList();
+          print('Panjang transaksi: ${transactions.length}');
         } else if (jsonData is Map) {
           // Jika data adalah map, ambil semua nilai
           transactions = jsonData.values
