@@ -10,6 +10,7 @@ import 'package:pmi_jateng/service/model/package_type.dart';
 import 'package:pmi_jateng/service/model/meeting_room.dart';
 import 'package:pmi_jateng/service/model/meeting_room_paket.dart';
 import 'package:http/http.dart' as http;
+import 'package:pmi_jateng/service/model/transaction.dart';
 import 'dart:convert';
 import 'config.dart';
 import 'package:pmi_jateng/service/auth_control.dart';
@@ -123,9 +124,8 @@ class ApiService {
   }
 
 // Mengambil data transaksi per email
-  static Future<List<Map<String, dynamic>>> fetchUserTransactions(
+  static Future<List<Transaction>> fetchUserTransactions(
       String? email, String? token) async {
-    // Jika email atau token null, langsung return list kosong
     if (email == null || token == null) {
       print('Email atau token kosong, tidak ada transaksi yang diambil.');
       return [];
@@ -141,28 +141,16 @@ class ApiService {
       });
 
       if (response.statusCode == 200) {
-        print('Response body: ${response.body}');
-
-        // Parsing response body
         final jsonData = jsonDecode(response.body);
+        List<Transaction> transactions = [];
 
-        // Debug: Cetak jsonData untuk memeriksa formatnya
-        print('Parsed JSON data: $jsonData');
-
-        List<Map<String, dynamic>> transactions = [];
-
-        // Memeriksa apakah jsonData adalah list atau map
         if (jsonData is List) {
-          // Jika data adalah list
           transactions =
-              jsonData.map((item) => Map<String, dynamic>.from(item)).toList();
+              jsonData.map((item) => Transaction.fromJson(item)).toList();
         } else if (jsonData is Map) {
-          // Jika data adalah map, ambil semua nilai
           transactions = jsonData.values
-              .map((item) => Map<String, dynamic>.from(item))
+              .map((item) => Transaction.fromJson(item))
               .toList();
-        } else {
-          print('Data tidak dalam format yang diharapkan.');
         }
 
         return transactions;

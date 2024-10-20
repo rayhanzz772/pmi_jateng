@@ -1,36 +1,57 @@
-// Assuming this is your Transaction class
+// lib/models/transaction_model.dart
+
 class Transaction {
-  String? id;
-  String? transactionDate;
-  String? transactionStatus;
-  String? orderId;
-  String? roomType;
-  String? roomImage;
-  int amount;
-  double totalPrice;
+  final int id; // Updated to int
+  final String
+      userEmail; // Changed from user_email to userEmail for Dart conventions
+  final String channel;
+  final String orderId; // Changed from order_id to orderId for Dart conventions
+  final String
+      snapToken; // Changed from snap_token to snapToken for Dart conventions
+  final String
+      transactionDate; // Changed from transaction_date to transactionDate for Dart conventions
+  final int amount;
+  final String
+      totalPrice; // Keep this as String since it includes currency symbol
+  final String
+      transactionStatus; // Changed from transaction_status to transactionStatus for Dart conventions
+  final int verifyCheckin;
+  final int verifyCheckout;
+  final String roomImage; // Made nullable, as per your earlier implementation
+  final String
+      roomType; // Changed from room_type to roomType for Dart conventions
 
   Transaction({
-    this.id,
-    this.transactionDate,
-    this.transactionStatus,
-    this.orderId,
-    this.roomType,
-    this.roomImage,
+    required this.id,
+    required this.userEmail,
+    required this.channel,
+    required this.orderId,
+    required this.snapToken,
+    required this.transactionDate,
     required this.amount,
     required this.totalPrice,
+    required this.transactionStatus,
+    required this.verifyCheckin,
+    required this.verifyCheckout,
+    required this.roomImage,
+    required this.roomType,
   });
 
-  // Factory method to create a Transaction from a JSON map
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
       id: json['id'],
-      transactionDate: json['transaction_date'],
-      transactionStatus: json['transaction_status'],
+      userEmail: json['user_email'],
+      channel: json['channel'],
       orderId: json['order_id'],
-      roomType: json['room_type'],
-      roomImage: json['room_image'],
+      snapToken: json['snap_token'],
+      transactionDate: json['transaction_date'],
       amount: json['amount'],
       totalPrice: json['total_price'],
+      transactionStatus: json['transaction_status'],
+      verifyCheckin: json['verifyCheckin'],
+      verifyCheckout: json['verifyCheckout'],
+      roomImage: json['room_image'],
+      roomType: json['room_type'],
     );
   }
 }
