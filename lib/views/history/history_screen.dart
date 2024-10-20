@@ -101,29 +101,26 @@ class _HistoryScreenState extends State<HistoryScreen> {
     List<Map<String, dynamic>> filteredTransactions = getFilteredTransactions();
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryMaroon,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: kPrimaryWhite),
-          onPressed: () {
-            Get.toNamed('/profile');
-          },
-        ),
-        title: Text(
-          'Transaksi',
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-            color: kPrimaryWhite,
+        appBar: AppBar(
+          backgroundColor: kPrimaryMaroon,
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: kPrimaryWhite),
+            onPressed: () {
+              Get.toNamed('/profile');
+            },
+          ),
+          title: Text(
+            'Transaksi',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+              color: kPrimaryWhite,
+            ),
           ),
         ),
-      ),
-      body: RefreshIndicator(
-        onRefresh: _refresh,
-        color: kPrimaryMaroon,
-        child: SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Column(
             children: [
               Container(
@@ -321,8 +318,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
