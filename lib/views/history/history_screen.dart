@@ -37,19 +37,30 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   Future<void> _fetchUserTransactions() async {
-    if (_email == null || _token == null) return;
+    try {
+      if (_email == null || _token == null) return;
 
-    final transactions =
-        await ApiService.fetchUserTransactions(_email!, _token);
-    transactions.sort((a, b) {
-      DateTime dateTimeA = DateTime.parse(a['transaction_date']);
-      DateTime dateTimeB = DateTime.parse(b['transaction_date']);
-      return dateTimeB.compareTo(dateTimeA);
-    });
+      final transactions =
+          await ApiService.fetchUserTransactions(_email!, _token);
 
-    setState(() {
-      _transactions = transactions;
-    });
+      // Pastikan transaksi ada dan bukan null
+      if (transactions != null && transactions.isNotEmpty) {
+        transactions.sort((a, b) {
+          DateTime dateTimeA = DateTime.parse(a['transaction_date']);
+          DateTime dateTimeB = DateTime.parse(b['transaction_date']);
+          return dateTimeB.compareTo(dateTimeA);
+        });
+
+        setState(() {
+          _transactions = transactions;
+        });
+      } else {
+        print("No transactions found");
+      }
+    } catch (e) {
+      // Menangkap dan mencetak kesalahan untuk debugging
+      print("Error fetching transactions: $e");
+    }
   }
 
   final List<String> labels = ['semua', 'success', 'pending', 'failed'];
@@ -90,29 +101,26 @@ class _HistoryScreenState extends State<HistoryScreen> {
     List<Map<String, dynamic>> filteredTransactions = getFilteredTransactions();
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryMaroon,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: kPrimaryWhite),
-          onPressed: () {
-            Get.toNamed('/profile');
-          },
-        ),
-        title: Text(
-          'Transaksi',
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-            color: kPrimaryWhite,
+        appBar: AppBar(
+          backgroundColor: kPrimaryMaroon,
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: kPrimaryWhite),
+            onPressed: () {
+              Get.toNamed('/profile');
+            },
+          ),
+          title: Text(
+            'Transaksi',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+              color: kPrimaryWhite,
+            ),
           ),
         ),
-      ),
-      body: RefreshIndicator(
-        onRefresh: _refresh,
-        color: kPrimaryMaroon,
-        child: SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Column(
             children: [
               Container(
@@ -161,6 +169,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   itemCount: filteredTransactions.length,
                   itemBuilder: (context, index) {
                     final transaction = filteredTransactions[index];
+
+                    // Cek untuk menghindari error
+                    if (transaction == null ||
+                        transaction['order_id'] == null) {
+                      return _buildErrorWidget(); // Atau tampilkan widget error
+                    }
 
                     // Debugging output
                     print(
@@ -310,8 +324,38 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
+}
+
+Widget _buildErrorWidget() {
+  return Container(
+    margin: EdgeInsets.symmetric(vertical: 20, horizontal: 8),
+    padding: EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: Colors.red[100],
+      borderRadius: BorderRadius.circular(8.0),
+      border: Border.all(color: Colors.red),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.error,
+          color: Colors.red,
+        ),
+        SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            'Terjadi kesalahan saat memuat transaksi. Silakan coba lagi.',
+            style: TextStyle(
+              color: Colors.red[800],
+              fontWeight: FontWeight.w600,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    ),
+  );
 }
