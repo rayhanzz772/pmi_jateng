@@ -37,19 +37,30 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   Future<void> _fetchUserTransactions() async {
-    if (_email == null || _token == null) return;
+    try {
+      if (_email == null || _token == null) return;
 
-    final transactions =
-        await ApiService.fetchUserTransactions(_email!, _token);
-    transactions.sort((a, b) {
-      DateTime dateTimeA = DateTime.parse(a['transaction_date']);
-      DateTime dateTimeB = DateTime.parse(b['transaction_date']);
-      return dateTimeB.compareTo(dateTimeA);
-    });
+      final transactions =
+          await ApiService.fetchUserTransactions(_email!, _token);
 
-    setState(() {
-      _transactions = transactions;
-    });
+      // Pastikan transaksi ada dan bukan null
+      if (transactions != null && transactions.isNotEmpty) {
+        transactions.sort((a, b) {
+          DateTime dateTimeA = DateTime.parse(a['transaction_date']);
+          DateTime dateTimeB = DateTime.parse(b['transaction_date']);
+          return dateTimeB.compareTo(dateTimeA);
+        });
+
+        setState(() {
+          _transactions = transactions;
+        });
+      } else {
+        print("No transactions found");
+      }
+    } catch (e) {
+      // Menangkap dan mencetak kesalahan untuk debugging
+      print("Error fetching transactions: $e");
+    }
   }
 
   final List<String> labels = ['semua', 'success', 'pending', 'failed'];
@@ -90,22 +101,23 @@ class _HistoryScreenState extends State<HistoryScreen> {
     List<Map<String, dynamic>> filteredTransactions = getFilteredTransactions();
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryMaroon,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: kPrimaryWhite),
-          onPressed: () {
-            Get.toNamed('/profile');
-          },
-        ),
-        title: Text(
-          'Transaksi',
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-            color: kPrimaryWhite,
+        appBar: AppBar(
+          backgroundColor: kPrimaryMaroon,
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: kPrimaryWhite),
+            onPressed: () {
+              Get.toNamed('/profile');
+            },
+          ),
+          title: Text(
+            'Transaksi',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+              color: kPrimaryWhite,
+            ),
           ),
         ),
       ),
@@ -139,6 +151,38 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: wp * 0.04,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 15),
+                height: hp * 0.04,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: labels.length,
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedItem = index;
+                        });
+                      },
+                      child: Container(
+                        width: wp * 0.26,
+                        margin: EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                          color:
+                              selectedItem == index ? Colors.red : Colors.grey,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            labels[index],
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: wp * 0.04,
+                            ),
                           ),
                         ),
                       ),
@@ -306,5 +350,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ),
       ),
     );
+            ],
+          ),
+        ));
   }
 }
