@@ -170,6 +170,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   itemBuilder: (context, index) {
                     final transaction = filteredTransactions[index];
 
+                    // Cek untuk menghindari error
+                    if (transaction == null ||
+                        transaction['order_id'] == null) {
+                      return _buildErrorWidget(); // Atau tampilkan widget error
+                    }
+
                     // Debugging output
                     print(
                         'Order ID: ${transaction['order_id']}, Length: ${transaction['order_id'].length}');
@@ -320,4 +326,36 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ),
         ));
   }
+}
+
+Widget _buildErrorWidget() {
+  return Container(
+    margin: EdgeInsets.symmetric(vertical: 20, horizontal: 8),
+    padding: EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: Colors.red[100],
+      borderRadius: BorderRadius.circular(8.0),
+      border: Border.all(color: Colors.red),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.error,
+          color: Colors.red,
+        ),
+        SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            'Terjadi kesalahan saat memuat transaksi. Silakan coba lagi.',
+            style: TextStyle(
+              color: Colors.red[800],
+              fontWeight: FontWeight.w600,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    ),
+  );
 }
