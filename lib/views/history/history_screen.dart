@@ -37,19 +37,30 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   Future<void> _fetchUserTransactions() async {
-    if (_email == null || _token == null) return;
+    try {
+      if (_email == null || _token == null) return;
 
-    final transactions =
-        await ApiService.fetchUserTransactions(_email!, _token);
-    transactions.sort((a, b) {
-      DateTime dateTimeA = DateTime.parse(a['transaction_date']);
-      DateTime dateTimeB = DateTime.parse(b['transaction_date']);
-      return dateTimeB.compareTo(dateTimeA);
-    });
+      final transactions =
+          await ApiService.fetchUserTransactions(_email!, _token);
 
-    setState(() {
-      _transactions = transactions;
-    });
+      // Pastikan transaksi ada dan bukan null
+      if (transactions != null && transactions.isNotEmpty) {
+        transactions.sort((a, b) {
+          DateTime dateTimeA = DateTime.parse(a['transaction_date']);
+          DateTime dateTimeB = DateTime.parse(b['transaction_date']);
+          return dateTimeB.compareTo(dateTimeA);
+        });
+
+        setState(() {
+          _transactions = transactions;
+        });
+      } else {
+        print("No transactions found");
+      }
+    } catch (e) {
+      // Menangkap dan mencetak kesalahan untuk debugging
+      print("Error fetching transactions: $e");
+    }
   }
 
   final List<String> labels = ['semua', 'success', 'pending', 'failed'];
